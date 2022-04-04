@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Security.Policy;
 using System.Xml.Serialization;
+using Microsoft.EntityFrameworkCore;
 
 namespace InvoicesChecker.Models;
 
@@ -14,13 +16,13 @@ public class FACTUURREGEL
     [XmlElement(ElementName = "FACTUUR_AANTAL")]
     public string FACTUUR_AANTAL { get; set; }
     [XmlElement(ElementName = "PRIJS")]
-    public string PRIJS { get; set; }
+    public decimal PRIJS { get; set; }
     [XmlElement(ElementName = "BTWSOORT")]
     public string BTWSOORT { get; set; }
     [XmlElement(ElementName = "PRIJSEENHEID")]
     public string PRIJSEENHEID { get; set; }
     [XmlElement(ElementName = "NETTOBEDRAG")]
-    public string NETTOBEDRAG { get; set; }
+    public decimal NETTOBEDRAG { get; set; }
     [XmlElement(ElementName = "ARTIKELCODE_LEVERANCIER")]
     public string ARTIKELCODE_LEVERANCIER { get; set; }
     [XmlElement(ElementName = "ARTIKELOMSCHRIJVING")]
@@ -35,6 +37,7 @@ public class FACTUURREGELS
     public List<FACTUURREGEL> FACTUURREGEL { get; set; }
 }
 
+[Index(nameof(ORDERNR_AFNEMER), IsUnique = true)]
 [XmlRoot(ElementName = "FACTUUR")]
 public class FACTUUR
 {
@@ -75,10 +78,15 @@ public class FACTUUR
     public string VALUTA { get; set; }
     [XmlElement(ElementName = "FACTUURREGELS")]
     public FACTUURREGELS FACTUURREGELS { get; set; }
+
+    public decimal Total { get; set; }
+    public decimal Payed { get; set; }
+    public int? PaymentId { get; set; }
+    public Payment Payment { get; set; }
 }
 
 [XmlRoot(ElementName = "ROZIS")]
-public class InvoiceFile    
+public class InvoiceFile
 {
     public int Id { get; set; }
     [XmlElement(ElementName = "FACTUUR")]
@@ -86,5 +94,6 @@ public class InvoiceFile
     public string Client { get; set; }
     public int Year { get; set; }
     public int Week { get; set; }
+    public string RawXml { get; set; }
 
 }

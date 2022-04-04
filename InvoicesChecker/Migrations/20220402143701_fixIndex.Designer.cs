@@ -4,6 +4,7 @@ using InvoicesChecker.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InvoicesChecker.Migrations
 {
     [DbContext(typeof(MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20220402143701_fixIndex")]
+    partial class fixIndex
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -81,12 +83,6 @@ namespace InvoicesChecker.Migrations
                     b.Property<string>("PAKBONNUMMER")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Payed")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int?>("PaymentId")
-                        .HasColumnType("int");
-
                     b.Property<string>("TESTINDICATOR")
                         .HasColumnType("nvarchar(max)");
 
@@ -138,11 +134,11 @@ namespace InvoicesChecker.Migrations
                     b.Property<string>("GELEVERD_AANTAL")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("NETTOBEDRAG")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<string>("NETTOBEDRAG")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("PRIJS")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<string>("PRIJS")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PRIJSEENHEID")
                         .HasColumnType("nvarchar(max)");
@@ -231,14 +227,11 @@ namespace InvoicesChecker.Migrations
                     b.Property<decimal>("DiscountUsed")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("FactuurId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("InvoiceAmount")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Order")
-                        .HasColumnType("varchar(10)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("PaymentAmount")
                         .HasColumnType("decimal(18,2)");
@@ -250,14 +243,6 @@ namespace InvoicesChecker.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("FactuurId")
-                        .IsUnique()
-                        .HasFilter("[FactuurId] IS NOT NULL");
-
-                    b.HasIndex("Order")
-                        .IsUnique()
-                        .HasFilter("[Order] IS NOT NULL");
 
                     b.ToTable("Payments");
                 });
@@ -280,20 +265,6 @@ namespace InvoicesChecker.Migrations
                     b.HasOne("InvoicesChecker.Models.FACTUURREGELS", null)
                         .WithMany("FACTUURREGEL")
                         .HasForeignKey("FACTUURREGELSId");
-                });
-
-            modelBuilder.Entity("InvoicesChecker.Models.Payment", b =>
-                {
-                    b.HasOne("InvoicesChecker.Models.FACTUUR", "Factuur")
-                        .WithOne("Payment")
-                        .HasForeignKey("InvoicesChecker.Models.Payment", "FactuurId");
-
-                    b.Navigation("Factuur");
-                });
-
-            modelBuilder.Entity("InvoicesChecker.Models.FACTUUR", b =>
-                {
-                    b.Navigation("Payment");
                 });
 
             modelBuilder.Entity("InvoicesChecker.Models.FACTUURREGELS", b =>
