@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.Skins;
@@ -10,6 +12,13 @@ namespace InvoicesChecker.Extensions;
 
 public static class Util
 {
+    public static string Location(this Exception ex)
+    {
+        var st = new StackTrace(ex, true);
+        var frame = st.GetFrames().FirstOrDefault(x => x.GetFileLineNumber() != 0);
+        if (frame == null) return "NA";
+        return $"({Path.GetFileName(frame.GetFileName())} : {frame.GetFileLineNumber()})";
+    }
     public static T DeserializeXmlToObject<T>(this string filepath) where T : class
     {
         var ser = new System.Xml.Serialization.XmlSerializer(typeof(T));
@@ -41,7 +50,8 @@ public static class Util
         }
         catch (Exception e)
         {
-            MessageBox.Show(showDetails ? e.ToString() : e.Message);
+            //MessageBox.Show(showDetails ? e.ToString() : e.Message);
+            MessageBox.Show($"{e.Message} {e.Location()}");
         }
         finally
         {

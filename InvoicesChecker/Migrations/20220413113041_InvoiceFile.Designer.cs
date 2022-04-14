@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InvoicesChecker.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20220330084801_PaymentsAdded")]
-    partial class PaymentsAdded
+    [Migration("20220413113041_InvoiceFile")]
+    partial class InvoiceFile
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,6 +37,9 @@ namespace InvoicesChecker.Migrations
 
                     b.Property<string>("BTW_REGISTRATIE_NR")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("FACTUURDATUM")
                         .HasColumnType("nvarchar(max)");
@@ -71,11 +74,11 @@ namespace InvoicesChecker.Migrations
                     b.Property<string>("GLN_PARTNER")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("InvoiceFileId")
+                    b.Property<int>("InvoiceFileId")
                         .HasColumnType("int");
 
                     b.Property<string>("ORDERNR_AFNEMER")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ORDER_DATUM")
                         .HasColumnType("nvarchar(max)");
@@ -83,17 +86,32 @@ namespace InvoicesChecker.Migrations
                     b.Property<string>("PAKBONNUMMER")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal>("Payed")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("PaymentId")
+                        .HasColumnType("int");
+
                     b.Property<string>("TESTINDICATOR")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("VALUTA")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedAt");
+
                     b.HasIndex("FACTUURREGELSId");
 
                     b.HasIndex("InvoiceFileId");
+
+                    b.HasIndex("ORDERNR_AFNEMER")
+                        .IsUnique()
+                        .HasFilter("[ORDERNR_AFNEMER] IS NOT NULL");
 
                     b.ToTable("FACTUUR");
                 });
@@ -127,11 +145,11 @@ namespace InvoicesChecker.Migrations
                     b.Property<string>("GELEVERD_AANTAL")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NETTOBEDRAG")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal>("NETTOBEDRAG")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("PRIJS")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal>("PRIJS")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("PRIJSEENHEID")
                         .HasColumnType("nvarchar(max)");
@@ -167,6 +185,9 @@ namespace InvoicesChecker.Migrations
                     b.Property<string>("Client")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("RawXml")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Week")
                         .HasColumnType("int");
 
@@ -176,6 +197,28 @@ namespace InvoicesChecker.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("InvoiceFiles");
+                });
+
+            modelBuilder.Entity("InvoicesChecker.Models.Log", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Severity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Logs");
                 });
 
             modelBuilder.Entity("InvoicesChecker.Models.Payment", b =>
@@ -195,11 +238,14 @@ namespace InvoicesChecker.Migrations
                     b.Property<decimal>("DiscountUsed")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int?>("FactuurId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("InvoiceAmount")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Order")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(10)");
 
                     b.Property<decimal>("PaymentAmount")
                         .HasColumnType("decimal(18,2)");
@@ -212,6 +258,14 @@ namespace InvoicesChecker.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FactuurId")
+                        .IsUnique()
+                        .HasFilter("[FactuurId] IS NOT NULL");
+
+                    b.HasIndex("Order")
+                        .IsUnique()
+                        .HasFilter("[Order] IS NOT NULL");
+
                     b.ToTable("Payments");
                 });
 
@@ -221,11 +275,15 @@ namespace InvoicesChecker.Migrations
                         .WithMany()
                         .HasForeignKey("FACTUURREGELSId");
 
-                    b.HasOne("InvoicesChecker.Models.InvoiceFile", null)
+                    b.HasOne("InvoicesChecker.Models.InvoiceFile", "InvoiceFile")
                         .WithMany("FACTUUR")
-                        .HasForeignKey("InvoiceFileId");
+                        .HasForeignKey("InvoiceFileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("FACTUURREGELS");
+
+                    b.Navigation("InvoiceFile");
                 });
 
             modelBuilder.Entity("InvoicesChecker.Models.FACTUURREGEL", b =>
@@ -233,6 +291,20 @@ namespace InvoicesChecker.Migrations
                     b.HasOne("InvoicesChecker.Models.FACTUURREGELS", null)
                         .WithMany("FACTUURREGEL")
                         .HasForeignKey("FACTUURREGELSId");
+                });
+
+            modelBuilder.Entity("InvoicesChecker.Models.Payment", b =>
+                {
+                    b.HasOne("InvoicesChecker.Models.FACTUUR", "Factuur")
+                        .WithOne("Payment")
+                        .HasForeignKey("InvoicesChecker.Models.Payment", "FactuurId");
+
+                    b.Navigation("Factuur");
+                });
+
+            modelBuilder.Entity("InvoicesChecker.Models.FACTUUR", b =>
+                {
+                    b.Navigation("Payment");
                 });
 
             modelBuilder.Entity("InvoicesChecker.Models.FACTUURREGELS", b =>

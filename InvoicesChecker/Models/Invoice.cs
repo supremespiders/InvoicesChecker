@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Security.Policy;
 using System.Xml.Serialization;
 using Microsoft.EntityFrameworkCore;
@@ -38,6 +39,7 @@ public class FACTUURREGELS
 }
 
 [Index(nameof(ORDERNR_AFNEMER), IsUnique = true)]
+[Index(nameof(CreatedAt), IsUnique = false)]
 [XmlRoot(ElementName = "FACTUUR")]
 public class FACTUUR
 {
@@ -79,10 +81,14 @@ public class FACTUUR
     [XmlElement(ElementName = "FACTUURREGELS")]
     public FACTUURREGELS FACTUURREGELS { get; set; }
 
+    public DateTime CreatedAt { get; set; }
+
     public decimal Total { get; set; }
     public decimal Payed { get; set; }
     public int? PaymentId { get; set; }
     public Payment Payment { get; set; }
+    public int InvoiceFileId { get; set; }
+    public InvoiceFile InvoiceFile { get; set; }
 }
 
 [XmlRoot(ElementName = "ROZIS")]

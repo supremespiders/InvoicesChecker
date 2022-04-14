@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -65,7 +66,7 @@ public class ScanInvoicesService
             if (!DateTime.TryParse(sheet.Cells[i, 2].Value?.ToString(), out var date)) throw new KnownException($"Failed to parse date : {sheet.Cells[i, 2].Value?.ToString()} at line : {i}");
             if (_savedPayments.Contains(order))
             {
-               // Notifier.Error($"Duplicate purchase number : {order} on payment file");
+                // Notifier.Error($"Duplicate purchase number : {order} on payment file");
                 continue;
             }
 
@@ -137,6 +138,10 @@ public class ScanInvoicesService
             week = int.Parse(name[6..]);
             year = int.Parse(name[..4]);
         }
+        else
+        {
+            throw new Exception($"new format for file name : {name}");
+        }
 
         return (client, week, year);
     }
@@ -152,6 +157,7 @@ public class ScanInvoicesService
         foreach (var factuur in invoiceFile.FACTUUR)
         {
             factuur.Total = factuur.FACTUURREGELS.FACTUURREGEL.Sum(x => x.NETTOBEDRAG);
+            factuur.CreatedAt = DateTime.ParseExact(factuur.FACTUURDATUM, "yyyyMMdd", CultureInfo.InvariantCulture);
         }
         return invoiceFile;
     }

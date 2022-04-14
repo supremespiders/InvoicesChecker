@@ -1,4 +1,7 @@
-﻿using InvoicesChecker.Models;
+﻿using System.IO;
+using System.Text.Json;
+using System.Windows.Forms;
+using InvoicesChecker.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace InvoicesChecker.Services;
@@ -7,7 +10,12 @@ public class MyContext : DbContext
 {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-G1IQ31I;Initial Catalog=InvoiceDb;Integrated Security=True;");
+        if (string.IsNullOrEmpty(GlobalData.ConnectionString))
+        {
+            var config = JsonSerializer.Deserialize<Config>(File.ReadAllText($"{Application.StartupPath}/config"));
+            GlobalData.ConnectionString = config.ConnectionString;
+        }
+        optionsBuilder.UseSqlServer(GlobalData.ConnectionString);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
