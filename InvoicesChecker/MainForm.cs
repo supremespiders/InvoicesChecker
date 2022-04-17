@@ -225,10 +225,6 @@ namespace InvoicesChecker
             }
         }
 
-        private async void SaveButton_Click(object sender, EventArgs e)
-        {
-            await SaveConfig();
-        }
 
         private async Task LoadInvoices()
         {
@@ -288,7 +284,42 @@ namespace InvoicesChecker
             paymentsGrid.DataSource = payments;
         }
 
-        private async void scanButton_Click(object sender, EventArgs e)
+
+        private async void SearchInvoicesButton_Click(object sender, EventArgs e)
+        {
+            await this.Exec(async () =>
+            {
+                await LoadInvoices();
+            });
+        }
+
+        private async void searchPaymentsButton_Click(object sender, EventArgs e)
+        {
+            await this.Exec(async () =>
+            {
+                await LoadPayments();
+            });
+        }
+
+        private async void recreateDbButton_Click_1(object sender, EventArgs e)
+        {
+            if (!this.Confirm($"Are you sure you want to recreate the current db ?")) return;
+            if (string.IsNullOrEmpty(GlobalData.ConnectionString))
+            {
+                MessageBox.Show(@"Connection string is empty!");
+                return;
+            }
+
+            await this.Exec(async () =>
+            {
+                var context = new MyContext();
+                await Task.Run(context.Database.EnsureDeleted);
+                await Task.Run(context.Database.Migrate);
+
+            });
+        }
+
+        private async void scanButton_Click_1(object sender, EventArgs e)
         {
             debugT.Text = "";
             myTabs.SelectedTabPageIndex = 1;
@@ -314,38 +345,9 @@ namespace InvoicesChecker
             }
         }
 
-        private async void recreateDbButton_Click(object sender, EventArgs e)
+        private async void SaveButton_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(GlobalData.ConnectionString))
-            {
-                MessageBox.Show(@"Connection string is empty!");
-                return;
-            }
-
-            await this.Exec(async () =>
-            {
-                var context = new MyContext();
-                await Task.Run(context.Database.EnsureDeleted);
-                await Task.Run(context.Database.Migrate);
-
-            });
-            // context.Database.ExecuteSqlRaw("use master;go;alter database InvoiceDb set single_user with rollback immediate;DROP DATABASE InvoiceDb;");
-        }
-
-        private async void SearchInvoicesButton_Click(object sender, EventArgs e)
-        {
-            await this.Exec(async () =>
-            {
-                await LoadInvoices();
-            });
-        }
-
-        private async void searchPaymentsButton_Click(object sender, EventArgs e)
-        {
-            await this.Exec(async () =>
-            {
-                await LoadPayments();
-            });
+            await SaveConfig();
         }
     }
 }
