@@ -11,7 +11,7 @@ public class InvoiceAdapter
     public string InvoiceNumber { get; set; }
     public string PurchaseNumber { get; set; }
     public DateTime InvoiceDate { get; set; }
-    public string OrderDate { get; set; }
+    public DateTime OrderDate { get; set; }
     public string GlnPartner { get; set; }
     public decimal Total { get; set; }
     public decimal Payment { get; set; }

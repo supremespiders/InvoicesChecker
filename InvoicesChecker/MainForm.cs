@@ -13,15 +13,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.LookAndFeel;
-using DevExpress.XtraBars;
-using DevExpress.XtraBars.Ribbon;
-using DevExpress.XtraTabbedMdi;
 using InvoicesChecker.Extensions;
-using InvoicesChecker.Forms;
 using InvoicesChecker.Models;
 using InvoicesChecker.Services;
 using Microsoft.EntityFrameworkCore;
-using Single = System.Single;
 
 namespace InvoicesChecker
 {
@@ -52,8 +47,13 @@ namespace InvoicesChecker
             wintechInvoiceFolderI.Text = config?.WintechInvoiceFolder;
             winsatInvoiceFolderI.Text = config?.WinsatInvoiceFolder;
             paymentsFolderI.Text = config?.PaymentFolder;
-            connectionStringI.Text = config?.ConnectionString;
-            GlobalData.ConnectionString = connectionStringI.Text;
+            if (!File.Exists("connection"))
+            {
+                await File.WriteAllTextAsync("connection", "Server=DESKTOP-G1IQ31I;Database=InvoiceDb;User Id=invoice;Password=qw182sdfRt7$;");
+                MessageBox.Show("Please enter a connection string");
+                return;
+            }
+            GlobalData.ConnectionString = await File.ReadAllTextAsync("connection");
             if (string.IsNullOrEmpty(GlobalData.ConnectionString))
                 return;
 
@@ -66,6 +66,12 @@ namespace InvoicesChecker
             //    await LoadInvoices();
             //    await LoadPayments();
             //});
+
+            await this.Exec(async () =>
+            {
+                await LoadInvoiceFiles();
+                await LoadPayments();
+            });
         }
 
         async Task CheckForUpdates()
@@ -207,7 +213,6 @@ namespace InvoicesChecker
                 WintechInvoiceFolder = wintechInvoiceFolderI.Text,
                 WinsatInvoiceFolder = winsatInvoiceFolderI.Text,
                 PaymentFolder = paymentsFolderI.Text,
-                ConnectionString = connectionStringI.Text
             };
             try
             {
@@ -230,15 +235,15 @@ namespace InvoicesChecker
             var d = InvoiceDateEdit.DateTime;
             var context = new MyContext();
             // var invoices = await context.InvoiceFiles.AsNoTracking().Include(x => x.FACTUUR).Select(x => new { x.Client, x.Year, x.Week, x.FACTUUR }).ToListAsync();
-            var invoiceFiles = (await context.InvoiceFiles.Select(x => new { x.Id, x.Client, x.Year, x.Week, x.FACTUUR }).ToListAsync()).ToDictionary(x => x.Id);
-            var invoices = await context.FACTUUR.AsNoTracking().Where(x => x.CreatedAt.Year == d.Year && x.CreatedAt.Month == d.Month).ToListAsync();
+            var invoiceFiles = (await context.InvoiceFiles.AsNoTracking().ToListAsync()).ToDictionary(x => x.Id);
+            var invoices = await context.Invoices.AsNoTracking().Where(x => x.InvoiceDate.Year == d.Year && x.InvoiceDate.Month == d.Month).ToListAsync();
             foreach (var invoice in invoices)
             {
                 invoice.InvoiceFile = new InvoiceFile
                 {
                     Client = invoiceFiles[invoice.InvoiceFileId].Client,
                     Year = invoiceFiles[invoice.InvoiceFileId].Year,
-                    Week = invoiceFiles[invoice.InvoiceFileId].Week
+                    FileNumber = invoiceFiles[invoice.InvoiceFileId].FileNumber
                 };
             }
 
@@ -248,27 +253,38 @@ namespace InvoicesChecker
                 invoiceAdapters.Add(new InvoiceAdapter()
                 {
                     Client = invoice.InvoiceFile.Client,
-                    FileNumber = invoice.InvoiceFile.Week,
+                    FileNumber = invoice.InvoiceFile.FileNumber,
                     Year = invoice.InvoiceFile.Year,
-                    GlnPartner = invoice.GLN_PARTNER,
-                    InvoiceDate = invoice.CreatedAt,
-                    OrderDate = invoice.ORDER_DATUM,
-                    PurchaseNumber = invoice.ORDERNR_AFNEMER,
-                    InvoiceNumber = invoice.FACTUURNUMMER,
-                    Total = invoice.Total,
-                    Payment = invoice.Payed,
-                    RestToPay = invoice.Total - invoice.Payed
+                    GlnPartner = invoice.GlnPartner,
+                    InvoiceDate = invoice.InvoiceDate,
+                    OrderDate = invoice.OrderDate,
+                    PurchaseNumber = invoice.PurchaseNumber,
+                    InvoiceNumber = invoice.InvoiceNumber,
+                    Total = invoice.TotalToPay,
+                    Payment = invoice.TotalPayed,
+                    RestToPay = invoice.TotalToPay - invoice.TotalPayed
                 });
             }
 
             InvoicesGrid.DataSource = invoiceAdapters;
         }
 
+
+        private async Task LoadInvoiceFiles()
+        {
+            //var d = InvoiceDateEdit.DateTime;
+            var context = new MyContext();
+            var invoiceFiles = (await context.InvoiceFiles.AsNoTracking().Include(x => x.Invoices).ToListAsync());
+
+            invoiceFileGrid.DataSource = invoiceFiles;
+        }
+
         private async Task LoadPayments()
         {
             var d = paymentDateI.DateTime;
             var context = new MyContext();
-            var payments = await context.Payments.AsNoTracking().Where(x => x.FactuurId == null && x.Date.Year == d.Year && x.Date.Month == d.Month).ToListAsync();
+            // var payments = await context.Payments.AsNoTracking().Where(x => x.InvoiceId == null && x.Date.Year == d.Year && x.Date.Month == d.Month).ToListAsync();
+            var payments = await context.Payments.AsNoTracking().Where(x => x.InvoiceId == null).ToListAsync();
             paymentsGrid.DataSource = payments;
         }
 
@@ -280,7 +296,13 @@ namespace InvoicesChecker
             var service = new ScanInvoicesService(wintechInvoiceFolderI.Text, winsatInvoiceFolderI.Text, paymentsFolderI.Text);
             try
             {
-                await Task.Run(service.MainWork);
+                var (invoiceChanged, paymentChanged) = await Task.Run(service.MainWork);
+                if (invoiceChanged || paymentChanged)
+                    await this.Exec(async () =>
+                    {
+                        await LoadInvoiceFiles();
+                        await LoadPayments();
+                    });
             }
             catch (KnownException ex)
             {
@@ -292,7 +314,7 @@ namespace InvoicesChecker
             }
         }
 
-        private void recreateDbButton_Click(object sender, EventArgs e)
+        private async void recreateDbButton_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(GlobalData.ConnectionString))
             {
@@ -300,17 +322,13 @@ namespace InvoicesChecker
                 return;
             }
 
-            try
+            await this.Exec(async () =>
             {
                 var context = new MyContext();
-                context.Database.EnsureDeleted();
-                context.Database.Migrate();
-                MessageBox.Show("Recreated");
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show($"{exception.Message} {exception.Location()}");
-            }
+                await Task.Run(context.Database.EnsureDeleted);
+                await Task.Run(context.Database.Migrate);
+
+            });
             // context.Database.ExecuteSqlRaw("use master;go;alter database InvoiceDb set single_user with rollback immediate;DROP DATABASE InvoiceDb;");
         }
 

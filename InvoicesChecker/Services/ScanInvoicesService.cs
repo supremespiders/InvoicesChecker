@@ -19,8 +19,9 @@ public class ScanInvoicesService
     private string _winsatInvoiceFolder;
     private string _paymentFolder;
     private HashSet<string> _filesOnDb;
-    private HashSet<string> _purchaseNumbers;
-    private HashSet<string> _savedPayments;
+    private HashSet<string> _savedPos;
+    private Dictionary<string, Payment> _savedPayments;
+    readonly MyContext _context = new();
     public ScanInvoicesService(string wintechInvoiceFolder, string winsatInvoiceFolder, string paymentFolder)
     {
         _wintechInvoiceFolder = wintechInvoiceFolder;
@@ -37,51 +38,55 @@ public class ScanInvoicesService
         var payments = new List<Payment>();
         for (int i = 19; i <= sheet.Dimension.End.Row; i++)
         {
-            var invoice = sheet.Cells[i, 3].Value?.ToString()?.Split("/");
-            if (invoice == null) break;
-            var client = "";
-            var week = 0;
-            var year = 0;
-            if (invoice.Length != 4)
-            {
-                Debug.WriteLine($"Unknown format : {sheet.Cells[i, 3].Value?.ToString()}");
-                continue;
-            }
-            if (char.IsDigit(invoice[0][0]))
-            {
-                client = invoice[1];
-                if (!int.TryParse(invoice[2], out week)) throw new KnownException($"Unexpected format at line : {i} on payment file week(2) : {sheet.Cells[i, 3].Value?.ToString()}");
-                if (!int.TryParse(invoice[0], out year)) throw new KnownException($"Unexpected format at line : {i} on payment file year(0) : {sheet.Cells[i, 3].Value?.ToString()}");
-            }
-            else
-            {
-                client = invoice[0];
-                if (!int.TryParse(invoice[1], out week)) throw new KnownException($"Unexpected format at line : {i} on payment file week(1) : {sheet.Cells[i, 3].Value?.ToString()}");
-                if (!int.TryParse(invoice[2], out year)) throw new KnownException($"Unexpected format at line : {i} on payment file year(2) : {sheet.Cells[i, 3].Value?.ToString()}");
-            }
+            //var invoice = sheet.Cells[i, 3].Value?.ToString()?.Split("/");
+            //if (invoice == null) break;
+            //var client = "";
+            //var week = 0;
+            //var year = 0;
+            //if (invoice.Length != 4)
+            //{
+            //    Debug.WriteLine($"Unknown format : {sheet.Cells[i, 3].Value?.ToString()}");
+            //    continue;
+            //}
+            //if (char.IsDigit(invoice[0][0]))
+            //{
+            //    client = invoice[1];
+            //    if (!int.TryParse(invoice[2], out week)) throw new KnownException($"Unexpected format at line : {i} on payment file week(2) : {sheet.Cells[i, 3].Value?.ToString()}");
+            //    if (!int.TryParse(invoice[0], out year)) throw new KnownException($"Unexpected format at line : {i} on payment file year(0) : {sheet.Cells[i, 3].Value?.ToString()}");
+            //}
+            //else
+            //{
+            //    client = invoice[0];
+            //    if (!int.TryParse(invoice[1], out week)) throw new KnownException($"Unexpected format at line : {i} on payment file week(1) : {sheet.Cells[i, 3].Value?.ToString()}");
+            //    if (!int.TryParse(invoice[2], out year)) throw new KnownException($"Unexpected format at line : {i} on payment file year(2) : {sheet.Cells[i, 3].Value?.ToString()}");
+            //}
 
-            var order = invoice[3];
+            //var order = invoice[3];
+            var order = sheet.Cells[i, 3].Value?.ToString();
+            if (string.IsNullOrEmpty(order)) break;
 
 
             if (!DateTime.TryParse(sheet.Cells[i, 2].Value?.ToString(), out var date)) throw new KnownException($"Failed to parse date : {sheet.Cells[i, 2].Value?.ToString()} at line : {i}");
-            if (_savedPayments.Contains(order))
+            if (_savedPayments.ContainsKey(order))
             {
                 // Notifier.Error($"Duplicate purchase number : {order} on payment file");
                 continue;
             }
 
-            _savedPayments.Add(order);
-            payments.Add(new Payment
+            var payment = new Payment
             {
                 Date = date,
-                InvoiceAmount = decimal.Parse(sheet.Cells[i, 4].Value?.ToString() ?? "0"),
-                DiscountUsed = decimal.Parse(sheet.Cells[i, 5].Value?.ToString() ?? "0"),
-                PaymentAmount = decimal.Parse(sheet.Cells[i, 6].Value?.ToString() ?? "0"),
-                Client = client,
-                Week = week,
-                Year = year,
-                Order = order
-            });
+                InvoiceAmount = Math.Abs(decimal.Parse(sheet.Cells[i, 4].Value?.ToString() ?? "0")),
+                DiscountUsed = Math.Abs(decimal.Parse(sheet.Cells[i, 5].Value?.ToString() ?? "0")),
+                PaymentAmount = Math.Abs(decimal.Parse(sheet.Cells[i, 6].Value?.ToString() ?? "0")),
+                InvoiceNumber = order
+                //Client = client,
+                //Week = week,
+                //Year = year,
+
+            };
+            _savedPayments.Add(order, payment);
+            payments.Add(payment);
         }
 
         return payments;
@@ -146,23 +151,36 @@ public class ScanInvoicesService
         return (client, week, year);
     }
 
-    private InvoiceFile ScanFile(string path)
+    private async Task<InvoiceFile> ScanFile(string path)
     {
-        var invoiceFile = path.DeserializeXmlToObject<InvoiceFile>();
+        var element = await path.DeserializeXmlToObject<RootElement>();
         var (client, week, year) = ParseFileName(path);
-        invoiceFile.Client = client;
-        invoiceFile.Week = week;
-        invoiceFile.Year = year;
-        invoiceFile.RawXml = File.ReadAllText(path);
-        foreach (var factuur in invoiceFile.FACTUUR)
+        var invoices = new List<Invoice>();
+        foreach (var factuur in element.FACTUUR)
         {
-            factuur.Total = factuur.FACTUURREGELS.FACTUURREGEL.Sum(x => x.NETTOBEDRAG);
-            factuur.CreatedAt = DateTime.ParseExact(factuur.FACTUURDATUM, "yyyyMMdd", CultureInfo.InvariantCulture);
+            invoices.Add(new Invoice
+            {
+                InvoiceDate = DateTime.ParseExact(factuur.FACTUURDATUM, "yyyyMMdd", CultureInfo.InvariantCulture),
+                OrderDate = DateTime.ParseExact(factuur.ORDER_DATUM, "yyyyMMdd", CultureInfo.InvariantCulture),
+                GlnPartner = factuur.GLN_PARTNER,
+                InvoiceNumber = factuur.FACTUURNUMMER,
+                PurchaseNumber = factuur.ORDERNR_AFNEMER,
+                TotalToPay = factuur.FACTUURREGELS.FACTUURREGEL.Sum(x => x.NETTOBEDRAG)
+            });
         }
+        var invoiceFile = new InvoiceFile
+        {
+            Year = year,
+            FileNumber = week,
+            Client = client,
+            FileName = Path.GetFileNameWithoutExtension(path),
+            Invoices = invoices,
+            TotalToPay = invoices.Sum(x => x.TotalToPay)
+        };
         return invoiceFile;
     }
 
-    private List<InvoiceFile> CheckForNewFiles(string folderPath)
+    private async Task<List<InvoiceFile>> CheckForNewFiles(string folderPath)
     {
         if (!Directory.Exists(folderPath)) throw new KnownException($"Directory : {folderPath} don't exist");
         var invoiceFiles = new List<InvoiceFile>();
@@ -181,7 +199,7 @@ public class ScanInvoicesService
         {
             try
             {
-                var invoiceFile = ScanFile(newFile);
+                var invoiceFile = await ScanFile(newFile);
                 invoiceFiles.Add(invoiceFile);
             }
             catch (Exception e)
@@ -193,62 +211,176 @@ public class ScanInvoicesService
         return invoiceFiles;
     }
 
-    public async Task MainWork()
+    async Task SaveInvoices(List<InvoiceFile> invoiceFiles)
+    {
+        var invoices = invoiceFiles.Select(x => x.Invoices).ToList();
+        var context = new MyContext();
+        foreach (var invoiceFile in invoiceFiles)
+        {
+            invoiceFile.Invoices = null;
+            context.InvoiceFiles.Add(invoiceFile);
+        }
+        await context.SaveChangesAsync();
+        for (var i = 0; i < invoiceFiles.Count; i++)
+        {
+            var invoiceFile = invoiceFiles[i];
+            invoiceFile.Invoices = invoices[i];
+            foreach (var invoice in invoiceFile.Invoices)
+            {
+                invoice.InvoiceFileId = invoiceFile.Id;
+            }
+        }
+
+        await context.BulkInsert(invoiceFiles.SelectMany(x => x.Invoices).ToList());
+        Notifier.Log($"{invoiceFiles.Count} new invoice files saved");
+    }
+
+    async Task SavePayment(List<Payment> payments)
+    {
+        if (payments.Count == 0) return;
+        //save payments
+        var poToPull = payments.Where(x => _savedPos.Contains(x.InvoiceNumber)).Select(x => x.InvoiceNumber).ToList();
+        var invoices = await _context.Invoices.AsNoTracking().Where(x => poToPull.Contains(x.InvoiceNumber)).ToListAsync();
+        foreach (var invoice in invoices)
+        {
+            var payment = payments.First(x => x.InvoiceNumber == invoice.InvoiceNumber);
+            payment.InvoiceId = invoice.Id;
+        }
+        await _context.BulkInsert(payments);
+
+        //update invoices with payments
+
+        var insertedPayments = await _context.Payments.AsNoTracking().Where(x => poToPull.Contains(x.InvoiceNumber)).ToListAsync();
+        Notifier.Log($"{insertedPayments.Count} payments seams to match invoices we have");
+        if (insertedPayments.Count == 0) return;
+        var invoiceFilesIds = invoices.Select(x => x.InvoiceFileId).Distinct().ToHashSet();
+        var invoiceFiles = await _context.InvoiceFiles.AsNoTracking().Where(x => invoiceFilesIds.Contains(x.Id)).ToListAsync();
+        foreach (var invoice in invoices)
+        {
+            var payment = insertedPayments.First(x => x.InvoiceNumber == invoice.InvoiceNumber);
+            if (invoice.TotalPayed != 0)
+            {
+                Notifier.Error($"Invoice : {invoice.InvoiceNumber} is already have : {invoice.TotalPayed} payed, second payments is not implemented");
+                continue;
+            }
+
+            var invoiceFile = invoiceFiles.First(x => x.Id == invoice.InvoiceFileId);
+
+            invoiceFile.TotalPayed += payment.PaymentAmount;
+            invoiceFile.RestToPay = invoiceFile.TotalToPay - invoiceFile.TotalPayed;
+            invoice.TotalPayed = payment.PaymentAmount;
+            invoice.RestToPay = invoice.TotalToPay - invoice.TotalPayed;
+        }
+        await _context.BulkUpdate(invoices, new List<string> { "TotalPayed", "RestToPay" });
+        await _context.BulkUpdate(invoiceFiles, new List<string> { "TotalPayed", "RestToPay" });
+
+        //var invoiceFiles = await _context.InvoiceFiles.AsNoTracking().Include(x=>x.Invoices).Where(x => invoiceFilesIds.Contains(x.Id)).ToListAsync();
+        //foreach (var invoiceFile in invoiceFiles)
+        //{
+        //    invoiceFile.TotalPayed=invoiceFile.Invoices.Sum(x=>x.)
+        //}
+
+
+        //foreach (var payment in payments)
+        //{
+        //    if (_purchaseNumbers.Contains(payment.Order))
+        //    {
+        //        poToPull.Add(payment.Order);
+        //        //var factuur = await context.FACTUUR.FirstAsync(x => x.ORDERNR_AFNEMER.Equals(payment.Order));
+        //        //payment.Factuur = factuur;
+        //        //factuur.Payed = payment.PaymentAmount;
+        //        //factuur.Payment = payment;
+        //    }
+        //}
+    }
+
+    void CheckPaymentsForInvoices(List<InvoiceFile> invoicesFiles)
+    {
+        foreach (var invoicesFile in invoicesFiles)
+        {
+            foreach (var invoice in invoicesFile.Invoices)
+            {
+                if (_savedPayments.ContainsKey(invoice.InvoiceNumber))
+                {
+                    invoice.PaymentId = _savedPayments[invoice.InvoiceNumber].Id;
+                    invoice.TotalPayed = _savedPayments[invoice.InvoiceNumber].PaymentAmount;
+                }
+                invoice.RestToPay = invoice.TotalToPay - invoice.TotalPayed;
+            }
+            invoicesFile.TotalPayed = invoicesFile.Invoices.Sum(x => x.TotalPayed);
+            invoicesFile.RestToPay = invoicesFile.Invoices.Sum(x => x.RestToPay);
+        }
+    }
+
+    public async Task<(bool invoiceChanged,bool paymentChanged)> MainWork()
     {
         Notifier.Log($"Start working");
-        var context = new MyContext();
+
         Notifier.Log("fetching file headers from db");
-        _filesOnDb = (await context.InvoiceFiles.AsNoTracking().Select(x => new { x.Client, x.Year, x.Week }).ToListAsync()).Select(x => $"{x.Client}{x.Year}{x.Week}").ToHashSet();
-        _savedPayments = (await context.Payments.AsNoTracking().Select(x => x.Order).ToListAsync()).ToHashSet();
+        _filesOnDb = (await _context.InvoiceFiles.AsNoTracking().Select(x => new { x.Client, x.Year, x.FileNumber }).ToListAsync()).Select(x => $"{x.Client}{x.Year}{x.FileNumber}").ToHashSet();
+        _savedPayments = (await _context.Payments.AsNoTracking().ToListAsync()).ToDictionary(x => x.InvoiceNumber, x => x);
         Notifier.Log("fetching purchase numbers from db");
-        _purchaseNumbers = (await context.FACTUUR.AsNoTracking().ToListAsync()).Select(x => x.ORDERNR_AFNEMER).ToHashSet();
+        _savedPos = (await _context.Invoices.AsNoTracking().ToListAsync()).Select(x => x.InvoiceNumber).ToHashSet();
+
         var invoiceFiles = new List<InvoiceFile>();
         Notifier.Log("Checking Wintech folder for new invoices");
-        invoiceFiles.AddRange(CheckForNewFiles(_wintechInvoiceFolder));
+        invoiceFiles.AddRange(await CheckForNewFiles(_wintechInvoiceFolder));
         Notifier.Log("Checking Winsat folder for new invoices");
-        invoiceFiles.AddRange(CheckForNewFiles(_winsatInvoiceFolder));
-        var dups = invoiceFiles.SelectMany(x => x.FACTUUR).GroupBy(x => x.ORDERNR_AFNEMER).Where(x => x.Count() > 1).ToList();
+        invoiceFiles.AddRange(await CheckForNewFiles(_winsatInvoiceFolder));
+
+        CheckDuplicatePurchaseNumbers(invoiceFiles);
+        CheckPaymentsForInvoices(invoiceFiles);
+        await SaveInvoices(invoiceFiles);
+
+        var payments = ScanPayment(_paymentFolder);
+        await SavePayment(payments);
+        //foreach (var payment in payments)
+        //{
+        //    if (_purchaseNumbers.Contains(payment.Order))
+        //    {
+        //        var factuur = await context.FACTUUR.FirstAsync(x => x.ORDERNR_AFNEMER.Equals(payment.Order));
+        //        payment.Factuur = factuur;
+        //        factuur.Payed = payment.PaymentAmount;
+        //        factuur.Payment = payment;
+        //    }
+        //}
+
+        //await _context.Payments.AddRangeAsync(payments);
+        //await _context.SaveChangesAsync();
+        Notifier.Log($"{payments.Count} new payments saved");
+
+
+        Notifier.Log($"work complete");
+        return (invoiceFiles.Count!=0, payments.Count!=0);
+    }
+
+    private void CheckDuplicatePurchaseNumbers(List<InvoiceFile> invoiceFiles)
+    {
+        var dups = invoiceFiles.SelectMany(x => x.Invoices).GroupBy(x => x.InvoiceNumber).Where(x => x.Count() > 1).ToList();
         var duplicateDisplay = new List<string>();
         foreach (var dup in dups)
         {
             var sb = new StringBuilder($"purchase number {dup.Key} is duplicate in ");
-            foreach (var factuur in dup)
+            foreach (var invoice in dup)
             {
-                var file = invoiceFiles.FirstOrDefault(x => x.FACTUUR.Contains(factuur));
-                sb.Append($"{factuur.FACTUURNUMMER} : {file?.Client}-{file?.Year}-{file?.Week}, ");
+                var file = invoiceFiles.FirstOrDefault(x => x.Invoices.Contains(invoice));
+                sb.Append($"{invoice.InvoiceNumber} : {file.FileName}, ");
             }
+
             duplicateDisplay.Add(sb.ToString());
         }
+
         if (duplicateDisplay.Count > 0)
             throw new KnownException($"Duplicate purchasing number found : \n{string.Join("\n", duplicateDisplay)}");
+
         foreach (var invoiceFile in invoiceFiles)
         {
-            foreach (var factuur in invoiceFile.FACTUUR)
+            foreach (var invoice in invoiceFile.Invoices)
             {
-                if (_purchaseNumbers.Contains(factuur.ORDERNR_AFNEMER))
-                    throw new KnownException($"Purchase number : {factuur.ORDERNR_AFNEMER} in file : {invoiceFile.Client}{invoiceFile.Year}{invoiceFile.Week} exist!!");
-                _purchaseNumbers.Add(factuur.ORDERNR_AFNEMER);
+                if (_savedPos.Contains(invoice.InvoiceNumber))
+                    throw new KnownException($"Purchase number : {invoice.InvoiceNumber} in file : {invoiceFile.FileName} exist!!");
+                _savedPos.Add(invoice.InvoiceNumber);
             }
         }
-        await context.InvoiceFiles.AddRangeAsync(invoiceFiles);
-        await context.SaveChangesAsync();
-        Notifier.Log($"{invoiceFiles.Count} new invoice files saved");
-        //await ScanFile("2022LB0001.xml");
-        var payments = ScanPayment(_paymentFolder);
-
-        foreach (var payment in payments)
-        {
-            if (_purchaseNumbers.Contains(payment.Order))
-            {
-                var factuur = await context.FACTUUR.FirstAsync(x => x.ORDERNR_AFNEMER.Equals(payment.Order));
-                payment.Factuur = factuur;
-                factuur.Payed = payment.PaymentAmount;
-                factuur.Payment = payment;
-            }
-        }
-
-        await context.Payments.AddRangeAsync(payments);
-        await context.SaveChangesAsync();
-        Notifier.Log($"{payments.Count} new payments saved");
     }
 }

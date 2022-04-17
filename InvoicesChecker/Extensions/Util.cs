@@ -19,18 +19,21 @@ public static class Util
         if (frame == null) return "NA";
         return $"({Path.GetFileName(frame.GetFileName())} : {frame.GetFileLineNumber()})";
     }
-    public static T DeserializeXmlToObject<T>(this string filepath) where T : class
+    public static async Task<T> DeserializeXmlToObject<T>(this string filepath) where T : class
     {
         var ser = new System.Xml.Serialization.XmlSerializer(typeof(T));
-
-        using var sr = new StreamReader(filepath);
-        return (T)ser.Deserialize(sr);
+        //using var sr = new StreamReader(filepath);
+        var xml = await File.ReadAllTextAsync(filepath);
+        if (xml.StartsWith("ï»¿"))
+            xml = xml[3..];
+        using var reader = new StringReader(xml);
+        return (T)ser.Deserialize(reader);
     }
 
     public static void SerializeToXml<T>(this T o, string path) where T : class
     {
         var ser = new System.Xml.Serialization.XmlSerializer(typeof(T));
-        
+
         using var sr = new StreamWriter(path);
         ser.Serialize(sr, o);
     }

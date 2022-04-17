@@ -29,15 +29,42 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            DevExpress.XtraGrid.GridFormatRule gridFormatRule1 = new DevExpress.XtraGrid.GridFormatRule();
+            DevExpress.XtraEditors.FormatConditionRuleExpression formatConditionRuleExpression1 = new DevExpress.XtraEditors.FormatConditionRuleExpression();
+            DevExpress.XtraGrid.GridFormatRule gridFormatRule2 = new DevExpress.XtraGrid.GridFormatRule();
+            DevExpress.XtraEditors.FormatConditionRuleExpression formatConditionRuleExpression2 = new DevExpress.XtraEditors.FormatConditionRuleExpression();
+            DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
             DevExpress.XtraGrid.GridFormatRule gridFormatRule3 = new DevExpress.XtraGrid.GridFormatRule();
             DevExpress.XtraEditors.FormatConditionRuleExpression formatConditionRuleExpression3 = new DevExpress.XtraEditors.FormatConditionRuleExpression();
             DevExpress.XtraGrid.GridFormatRule gridFormatRule4 = new DevExpress.XtraGrid.GridFormatRule();
             DevExpress.XtraEditors.FormatConditionRuleExpression formatConditionRuleExpression4 = new DevExpress.XtraEditors.FormatConditionRuleExpression();
+            DevExpress.XtraGrid.GridFormatRule gridFormatRule5 = new DevExpress.XtraGrid.GridFormatRule();
+            DevExpress.XtraEditors.FormatConditionRuleExpression formatConditionRuleExpression5 = new DevExpress.XtraEditors.FormatConditionRuleExpression();
+            DevExpress.XtraGrid.GridFormatRule gridFormatRule6 = new DevExpress.XtraGrid.GridFormatRule();
+            DevExpress.XtraEditors.FormatConditionRuleExpression formatConditionRuleExpression6 = new DevExpress.XtraEditors.FormatConditionRuleExpression();
+            this.invoicesView = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.colInvoiceNumber1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colInvoiceDate1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colOrderDate1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colPurchaseNumber1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colGlnPartner1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colTotalToPay1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colTotalPayed1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colRestToPay2 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.invoiceFileGrid = new DevExpress.XtraGrid.GridControl();
+            this.invoiceFileBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.invoiceFileView = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.colClient2 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colYear2 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colFileNumber = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colFileName = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colTotalToPay = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colTotalPayed = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colRestToPay1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.xtraTabbedMdiManager1 = new DevExpress.XtraTabbedMdi.XtraTabbedMdiManager(this.components);
             this.myTabs = new DevExpress.XtraTab.XtraTabControl();
             this.xtraTabPage1 = new DevExpress.XtraTab.XtraTabPage();
             this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
-            this.connectionStringI = new DevExpress.XtraEditors.TextEdit();
             this.recreateDbButton = new DevExpress.XtraEditors.SimpleButton();
             this.scanButton = new DevExpress.XtraEditors.SimpleButton();
             this.SaveButton = new DevExpress.XtraEditors.SimpleButton();
@@ -45,16 +72,9 @@
             this.winsatInvoiceFolderI = new DevExpress.XtraEditors.TextEdit();
             this.wintechInvoiceFolderI = new DevExpress.XtraEditors.TextEdit();
             this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
-            this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
             this.emptySpaceItem3 = new DevExpress.XtraLayout.EmptySpaceItem();
-            this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem11 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem12 = new DevExpress.XtraLayout.LayoutControlItem();
             this.emptySpaceItem4 = new DevExpress.XtraLayout.EmptySpaceItem();
             this.emptySpaceItem5 = new DevExpress.XtraLayout.EmptySpaceItem();
-            this.layoutControlItem13 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem14 = new DevExpress.XtraLayout.LayoutControlItem();
             this.xtraTabPage2 = new DevExpress.XtraTab.XtraTabPage();
             this.debugT = new System.Windows.Forms.RichTextBox();
             this.xtraTabPage3 = new DevExpress.XtraTab.XtraTabPage();
@@ -80,16 +100,19 @@
             this.paymentsGrid = new DevExpress.XtraGrid.GridControl();
             this.paymentBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.colId = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colDate = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colClient1 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colYear1 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colWeek1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colInvoiceAmount = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colDiscountUsed = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colPaymentAmount = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colOrder = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colInvoiceNumber2 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.panelControl2 = new DevExpress.XtraEditors.PanelControl();
+            this.searchPaymentsButton = new DevExpress.XtraEditors.SimpleButton();
+            this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
+            this.paymentDateI = new DevExpress.XtraEditors.DateEdit();
+            this.xtraTabPage5 = new DevExpress.XtraTab.XtraTabPage();
+            this.panelControl4 = new DevExpress.XtraEditors.PanelControl();
+            this.panelControl3 = new DevExpress.XtraEditors.PanelControl();
             this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
@@ -100,30 +123,23 @@
             this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.searchPaymentsButton = new DevExpress.XtraEditors.SimpleButton();
-            this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
-            this.paymentDateI = new DevExpress.XtraEditors.DateEdit();
+            ((System.ComponentModel.ISupportInitialize)(this.invoicesView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.invoiceFileGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.invoiceFileBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.invoiceFileView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabbedMdiManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.myTabs)).BeginInit();
             this.myTabs.SuspendLayout();
             this.xtraTabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.connectionStringI.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.paymentsFolderI.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.winsatInvoiceFolderI.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.wintechInvoiceFolderI.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem11)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem12)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem13)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem14)).BeginInit();
             this.xtraTabPage2.SuspendLayout();
             this.xtraTabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.InvoicesGrid)).BeginInit();
@@ -139,6 +155,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl2)).BeginInit();
             this.panelControl2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.paymentDateI.Properties.CalendarTimeProperties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.paymentDateI.Properties)).BeginInit();
+            this.xtraTabPage5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.panelControl4)).BeginInit();
+            this.panelControl4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.panelControl3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
@@ -149,9 +171,221 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.paymentDateI.Properties.CalendarTimeProperties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.paymentDateI.Properties)).BeginInit();
             this.SuspendLayout();
+            // 
+            // invoicesView
+            // 
+            this.invoicesView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.colInvoiceNumber1,
+            this.colInvoiceDate1,
+            this.colOrderDate1,
+            this.colPurchaseNumber1,
+            this.colGlnPartner1,
+            this.colTotalToPay1,
+            this.colTotalPayed1,
+            this.colRestToPay2});
+            gridFormatRule1.ApplyToRow = true;
+            gridFormatRule1.Name = "Format0";
+            formatConditionRuleExpression1.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            formatConditionRuleExpression1.Appearance.Options.UseBackColor = true;
+            formatConditionRuleExpression1.Expression = "[RestToPay] = 0";
+            gridFormatRule1.Rule = formatConditionRuleExpression1;
+            gridFormatRule2.ApplyToRow = true;
+            gridFormatRule2.Name = "Format1";
+            formatConditionRuleExpression2.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            formatConditionRuleExpression2.Appearance.Options.UseBackColor = true;
+            formatConditionRuleExpression2.Expression = "[RestToPay] <> 0 And [RestToPay] <> [TotalToPay]";
+            gridFormatRule2.Rule = formatConditionRuleExpression2;
+            this.invoicesView.FormatRules.Add(gridFormatRule1);
+            this.invoicesView.FormatRules.Add(gridFormatRule2);
+            this.invoicesView.GridControl = this.invoiceFileGrid;
+            this.invoicesView.Name = "invoicesView";
+            this.invoicesView.OptionsBehavior.Editable = false;
+            this.invoicesView.OptionsView.ShowGroupPanel = false;
+            // 
+            // colInvoiceNumber1
+            // 
+            this.colInvoiceNumber1.FieldName = "InvoiceNumber";
+            this.colInvoiceNumber1.MinWidth = 30;
+            this.colInvoiceNumber1.Name = "colInvoiceNumber1";
+            this.colInvoiceNumber1.Visible = true;
+            this.colInvoiceNumber1.VisibleIndex = 0;
+            this.colInvoiceNumber1.Width = 112;
+            // 
+            // colInvoiceDate1
+            // 
+            this.colInvoiceDate1.FieldName = "InvoiceDate";
+            this.colInvoiceDate1.MinWidth = 30;
+            this.colInvoiceDate1.Name = "colInvoiceDate1";
+            this.colInvoiceDate1.Visible = true;
+            this.colInvoiceDate1.VisibleIndex = 1;
+            this.colInvoiceDate1.Width = 112;
+            // 
+            // colOrderDate1
+            // 
+            this.colOrderDate1.FieldName = "OrderDate";
+            this.colOrderDate1.MinWidth = 30;
+            this.colOrderDate1.Name = "colOrderDate1";
+            this.colOrderDate1.Visible = true;
+            this.colOrderDate1.VisibleIndex = 2;
+            this.colOrderDate1.Width = 112;
+            // 
+            // colPurchaseNumber1
+            // 
+            this.colPurchaseNumber1.FieldName = "PurchaseNumber";
+            this.colPurchaseNumber1.MinWidth = 30;
+            this.colPurchaseNumber1.Name = "colPurchaseNumber1";
+            this.colPurchaseNumber1.Visible = true;
+            this.colPurchaseNumber1.VisibleIndex = 3;
+            this.colPurchaseNumber1.Width = 112;
+            // 
+            // colGlnPartner1
+            // 
+            this.colGlnPartner1.FieldName = "GlnPartner";
+            this.colGlnPartner1.MinWidth = 30;
+            this.colGlnPartner1.Name = "colGlnPartner1";
+            this.colGlnPartner1.Visible = true;
+            this.colGlnPartner1.VisibleIndex = 4;
+            this.colGlnPartner1.Width = 112;
+            // 
+            // colTotalToPay1
+            // 
+            this.colTotalToPay1.FieldName = "TotalToPay";
+            this.colTotalToPay1.MinWidth = 30;
+            this.colTotalToPay1.Name = "colTotalToPay1";
+            this.colTotalToPay1.Visible = true;
+            this.colTotalToPay1.VisibleIndex = 5;
+            this.colTotalToPay1.Width = 112;
+            // 
+            // colTotalPayed1
+            // 
+            this.colTotalPayed1.FieldName = "TotalPayed";
+            this.colTotalPayed1.MinWidth = 30;
+            this.colTotalPayed1.Name = "colTotalPayed1";
+            this.colTotalPayed1.Visible = true;
+            this.colTotalPayed1.VisibleIndex = 6;
+            this.colTotalPayed1.Width = 112;
+            // 
+            // colRestToPay2
+            // 
+            this.colRestToPay2.FieldName = "RestToPay";
+            this.colRestToPay2.MinWidth = 30;
+            this.colRestToPay2.Name = "colRestToPay2";
+            this.colRestToPay2.Visible = true;
+            this.colRestToPay2.VisibleIndex = 7;
+            this.colRestToPay2.Width = 112;
+            // 
+            // invoiceFileGrid
+            // 
+            this.invoiceFileGrid.DataSource = this.invoiceFileBindingSource;
+            this.invoiceFileGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            gridLevelNode1.LevelTemplate = this.invoicesView;
+            gridLevelNode1.RelationName = "Invoices";
+            this.invoiceFileGrid.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
+            gridLevelNode1});
+            this.invoiceFileGrid.Location = new System.Drawing.Point(2, 2);
+            this.invoiceFileGrid.MainView = this.invoiceFileView;
+            this.invoiceFileGrid.Name = "invoiceFileGrid";
+            this.invoiceFileGrid.Size = new System.Drawing.Size(2136, 833);
+            this.invoiceFileGrid.TabIndex = 0;
+            this.invoiceFileGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.invoiceFileView,
+            this.invoicesView});
+            // 
+            // invoiceFileBindingSource
+            // 
+            this.invoiceFileBindingSource.DataSource = typeof(InvoicesChecker.Models.InvoiceFile);
+            // 
+            // invoiceFileView
+            // 
+            this.invoiceFileView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.colClient2,
+            this.colYear2,
+            this.colFileNumber,
+            this.colFileName,
+            this.colTotalToPay,
+            this.colTotalPayed,
+            this.colRestToPay1});
+            gridFormatRule3.ApplyToRow = true;
+            gridFormatRule3.Name = "Format0";
+            formatConditionRuleExpression3.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            formatConditionRuleExpression3.Appearance.Options.UseBackColor = true;
+            formatConditionRuleExpression3.Expression = "[RestToPay] = 0";
+            gridFormatRule3.Rule = formatConditionRuleExpression3;
+            gridFormatRule4.ApplyToRow = true;
+            gridFormatRule4.Name = "Format1";
+            formatConditionRuleExpression4.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            formatConditionRuleExpression4.Appearance.Options.UseBackColor = true;
+            formatConditionRuleExpression4.Expression = "[RestToPay] <> 0 And [RestToPay] <> [TotalToPay]";
+            gridFormatRule4.Rule = formatConditionRuleExpression4;
+            this.invoiceFileView.FormatRules.Add(gridFormatRule3);
+            this.invoiceFileView.FormatRules.Add(gridFormatRule4);
+            this.invoiceFileView.GridControl = this.invoiceFileGrid;
+            this.invoiceFileView.Name = "invoiceFileView";
+            this.invoiceFileView.OptionsView.ShowGroupPanel = false;
+            // 
+            // colClient2
+            // 
+            this.colClient2.FieldName = "Client";
+            this.colClient2.MinWidth = 30;
+            this.colClient2.Name = "colClient2";
+            this.colClient2.Visible = true;
+            this.colClient2.VisibleIndex = 1;
+            this.colClient2.Width = 112;
+            // 
+            // colYear2
+            // 
+            this.colYear2.FieldName = "Year";
+            this.colYear2.MinWidth = 30;
+            this.colYear2.Name = "colYear2";
+            this.colYear2.Visible = true;
+            this.colYear2.VisibleIndex = 2;
+            this.colYear2.Width = 112;
+            // 
+            // colFileNumber
+            // 
+            this.colFileNumber.FieldName = "FileNumber";
+            this.colFileNumber.MinWidth = 30;
+            this.colFileNumber.Name = "colFileNumber";
+            this.colFileNumber.Visible = true;
+            this.colFileNumber.VisibleIndex = 3;
+            this.colFileNumber.Width = 112;
+            // 
+            // colFileName
+            // 
+            this.colFileName.FieldName = "FileName";
+            this.colFileName.MinWidth = 30;
+            this.colFileName.Name = "colFileName";
+            this.colFileName.Visible = true;
+            this.colFileName.VisibleIndex = 0;
+            this.colFileName.Width = 112;
+            // 
+            // colTotalToPay
+            // 
+            this.colTotalToPay.FieldName = "TotalToPay";
+            this.colTotalToPay.MinWidth = 30;
+            this.colTotalToPay.Name = "colTotalToPay";
+            this.colTotalToPay.Visible = true;
+            this.colTotalToPay.VisibleIndex = 4;
+            this.colTotalToPay.Width = 112;
+            // 
+            // colTotalPayed
+            // 
+            this.colTotalPayed.FieldName = "TotalPayed";
+            this.colTotalPayed.MinWidth = 30;
+            this.colTotalPayed.Name = "colTotalPayed";
+            this.colTotalPayed.Visible = true;
+            this.colTotalPayed.VisibleIndex = 5;
+            this.colTotalPayed.Width = 112;
+            // 
+            // colRestToPay1
+            // 
+            this.colRestToPay1.FieldName = "RestToPay";
+            this.colRestToPay1.MinWidth = 30;
+            this.colRestToPay1.Name = "colRestToPay1";
+            this.colRestToPay1.Visible = true;
+            this.colRestToPay1.VisibleIndex = 6;
+            this.colRestToPay1.Width = 112;
             // 
             // xtraTabbedMdiManager1
             // 
@@ -169,7 +403,8 @@
             this.xtraTabPage1,
             this.xtraTabPage2,
             this.xtraTabPage3,
-            this.xtraTabPage4});
+            this.xtraTabPage4,
+            this.xtraTabPage5});
             // 
             // xtraTabPage1
             // 
@@ -180,7 +415,6 @@
             // 
             // layoutControl1
             // 
-            this.layoutControl1.Controls.Add(this.connectionStringI);
             this.layoutControl1.Controls.Add(this.recreateDbButton);
             this.layoutControl1.Controls.Add(this.scanButton);
             this.layoutControl1.Controls.Add(this.SaveButton);
@@ -190,42 +424,35 @@
             this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.layoutControl1.Location = new System.Drawing.Point(0, 0);
             this.layoutControl1.Name = "layoutControl1";
+            this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1238, 574, 975, 600);
             this.layoutControl1.Root = this.layoutControlGroup1;
             this.layoutControl1.Size = new System.Drawing.Size(2140, 926);
             this.layoutControl1.TabIndex = 0;
             this.layoutControl1.Text = "layoutControl1";
             // 
-            // connectionStringI
-            // 
-            this.connectionStringI.Location = new System.Drawing.Point(183, 102);
-            this.connectionStringI.Name = "connectionStringI";
-            this.connectionStringI.Size = new System.Drawing.Size(1945, 26);
-            this.connectionStringI.StyleController = this.layoutControl1;
-            this.connectionStringI.TabIndex = 7;
-            // 
             // recreateDbButton
             // 
-            this.recreateDbButton.Location = new System.Drawing.Point(1495, 168);
+            this.recreateDbButton.Location = new System.Drawing.Point(1495, 139);
             this.recreateDbButton.Name = "recreateDbButton";
             this.recreateDbButton.Size = new System.Drawing.Size(633, 32);
             this.recreateDbButton.StyleController = this.layoutControl1;
-            this.recreateDbButton.TabIndex = 6;
+            this.recreateDbButton.TabIndex = 5;
             this.recreateDbButton.Text = "Recreate database";
             this.recreateDbButton.Click += new System.EventHandler(this.recreateDbButton_Click);
             // 
             // scanButton
             // 
-            this.scanButton.Location = new System.Drawing.Point(1495, 204);
+            this.scanButton.Location = new System.Drawing.Point(1495, 175);
             this.scanButton.Name = "scanButton";
             this.scanButton.Size = new System.Drawing.Size(633, 32);
             this.scanButton.StyleController = this.layoutControl1;
-            this.scanButton.TabIndex = 5;
+            this.scanButton.TabIndex = 6;
             this.scanButton.Text = "Scan now";
             this.scanButton.Click += new System.EventHandler(this.scanButton_Click);
             // 
             // SaveButton
             // 
-            this.SaveButton.Location = new System.Drawing.Point(1495, 132);
+            this.SaveButton.Location = new System.Drawing.Point(1495, 103);
             this.SaveButton.Name = "SaveButton";
             this.SaveButton.Size = new System.Drawing.Size(633, 32);
             this.SaveButton.StyleController = this.layoutControl1;
@@ -262,28 +489,12 @@
             this.layoutControlGroup1.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
             this.layoutControlGroup1.GroupBordersVisible = false;
             this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.layoutControlItem8,
             this.emptySpaceItem3,
-            this.layoutControlItem9,
-            this.layoutControlItem10,
-            this.layoutControlItem11,
-            this.layoutControlItem12,
-            this.emptySpaceItem4,
             this.emptySpaceItem5,
-            this.layoutControlItem13,
-            this.layoutControlItem14});
-            this.layoutControlGroup1.Name = "layoutControlGroup1";
+            this.emptySpaceItem4});
+            this.layoutControlGroup1.Name = "Root";
             this.layoutControlGroup1.Size = new System.Drawing.Size(2140, 926);
             this.layoutControlGroup1.TextVisible = false;
-            // 
-            // layoutControlItem8
-            // 
-            this.layoutControlItem8.Control = this.wintechInvoiceFolderI;
-            this.layoutControlItem8.Location = new System.Drawing.Point(0, 0);
-            this.layoutControlItem8.Name = "layoutControlItem8";
-            this.layoutControlItem8.Size = new System.Drawing.Size(2120, 30);
-            this.layoutControlItem8.Text = "wintech Invoice Folder";
-            this.layoutControlItem8.TextSize = new System.Drawing.Size(159, 19);
             // 
             // emptySpaceItem3
             // 
@@ -293,75 +504,21 @@
             this.emptySpaceItem3.Size = new System.Drawing.Size(2120, 678);
             this.emptySpaceItem3.TextSize = new System.Drawing.Size(0, 0);
             // 
-            // layoutControlItem9
-            // 
-            this.layoutControlItem9.Control = this.winsatInvoiceFolderI;
-            this.layoutControlItem9.Location = new System.Drawing.Point(0, 30);
-            this.layoutControlItem9.Name = "layoutControlItem9";
-            this.layoutControlItem9.Size = new System.Drawing.Size(2120, 30);
-            this.layoutControlItem9.Text = "Winsat Invoice Folder";
-            this.layoutControlItem9.TextSize = new System.Drawing.Size(159, 19);
-            // 
-            // layoutControlItem10
-            // 
-            this.layoutControlItem10.Control = this.paymentsFolderI;
-            this.layoutControlItem10.Location = new System.Drawing.Point(0, 60);
-            this.layoutControlItem10.Name = "layoutControlItem10";
-            this.layoutControlItem10.Size = new System.Drawing.Size(2120, 30);
-            this.layoutControlItem10.Text = "Payments Folder";
-            this.layoutControlItem10.TextSize = new System.Drawing.Size(159, 19);
-            // 
-            // layoutControlItem11
-            // 
-            this.layoutControlItem11.Control = this.SaveButton;
-            this.layoutControlItem11.Location = new System.Drawing.Point(1483, 120);
-            this.layoutControlItem11.Name = "layoutControlItem11";
-            this.layoutControlItem11.Size = new System.Drawing.Size(637, 36);
-            this.layoutControlItem11.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem11.TextVisible = false;
-            // 
-            // layoutControlItem12
-            // 
-            this.layoutControlItem12.Control = this.scanButton;
-            this.layoutControlItem12.Location = new System.Drawing.Point(1483, 192);
-            this.layoutControlItem12.Name = "layoutControlItem12";
-            this.layoutControlItem12.Size = new System.Drawing.Size(637, 36);
-            this.layoutControlItem12.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem12.TextVisible = false;
-            // 
             // emptySpaceItem4
             // 
             this.emptySpaceItem4.AllowHotTrack = false;
-            this.emptySpaceItem4.Location = new System.Drawing.Point(0, 120);
+            this.emptySpaceItem4.Location = new System.Drawing.Point(0, 218);
             this.emptySpaceItem4.Name = "emptySpaceItem4";
-            this.emptySpaceItem4.Size = new System.Drawing.Size(1483, 72);
+            this.emptySpaceItem4.Size = new System.Drawing.Size(2120, 10);
             this.emptySpaceItem4.TextSize = new System.Drawing.Size(0, 0);
             // 
             // emptySpaceItem5
             // 
             this.emptySpaceItem5.AllowHotTrack = false;
-            this.emptySpaceItem5.Location = new System.Drawing.Point(0, 192);
+            this.emptySpaceItem5.Location = new System.Drawing.Point(0, 0);
             this.emptySpaceItem5.Name = "emptySpaceItem5";
-            this.emptySpaceItem5.Size = new System.Drawing.Size(1483, 36);
+            this.emptySpaceItem5.Size = new System.Drawing.Size(2120, 218);
             this.emptySpaceItem5.TextSize = new System.Drawing.Size(0, 0);
-            // 
-            // layoutControlItem13
-            // 
-            this.layoutControlItem13.Control = this.recreateDbButton;
-            this.layoutControlItem13.Location = new System.Drawing.Point(1483, 156);
-            this.layoutControlItem13.Name = "layoutControlItem13";
-            this.layoutControlItem13.Size = new System.Drawing.Size(637, 36);
-            this.layoutControlItem13.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem13.TextVisible = false;
-            // 
-            // layoutControlItem14
-            // 
-            this.layoutControlItem14.Control = this.connectionStringI;
-            this.layoutControlItem14.Location = new System.Drawing.Point(0, 90);
-            this.layoutControlItem14.Name = "layoutControlItem14";
-            this.layoutControlItem14.Size = new System.Drawing.Size(2120, 30);
-            this.layoutControlItem14.Text = "Connection string";
-            this.layoutControlItem14.TextSize = new System.Drawing.Size(159, 19);
             // 
             // xtraTabPage2
             // 
@@ -418,20 +575,20 @@
             this.colTotal,
             this.colPayment,
             this.colRestToPay});
-            gridFormatRule3.ApplyToRow = true;
-            gridFormatRule3.Name = "Format0";
-            formatConditionRuleExpression3.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            formatConditionRuleExpression3.Appearance.Options.UseBackColor = true;
-            formatConditionRuleExpression3.Expression = "[RestToPay] = 0";
-            gridFormatRule3.Rule = formatConditionRuleExpression3;
-            gridFormatRule4.ApplyToRow = true;
-            gridFormatRule4.Name = "Format1";
-            formatConditionRuleExpression4.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            formatConditionRuleExpression4.Appearance.Options.UseBackColor = true;
-            formatConditionRuleExpression4.Expression = "[RestToPay] <> 0 And [RestToPay] <> [Total]";
-            gridFormatRule4.Rule = formatConditionRuleExpression4;
-            this.gridView1.FormatRules.Add(gridFormatRule3);
-            this.gridView1.FormatRules.Add(gridFormatRule4);
+            gridFormatRule5.ApplyToRow = true;
+            gridFormatRule5.Name = "Format0";
+            formatConditionRuleExpression5.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            formatConditionRuleExpression5.Appearance.Options.UseBackColor = true;
+            formatConditionRuleExpression5.Expression = "[RestToPay] = 0";
+            gridFormatRule5.Rule = formatConditionRuleExpression5;
+            gridFormatRule6.ApplyToRow = true;
+            gridFormatRule6.Name = "Format1";
+            formatConditionRuleExpression6.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            formatConditionRuleExpression6.Appearance.Options.UseBackColor = true;
+            formatConditionRuleExpression6.Expression = "[RestToPay] <> 0 And [RestToPay] <> [Total]";
+            gridFormatRule6.Rule = formatConditionRuleExpression6;
+            this.gridView1.FormatRules.Add(gridFormatRule5);
+            this.gridView1.FormatRules.Add(gridFormatRule6);
             this.gridView1.GridControl = this.InvoicesGrid;
             this.gridView1.Name = "gridView1";
             this.gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
@@ -589,16 +746,16 @@
             this.xtraTabPage4.Controls.Add(this.panelControl2);
             this.xtraTabPage4.Name = "xtraTabPage4";
             this.xtraTabPage4.Size = new System.Drawing.Size(2140, 926);
-            this.xtraTabPage4.Text = "Payments";
+            this.xtraTabPage4.Text = "Non mapped Payments";
             // 
             // paymentsGrid
             // 
             this.paymentsGrid.DataSource = this.paymentBindingSource;
             this.paymentsGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.paymentsGrid.Location = new System.Drawing.Point(0, 76);
+            this.paymentsGrid.Location = new System.Drawing.Point(0, 45);
             this.paymentsGrid.MainView = this.gridView2;
             this.paymentsGrid.Name = "paymentsGrid";
-            this.paymentsGrid.Size = new System.Drawing.Size(2140, 850);
+            this.paymentsGrid.Size = new System.Drawing.Size(2140, 881);
             this.paymentsGrid.TabIndex = 1;
             this.paymentsGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView2});
@@ -610,28 +767,16 @@
             // gridView2
             // 
             this.gridView2.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
-            this.colId,
             this.colDate,
             this.colClient1,
-            this.colYear1,
-            this.colWeek1,
             this.colInvoiceAmount,
             this.colDiscountUsed,
             this.colPaymentAmount,
-            this.colOrder});
+            this.colInvoiceNumber2});
             this.gridView2.GridControl = this.paymentsGrid;
             this.gridView2.Name = "gridView2";
             this.gridView2.OptionsBehavior.Editable = false;
             this.gridView2.OptionsView.ShowGroupPanel = false;
-            // 
-            // colId
-            // 
-            this.colId.FieldName = "Id";
-            this.colId.MinWidth = 30;
-            this.colId.Name = "colId";
-            this.colId.Visible = true;
-            this.colId.VisibleIndex = 0;
-            this.colId.Width = 112;
             // 
             // colDate
             // 
@@ -640,7 +785,7 @@
             this.colDate.Name = "colDate";
             this.colDate.Visible = true;
             this.colDate.VisibleIndex = 1;
-            this.colDate.Width = 112;
+            this.colDate.Width = 207;
             // 
             // colClient1
             // 
@@ -648,26 +793,8 @@
             this.colClient1.MinWidth = 30;
             this.colClient1.Name = "colClient1";
             this.colClient1.Visible = true;
-            this.colClient1.VisibleIndex = 2;
-            this.colClient1.Width = 112;
-            // 
-            // colYear1
-            // 
-            this.colYear1.FieldName = "Year";
-            this.colYear1.MinWidth = 30;
-            this.colYear1.Name = "colYear1";
-            this.colYear1.Visible = true;
-            this.colYear1.VisibleIndex = 3;
-            this.colYear1.Width = 112;
-            // 
-            // colWeek1
-            // 
-            this.colWeek1.FieldName = "Week";
-            this.colWeek1.MinWidth = 30;
-            this.colWeek1.Name = "colWeek1";
-            this.colWeek1.Visible = true;
-            this.colWeek1.VisibleIndex = 4;
-            this.colWeek1.Width = 112;
+            this.colClient1.VisibleIndex = 0;
+            this.colClient1.Width = 98;
             // 
             // colInvoiceAmount
             // 
@@ -675,8 +802,8 @@
             this.colInvoiceAmount.MinWidth = 30;
             this.colInvoiceAmount.Name = "colInvoiceAmount";
             this.colInvoiceAmount.Visible = true;
-            this.colInvoiceAmount.VisibleIndex = 5;
-            this.colInvoiceAmount.Width = 112;
+            this.colInvoiceAmount.VisibleIndex = 3;
+            this.colInvoiceAmount.Width = 498;
             // 
             // colDiscountUsed
             // 
@@ -684,8 +811,8 @@
             this.colDiscountUsed.MinWidth = 30;
             this.colDiscountUsed.Name = "colDiscountUsed";
             this.colDiscountUsed.Visible = true;
-            this.colDiscountUsed.VisibleIndex = 6;
-            this.colDiscountUsed.Width = 112;
+            this.colDiscountUsed.VisibleIndex = 4;
+            this.colDiscountUsed.Width = 498;
             // 
             // colPaymentAmount
             // 
@@ -693,17 +820,17 @@
             this.colPaymentAmount.MinWidth = 30;
             this.colPaymentAmount.Name = "colPaymentAmount";
             this.colPaymentAmount.Visible = true;
-            this.colPaymentAmount.VisibleIndex = 7;
-            this.colPaymentAmount.Width = 112;
+            this.colPaymentAmount.VisibleIndex = 5;
+            this.colPaymentAmount.Width = 517;
             // 
-            // colOrder
+            // colInvoiceNumber2
             // 
-            this.colOrder.FieldName = "Order";
-            this.colOrder.MinWidth = 30;
-            this.colOrder.Name = "colOrder";
-            this.colOrder.Visible = true;
-            this.colOrder.VisibleIndex = 8;
-            this.colOrder.Width = 112;
+            this.colInvoiceNumber2.FieldName = "InvoiceNumber";
+            this.colInvoiceNumber2.MinWidth = 30;
+            this.colInvoiceNumber2.Name = "colInvoiceNumber2";
+            this.colInvoiceNumber2.Visible = true;
+            this.colInvoiceNumber2.VisibleIndex = 2;
+            this.colInvoiceNumber2.Width = 355;
             // 
             // panelControl2
             // 
@@ -713,8 +840,68 @@
             this.panelControl2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelControl2.Location = new System.Drawing.Point(0, 0);
             this.panelControl2.Name = "panelControl2";
-            this.panelControl2.Size = new System.Drawing.Size(2140, 76);
+            this.panelControl2.Size = new System.Drawing.Size(2140, 45);
             this.panelControl2.TabIndex = 0;
+            // 
+            // searchPaymentsButton
+            // 
+            this.searchPaymentsButton.Location = new System.Drawing.Point(467, 0);
+            this.searchPaymentsButton.Name = "searchPaymentsButton";
+            this.searchPaymentsButton.Size = new System.Drawing.Size(168, 35);
+            this.searchPaymentsButton.TabIndex = 5;
+            this.searchPaymentsButton.Text = "Search";
+            this.searchPaymentsButton.Visible = false;
+            this.searchPaymentsButton.Click += new System.EventHandler(this.searchPaymentsButton_Click);
+            // 
+            // labelControl2
+            // 
+            this.labelControl2.Location = new System.Drawing.Point(115, 8);
+            this.labelControl2.Name = "labelControl2";
+            this.labelControl2.Size = new System.Drawing.Size(44, 19);
+            this.labelControl2.TabIndex = 4;
+            this.labelControl2.Text = "Month";
+            this.labelControl2.Visible = false;
+            // 
+            // paymentDateI
+            // 
+            this.paymentDateI.EditValue = null;
+            this.paymentDateI.Location = new System.Drawing.Point(206, 5);
+            this.paymentDateI.Name = "paymentDateI";
+            this.paymentDateI.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.paymentDateI.Properties.CalendarView = DevExpress.XtraEditors.Repository.CalendarView.Vista;
+            this.paymentDateI.Properties.MaskSettings.Set("mask", "Y");
+            this.paymentDateI.Properties.UseMaskAsDisplayFormat = true;
+            this.paymentDateI.Properties.VistaCalendarViewStyle = DevExpress.XtraEditors.VistaCalendarViewStyle.YearView;
+            this.paymentDateI.Properties.VistaDisplayMode = DevExpress.Utils.DefaultBoolean.True;
+            this.paymentDateI.Size = new System.Drawing.Size(225, 26);
+            this.paymentDateI.TabIndex = 3;
+            this.paymentDateI.Visible = false;
+            // 
+            // xtraTabPage5
+            // 
+            this.xtraTabPage5.Controls.Add(this.panelControl4);
+            this.xtraTabPage5.Controls.Add(this.panelControl3);
+            this.xtraTabPage5.Name = "xtraTabPage5";
+            this.xtraTabPage5.Size = new System.Drawing.Size(2140, 926);
+            this.xtraTabPage5.Text = "Invoice Files";
+            // 
+            // panelControl4
+            // 
+            this.panelControl4.Controls.Add(this.invoiceFileGrid);
+            this.panelControl4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelControl4.Location = new System.Drawing.Point(0, 89);
+            this.panelControl4.Name = "panelControl4";
+            this.panelControl4.Size = new System.Drawing.Size(2140, 837);
+            this.panelControl4.TabIndex = 1;
+            // 
+            // panelControl3
+            // 
+            this.panelControl3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelControl3.Location = new System.Drawing.Point(0, 0);
+            this.panelControl3.Name = "panelControl3";
+            this.panelControl3.Size = new System.Drawing.Size(2140, 89);
+            this.panelControl3.TabIndex = 0;
             // 
             // Root
             // 
@@ -805,38 +992,6 @@
             this.layoutControlItem7.Text = "Wintech Invoice Folder";
             this.layoutControlItem7.TextSize = new System.Drawing.Size(161, 19);
             // 
-            // searchPaymentsButton
-            // 
-            this.searchPaymentsButton.Location = new System.Drawing.Point(469, 25);
-            this.searchPaymentsButton.Name = "searchPaymentsButton";
-            this.searchPaymentsButton.Size = new System.Drawing.Size(168, 35);
-            this.searchPaymentsButton.TabIndex = 5;
-            this.searchPaymentsButton.Text = "Search";
-            this.searchPaymentsButton.Click += new System.EventHandler(this.searchPaymentsButton_Click);
-            // 
-            // labelControl2
-            // 
-            this.labelControl2.Location = new System.Drawing.Point(117, 33);
-            this.labelControl2.Name = "labelControl2";
-            this.labelControl2.Size = new System.Drawing.Size(44, 19);
-            this.labelControl2.TabIndex = 4;
-            this.labelControl2.Text = "Month";
-            // 
-            // paymentDateI
-            // 
-            this.paymentDateI.EditValue = null;
-            this.paymentDateI.Location = new System.Drawing.Point(208, 30);
-            this.paymentDateI.Name = "paymentDateI";
-            this.paymentDateI.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.paymentDateI.Properties.CalendarView = DevExpress.XtraEditors.Repository.CalendarView.Vista;
-            this.paymentDateI.Properties.MaskSettings.Set("mask", "Y");
-            this.paymentDateI.Properties.UseMaskAsDisplayFormat = true;
-            this.paymentDateI.Properties.VistaCalendarViewStyle = DevExpress.XtraEditors.VistaCalendarViewStyle.YearView;
-            this.paymentDateI.Properties.VistaDisplayMode = DevExpress.Utils.DefaultBoolean.True;
-            this.paymentDateI.Size = new System.Drawing.Size(225, 26);
-            this.paymentDateI.TabIndex = 3;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
@@ -847,27 +1002,23 @@
             this.Name = "MainForm";
             this.Text = "InvoicesChecker 1.00";
             this.Load += new System.EventHandler(this.MainForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.invoicesView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.invoiceFileGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.invoiceFileBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.invoiceFileView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabbedMdiManager1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.myTabs)).EndInit();
             this.myTabs.ResumeLayout(false);
             this.xtraTabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
             this.layoutControl1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.connectionStringI.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.paymentsFolderI.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.winsatInvoiceFolderI.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.wintechInvoiceFolderI.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem11)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem12)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem13)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem14)).EndInit();
             this.xtraTabPage2.ResumeLayout(false);
             this.xtraTabPage3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.InvoicesGrid)).EndInit();
@@ -885,6 +1036,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.panelControl2)).EndInit();
             this.panelControl2.ResumeLayout(false);
             this.panelControl2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.paymentDateI.Properties.CalendarTimeProperties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.paymentDateI.Properties)).EndInit();
+            this.xtraTabPage5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.panelControl4)).EndInit();
+            this.panelControl4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.panelControl3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
@@ -895,8 +1052,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.paymentDateI.Properties.CalendarTimeProperties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.paymentDateI.Properties)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -923,14 +1078,9 @@
         private DevExpress.XtraEditors.TextEdit paymentsFolderI;
         private DevExpress.XtraEditors.TextEdit winsatInvoiceFolderI;
         private DevExpress.XtraEditors.TextEdit wintechInvoiceFolderI;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem8;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem3;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem9;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem10;
         private DevExpress.XtraEditors.SimpleButton SaveButton;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem11;
         private DevExpress.XtraEditors.SimpleButton scanButton;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem12;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem4;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem5;
         private System.Windows.Forms.RichTextBox debugT;
@@ -953,24 +1103,40 @@
         private DevExpress.XtraGrid.Views.Grid.GridView gridView2;
         private DevExpress.XtraEditors.PanelControl panelControl2;
         private System.Windows.Forms.BindingSource paymentBindingSource;
-        private DevExpress.XtraGrid.Columns.GridColumn colId;
         private DevExpress.XtraGrid.Columns.GridColumn colDate;
         private DevExpress.XtraGrid.Columns.GridColumn colClient1;
-        private DevExpress.XtraGrid.Columns.GridColumn colYear1;
-        private DevExpress.XtraGrid.Columns.GridColumn colWeek1;
         private DevExpress.XtraGrid.Columns.GridColumn colInvoiceAmount;
         private DevExpress.XtraGrid.Columns.GridColumn colDiscountUsed;
         private DevExpress.XtraGrid.Columns.GridColumn colPaymentAmount;
-        private DevExpress.XtraGrid.Columns.GridColumn colOrder;
         private DevExpress.XtraEditors.LabelControl labelControl1;
         private DevExpress.XtraEditors.DateEdit InvoiceDateEdit;
         private DevExpress.XtraEditors.SimpleButton recreateDbButton;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem13;
-        private DevExpress.XtraEditors.TextEdit connectionStringI;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem14;
         private DevExpress.XtraEditors.SimpleButton SearchInvoicesButton;
         private DevExpress.XtraEditors.SimpleButton searchPaymentsButton;
         private DevExpress.XtraEditors.LabelControl labelControl2;
         private DevExpress.XtraEditors.DateEdit paymentDateI;
+        private DevExpress.XtraTab.XtraTabPage xtraTabPage5;
+        private DevExpress.XtraEditors.PanelControl panelControl4;
+        private DevExpress.XtraGrid.GridControl invoiceFileGrid;
+        private DevExpress.XtraGrid.Views.Grid.GridView invoiceFileView;
+        private DevExpress.XtraEditors.PanelControl panelControl3;
+        private System.Windows.Forms.BindingSource invoiceFileBindingSource;
+        private DevExpress.XtraGrid.Columns.GridColumn colClient2;
+        private DevExpress.XtraGrid.Columns.GridColumn colYear2;
+        private DevExpress.XtraGrid.Columns.GridColumn colFileNumber;
+        private DevExpress.XtraGrid.Columns.GridColumn colFileName;
+        private DevExpress.XtraGrid.Columns.GridColumn colTotalToPay;
+        private DevExpress.XtraGrid.Columns.GridColumn colTotalPayed;
+        private DevExpress.XtraGrid.Columns.GridColumn colRestToPay1;
+        private DevExpress.XtraGrid.Views.Grid.GridView invoicesView;
+        private DevExpress.XtraGrid.Columns.GridColumn colInvoiceNumber1;
+        private DevExpress.XtraGrid.Columns.GridColumn colInvoiceDate1;
+        private DevExpress.XtraGrid.Columns.GridColumn colOrderDate1;
+        private DevExpress.XtraGrid.Columns.GridColumn colPurchaseNumber1;
+        private DevExpress.XtraGrid.Columns.GridColumn colGlnPartner1;
+        private DevExpress.XtraGrid.Columns.GridColumn colTotalToPay1;
+        private DevExpress.XtraGrid.Columns.GridColumn colTotalPayed1;
+        private DevExpress.XtraGrid.Columns.GridColumn colRestToPay2;
+        private DevExpress.XtraGrid.Columns.GridColumn colInvoiceNumber2;
     }
 }

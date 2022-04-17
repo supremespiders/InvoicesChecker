@@ -20,18 +20,18 @@ public class MyContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Payment>().HasOne(t => t.Factuur)
+        modelBuilder.Entity<Payment>().HasOne(t => t.Invoice)
             .WithOne(t => t.Payment)
-            .HasForeignKey<FACTUUR>(t => t.PaymentId);
+            .HasForeignKey<Invoice>(t => t.PaymentId);
 
-        modelBuilder.Entity<FACTUUR>().HasOne(t => t.Payment)
-            .WithOne(t => t.Factuur)
-            .HasForeignKey<Payment>(t => t.FactuurId);
+        modelBuilder.Entity<Invoice>().HasOne(t => t.Payment)
+            .WithOne(t => t.Invoice)
+            .HasForeignKey<Payment>(t => t.InvoiceId);
         base.OnModelCreating(modelBuilder);
     }
 
     public DbSet<InvoiceFile> InvoiceFiles { get; set; }
     public DbSet<Payment> Payments { get; set; }
-    public DbSet<FACTUUR> FACTUUR { get; set; }
+    public DbSet<Invoice> Invoices { get; set; }
     public DbSet<Log> Logs { get; set; }
 }
