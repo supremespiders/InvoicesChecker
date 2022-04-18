@@ -66,7 +66,7 @@ public class ScanInvoicesService
             if (string.IsNullOrEmpty(order)) break;
 
 
-            if (!DateTime.TryParse(sheet.Cells[i, 2].Value?.ToString(), out var date)) throw new KnownException($"Failed to parse date : {sheet.Cells[i, 2].Value?.ToString()} at line : {i}");
+            if (!DateTime.TryParseExact(sheet.Cells[i, 2].Value?.ToString(),"dd/MM/yyyy", CultureInfo.InvariantCulture,DateTimeStyles.None, out var date)) throw new KnownException($"Failed to parse date : {sheet.Cells[i, 2].Value?.ToString()} at line : {i}");
             if (_savedPayments.ContainsKey(order))
             {
                 // Notifier.Error($"Duplicate purchase number : {order} on payment file");

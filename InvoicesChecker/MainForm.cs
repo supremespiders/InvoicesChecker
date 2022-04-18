@@ -47,13 +47,25 @@ namespace InvoicesChecker
             wintechInvoiceFolderI.Text = config?.WintechInvoiceFolder;
             winsatInvoiceFolderI.Text = config?.WinsatInvoiceFolder;
             paymentsFolderI.Text = config?.PaymentFolder;
+            var cs = config?.ConnectionString;
             if (!File.Exists("connection"))
             {
-                await File.WriteAllTextAsync("connection", "Server=DESKTOP-G1IQ31I;Database=InvoiceDb;User Id=invoice;Password=qw182sdfRt7$;");
-                MessageBox.Show("Please enter a connection string");
-                return;
+                if (string.IsNullOrEmpty(cs))
+                {
+                    await File.WriteAllTextAsync("connection", "Server=DESKTOP-G1IQ31I;Database=InvoiceDb;User Id=invoice;Password=qw182sdfRt7$;");
+                    MessageBox.Show("Please enter a connection string");
+                    return;
+                }
+                else
+                {
+                    GlobalData.ConnectionString = cs;
+                }
             }
-            GlobalData.ConnectionString = await File.ReadAllTextAsync("connection");
+            else
+            {
+                GlobalData.ConnectionString = await File.ReadAllTextAsync("connection");
+            }
+
             if (string.IsNullOrEmpty(GlobalData.ConnectionString))
                 return;
 

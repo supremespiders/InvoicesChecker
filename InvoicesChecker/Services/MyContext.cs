@@ -10,11 +10,13 @@ public class MyContext : DbContext
 {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        if (string.IsNullOrEmpty(GlobalData.ConnectionString))
-        {
-            var config = JsonSerializer.Deserialize<Config>(File.ReadAllText($"{Application.StartupPath}/config"));
-            GlobalData.ConnectionString = config.ConnectionString;
-        }
+        if (File.Exists("connection"))
+            GlobalData.ConnectionString = File.ReadAllText("connection");
+        //if (string.IsNullOrEmpty(GlobalData.ConnectionString))
+        //{
+        //    var config = JsonSerializer.Deserialize<Config>(File.ReadAllText($"{Application.StartupPath}/config"));
+        //    GlobalData.ConnectionString = config.ConnectionString;
+        //}
         optionsBuilder.UseSqlServer(GlobalData.ConnectionString);
     }
 
