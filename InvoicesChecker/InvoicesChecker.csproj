@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -16,6 +16,7 @@
   <ItemGroup>
     <PackageReference Include="DevExpress.Win.Design" Version="21.2.*-*" />
     <PackageReference Include="EPPlus" Version="5.8.8" />
+    <PackageReference Include="ExcelHelperEx" Version="1.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.3">

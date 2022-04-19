@@ -12,7 +12,9 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DevExpress.Export;
 using DevExpress.LookAndFeel;
+using ExcelHelperExe;
 using InvoicesChecker.Extensions;
 using InvoicesChecker.Models;
 using InvoicesChecker.Services;
@@ -23,6 +25,8 @@ namespace InvoicesChecker
     public partial class MainForm : DevExpress.XtraEditors.XtraForm
     {
         public MdiClient client;
+        private List<InvoiceFile> _invoiceFiles;
+        private List<InvoiceFile> _filteredInvoiceFiles;
         public MainForm()
         {
             UserLookAndFeel.Default.SetSkinStyle(SkinStyle.Bezier);
@@ -71,7 +75,7 @@ namespace InvoicesChecker
 
             InvoiceDateEdit.EditValue = DateTime.Now;
             paymentDateI.EditValue = DateTime.Now;
-
+            invoiceStatusCombo.SelectedIndex = 0;
             _ = Task.Run(CheckForUpdates);
             //await this.Exec(async () =>
             //{
@@ -81,9 +85,24 @@ namespace InvoicesChecker
 
             await this.Exec(async () =>
             {
-                await LoadInvoiceFiles();
-                await LoadPayments();
+                await LoadDates();
+                //await LoadInvoiceFiles();
+                //await LoadPayments();
             });
+        }
+
+        async Task LoadDates()
+        {
+            var selectedItem = -1;
+            if (selectYearCombo.Properties.Items.Count > 0)
+                selectedItem = (int)selectYearCombo.SelectedItem;
+            var context = new MyContext();
+            var invoiceFiles = await Task.Run(() => context.InvoiceFiles.ToList());
+            var dates = invoiceFiles.Select(x => x.Year).Distinct().OrderByDescending(x => x).ToList();
+            selectYearCombo.Properties.Items.AddRange(dates);
+            selectYearCombo.SelectedIndex = 0;
+            if (selectedItem != -1 && selectYearCombo.Properties.Items.Contains(selectedItem))
+                selectYearCombo.SelectedItem = selectedItem;
         }
 
         async Task CheckForUpdates()
@@ -280,11 +299,12 @@ namespace InvoicesChecker
 
         private async Task LoadInvoiceFiles()
         {
-            //var d = InvoiceDateEdit.DateTime;
+            if (selectYearCombo.Properties.Items.Count == 0) return;
+            var year = (int)selectYearCombo.SelectedItem;
             var context = new MyContext();
-            var invoiceFiles = (await context.InvoiceFiles.AsNoTracking().Include(x => x.Invoices).ToListAsync());
-
-            invoiceFileGrid.DataSource = invoiceFiles;
+            _invoiceFiles = (await context.InvoiceFiles.AsNoTracking().Where(x => x.Year == year).Include(x => x.Invoices).ToListAsync());
+            _filteredInvoiceFiles = _invoiceFiles;
+            invoiceFileGrid.DataSource = _invoiceFiles;
         }
 
         private async Task LoadPayments()
@@ -360,6 +380,132 @@ namespace InvoicesChecker
         private async void SaveButton_Click(object sender, EventArgs e)
         {
             await SaveConfig();
+        }
+
+        private async void searchInvoiceFilesButton_Click(object sender, EventArgs e)
+        {
+            await this.Exec(async () =>
+            {
+                await LoadInvoiceFiles();
+                //await LoadPayments();
+            });
+        }
+
+        private void invoiceStatusCombo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (_invoiceFiles == null) return;
+            _filteredInvoiceFiles = new List<InvoiceFile>();
+            foreach (var invoiceFile in _invoiceFiles)
+            {
+                var f = new InvoiceFile
+                {
+                    Id = invoiceFile.Id,
+                    Year = invoiceFile.Year,
+                    Client = invoiceFile.Client,
+                    FileName = invoiceFile.FileName,
+                    FileNumber = invoiceFile.FileNumber
+                };
+                switch (invoiceStatusCombo.SelectedIndex)
+                {
+                    case 0:
+                        f.Invoices = invoiceFile.Invoices;
+                        break;
+                    case 1:
+                        f.Invoices = invoiceFile.Invoices.Where(x => x.RestToPay == x.TotalToPay).ToList();
+                        break;
+                    case 2:
+                        f.Invoices = invoiceFile.Invoices.Where(x => x.RestToPay != 0 && x.RestToPay != x.TotalToPay).ToList();
+                        break;
+                    case 3:
+                        f.Invoices = invoiceFile.Invoices.Where(x => x.RestToPay == 0).ToList();
+                        break;
+                }
+
+                f.TotalToPay = f.Invoices.Sum(x => x.TotalToPay);
+                f.TotalPayed = f.Invoices.Sum(x => x.TotalPayed);
+                f.RestToPay = f.Invoices.Sum(x => x.RestToPay);
+                if (f.Invoices.Count != 0)
+                    _filteredInvoiceFiles.Add(f);
+            }
+            invoiceFileGrid.DataSource = _filteredInvoiceFiles;
+        }
+
+        private async void exportInvoicesToExcel_Click(object sender, EventArgs e)
+        {
+            if (_filteredInvoiceFiles == null || _filteredInvoiceFiles.Count == 0) return;
+            var saveFileDialog = new SaveFileDialog()
+            {
+                Filter = "xlsx files (*.xlsx)|*.xlsx",
+                InitialDirectory = Application.StartupPath,
+                RestoreDirectory = true
+            };
+            if (saveFileDialog.ShowDialog() != DialogResult.OK) return;
+            var savePath = saveFileDialog.FileName;
+            try
+            {
+                var invoiceOutputs = new List<InvoiceOutput>();
+                foreach (var invoiceFile in _filteredInvoiceFiles)
+                {
+                    foreach (var invoice in invoiceFile.Invoices)
+                    {
+                        var inv = new InvoiceOutput()
+                        {
+                            TotalPayed = invoice.TotalPayed,
+                            RestToPay = invoice.RestToPay,
+                            TotalToPay = invoice.TotalToPay,
+                            Year = invoiceFile.Year,
+                            InvoiceFile = invoiceFile.FileName,
+                            FileNumber = invoiceFile.FileNumber,
+                            GlnPartner = invoice.GlnPartner,
+                            InvoiceDate = invoice.InvoiceDate,
+                            InvoiceNumber = invoice.InvoiceNumber,
+                            PurchaseNumber = invoice.PurchaseNumber,
+                            OrderDate = invoice.OrderDate,
+                            Client = invoiceFile.Client
+                        };
+                        invoiceOutputs.Add(inv);
+                    }
+                }
+                await invoiceOutputs.SaveToExcel(savePath);
+                var psi = new ProcessStartInfo
+                {
+                    FileName = savePath,
+                    UseShellExecute = true
+                };
+                Process.Start(psi);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.ToString());
+            }
+        }
+
+        private async void exportPaymentsButton_Click(object sender, EventArgs e)
+        {
+            var payments = (List<Payment>)paymentsGrid.DataSource;
+            if (payments == null || payments.Count == 0) return;
+            var saveFileDialog = new SaveFileDialog()
+            {
+                Filter = "xlsx files (*.xlsx)|*.xlsx",
+                InitialDirectory = Application.StartupPath,
+                RestoreDirectory = true
+            };
+            if (saveFileDialog.ShowDialog() != DialogResult.OK) return;
+            var savePath = saveFileDialog.FileName;
+            try
+            {
+                await payments.SaveToExcel(savePath);
+                var psi = new ProcessStartInfo
+                {
+                    FileName = savePath,
+                    UseShellExecute = true
+                };
+                Process.Start(psi);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.ToString());
+            }
         }
     }
 }
