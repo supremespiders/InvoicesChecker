@@ -52,6 +52,7 @@
             this.colTotalToPay1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colTotalPayed1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colRestToPay2 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colTotalAmount1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.invoiceFileGrid = new DevExpress.XtraGrid.GridControl();
             this.invoiceFileBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.invoiceFileView = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -62,9 +63,15 @@
             this.colTotalToPay = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colTotalPayed = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colRestToPay1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colTotalAmount = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.xtraTabbedMdiManager1 = new DevExpress.XtraTabbedMdi.XtraTabbedMdiManager(this.components);
             this.myTabs = new DevExpress.XtraTab.XtraTabControl();
             this.xtraTabPage1 = new DevExpress.XtraTab.XtraTabPage();
+            this.labelControl7 = new DevExpress.XtraEditors.LabelControl();
+            this.LbDiscountText = new DevExpress.XtraEditors.TextEdit();
+            this.labelControl6 = new DevExpress.XtraEditors.LabelControl();
+            this.kwDiscountText = new DevExpress.XtraEditors.TextEdit();
             this.labelControl5 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
@@ -127,6 +134,7 @@
             this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.invoicesView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.invoiceFileGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.invoiceFileBindingSource)).BeginInit();
@@ -135,6 +143,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.myTabs)).BeginInit();
             this.myTabs.SuspendLayout();
             this.xtraTabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.LbDiscountText.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kwDiscountText.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.paymentsFolderI.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.winsatInvoiceFolderI.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.wintechInvoiceFolderI.Properties)).BeginInit();
@@ -184,7 +194,9 @@
             this.colGlnPartner1,
             this.colTotalToPay1,
             this.colTotalPayed1,
-            this.colRestToPay2});
+            this.colRestToPay2,
+            this.colTotalAmount1,
+            this.gridColumn2});
             gridFormatRule1.ApplyToRow = true;
             gridFormatRule1.Name = "Format0";
             formatConditionRuleExpression1.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
@@ -260,7 +272,7 @@
             this.colTotalToPay1.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "TotalToPay", "Total To Pay={0:0.##}")});
             this.colTotalToPay1.Visible = true;
-            this.colTotalToPay1.VisibleIndex = 5;
+            this.colTotalToPay1.VisibleIndex = 7;
             this.colTotalToPay1.Width = 112;
             // 
             // colTotalPayed1
@@ -271,7 +283,7 @@
             this.colTotalPayed1.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "TotalPayed", "Total Payed={0:0.##}")});
             this.colTotalPayed1.Visible = true;
-            this.colTotalPayed1.VisibleIndex = 6;
+            this.colTotalPayed1.VisibleIndex = 8;
             this.colTotalPayed1.Width = 112;
             // 
             // colRestToPay2
@@ -282,8 +294,19 @@
             this.colRestToPay2.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "RestToPay", "Rest To Pay={0:0.##}")});
             this.colRestToPay2.Visible = true;
-            this.colRestToPay2.VisibleIndex = 7;
+            this.colRestToPay2.VisibleIndex = 9;
             this.colRestToPay2.Width = 112;
+            // 
+            // colTotalAmount1
+            // 
+            this.colTotalAmount1.FieldName = "TotalAmount";
+            this.colTotalAmount1.MinWidth = 30;
+            this.colTotalAmount1.Name = "colTotalAmount1";
+            this.colTotalAmount1.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "TotalAmount", "Total Amount={0:0.##}")});
+            this.colTotalAmount1.Visible = true;
+            this.colTotalAmount1.VisibleIndex = 5;
+            this.colTotalAmount1.Width = 112;
             // 
             // invoiceFileGrid
             // 
@@ -315,7 +338,9 @@
             this.colFileName,
             this.colTotalToPay,
             this.colTotalPayed,
-            this.colRestToPay1});
+            this.colRestToPay1,
+            this.colTotalAmount,
+            this.gridColumn1});
             gridFormatRule3.ApplyToRow = true;
             gridFormatRule3.Name = "Format0";
             formatConditionRuleExpression3.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
@@ -380,7 +405,7 @@
             this.colTotalToPay.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "TotalToPay", "Total to pay={0:0.##}")});
             this.colTotalToPay.Visible = true;
-            this.colTotalToPay.VisibleIndex = 4;
+            this.colTotalToPay.VisibleIndex = 6;
             this.colTotalToPay.Width = 112;
             // 
             // colTotalPayed
@@ -391,7 +416,7 @@
             this.colTotalPayed.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "TotalPayed", "Total Payed={0:0.##}")});
             this.colTotalPayed.Visible = true;
-            this.colTotalPayed.VisibleIndex = 5;
+            this.colTotalPayed.VisibleIndex = 7;
             this.colTotalPayed.Width = 112;
             // 
             // colRestToPay1
@@ -402,8 +427,33 @@
             this.colRestToPay1.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "RestToPay", "Rest To Pay={0:0.##}")});
             this.colRestToPay1.Visible = true;
-            this.colRestToPay1.VisibleIndex = 6;
+            this.colRestToPay1.VisibleIndex = 8;
             this.colRestToPay1.Width = 112;
+            // 
+            // colTotalAmount
+            // 
+            this.colTotalAmount.FieldName = "TotalAmount";
+            this.colTotalAmount.MinWidth = 30;
+            this.colTotalAmount.Name = "colTotalAmount";
+            this.colTotalAmount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "TotalAmount", "Total Amount={0:0.##}")});
+            this.colTotalAmount.Visible = true;
+            this.colTotalAmount.VisibleIndex = 4;
+            this.colTotalAmount.Width = 112;
+            // 
+            // gridColumn1
+            // 
+            this.gridColumn1.Caption = "Discount";
+            this.gridColumn1.FieldName = "gridColumn1";
+            this.gridColumn1.MinWidth = 30;
+            this.gridColumn1.Name = "gridColumn1";
+            this.gridColumn1.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "gridColumn1", "Total Discount={0:0.##}")});
+            this.gridColumn1.UnboundDataType = typeof(decimal);
+            this.gridColumn1.UnboundExpression = "[TotalAmount] - [TotalToPay]";
+            this.gridColumn1.Visible = true;
+            this.gridColumn1.VisibleIndex = 5;
+            this.gridColumn1.Width = 112;
             // 
             // xtraTabbedMdiManager1
             // 
@@ -426,6 +476,10 @@
             // 
             // xtraTabPage1
             // 
+            this.xtraTabPage1.Controls.Add(this.labelControl7);
+            this.xtraTabPage1.Controls.Add(this.LbDiscountText);
+            this.xtraTabPage1.Controls.Add(this.labelControl6);
+            this.xtraTabPage1.Controls.Add(this.kwDiscountText);
             this.xtraTabPage1.Controls.Add(this.labelControl5);
             this.xtraTabPage1.Controls.Add(this.labelControl4);
             this.xtraTabPage1.Controls.Add(this.labelControl3);
@@ -438,6 +492,36 @@
             this.xtraTabPage1.Name = "xtraTabPage1";
             this.xtraTabPage1.Size = new System.Drawing.Size(1650, 876);
             this.xtraTabPage1.Text = "Scanner";
+            // 
+            // labelControl7
+            // 
+            this.labelControl7.Location = new System.Drawing.Point(435, 201);
+            this.labelControl7.Name = "labelControl7";
+            this.labelControl7.Size = new System.Drawing.Size(83, 19);
+            this.labelControl7.TabIndex = 19;
+            this.labelControl7.Text = "LB Discount";
+            // 
+            // LbDiscountText
+            // 
+            this.LbDiscountText.Location = new System.Drawing.Point(586, 198);
+            this.LbDiscountText.Name = "LbDiscountText";
+            this.LbDiscountText.Size = new System.Drawing.Size(123, 26);
+            this.LbDiscountText.TabIndex = 18;
+            // 
+            // labelControl6
+            // 
+            this.labelControl6.Location = new System.Drawing.Point(33, 201);
+            this.labelControl6.Name = "labelControl6";
+            this.labelControl6.Size = new System.Drawing.Size(89, 19);
+            this.labelControl6.TabIndex = 17;
+            this.labelControl6.Text = "KW Discount";
+            // 
+            // kwDiscountText
+            // 
+            this.kwDiscountText.Location = new System.Drawing.Point(255, 198);
+            this.kwDiscountText.Name = "kwDiscountText";
+            this.kwDiscountText.Size = new System.Drawing.Size(107, 26);
+            this.kwDiscountText.TabIndex = 16;
             // 
             // labelControl5
             // 
@@ -468,7 +552,7 @@
             this.recreateDbButton.Appearance.BackColor = System.Drawing.Color.White;
             this.recreateDbButton.Appearance.Options.UseBackColor = true;
             this.recreateDbButton.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("recreateDbButton.ImageOptions.Image")));
-            this.recreateDbButton.Location = new System.Drawing.Point(497, 204);
+            this.recreateDbButton.Location = new System.Drawing.Point(501, 264);
             this.recreateDbButton.Name = "recreateDbButton";
             this.recreateDbButton.Size = new System.Drawing.Size(219, 65);
             this.recreateDbButton.TabIndex = 11;
@@ -478,7 +562,7 @@
             // scanButton
             // 
             this.scanButton.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("scanButton.ImageOptions.Image")));
-            this.scanButton.Location = new System.Drawing.Point(722, 203);
+            this.scanButton.Location = new System.Drawing.Point(726, 263);
             this.scanButton.Name = "scanButton";
             this.scanButton.Size = new System.Drawing.Size(219, 66);
             this.scanButton.TabIndex = 12;
@@ -488,7 +572,7 @@
             // SaveButton
             // 
             this.SaveButton.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("SaveButton.ImageOptions.Image")));
-            this.SaveButton.Location = new System.Drawing.Point(947, 203);
+            this.SaveButton.Location = new System.Drawing.Point(951, 263);
             this.SaveButton.Name = "SaveButton";
             this.SaveButton.Size = new System.Drawing.Size(219, 64);
             this.SaveButton.TabIndex = 10;
@@ -1051,6 +1135,20 @@
             this.layoutControlItem7.Text = "Wintech Invoice Folder";
             this.layoutControlItem7.TextSize = new System.Drawing.Size(161, 19);
             // 
+            // gridColumn2
+            // 
+            this.gridColumn2.Caption = "Discount";
+            this.gridColumn2.FieldName = "gridColumn2";
+            this.gridColumn2.MinWidth = 30;
+            this.gridColumn2.Name = "gridColumn2";
+            this.gridColumn2.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "gridColumn2", "Total Discount={0:0.##}")});
+            this.gridColumn2.UnboundDataType = typeof(decimal);
+            this.gridColumn2.UnboundExpression = "[TotalAmount] - [TotalToPay]";
+            this.gridColumn2.Visible = true;
+            this.gridColumn2.VisibleIndex = 6;
+            this.gridColumn2.Width = 112;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
@@ -1070,6 +1168,8 @@
             this.myTabs.ResumeLayout(false);
             this.xtraTabPage1.ResumeLayout(false);
             this.xtraTabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.LbDiscountText.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kwDiscountText.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.paymentsFolderI.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.winsatInvoiceFolderI.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.wintechInvoiceFolderI.Properties)).EndInit();
@@ -1198,5 +1298,13 @@
         private DevExpress.XtraEditors.ComboBoxEdit invoiceStatusCombo;
         private DevExpress.XtraEditors.SimpleButton exportInvoicesToExcel;
         private DevExpress.XtraEditors.SimpleButton exportPaymentsButton;
+        private DevExpress.XtraEditors.LabelControl labelControl7;
+        private DevExpress.XtraEditors.TextEdit LbDiscountText;
+        private DevExpress.XtraEditors.LabelControl labelControl6;
+        private DevExpress.XtraEditors.TextEdit kwDiscountText;
+        private DevExpress.XtraGrid.Columns.GridColumn colTotalAmount1;
+        private DevExpress.XtraGrid.Columns.GridColumn colTotalAmount;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn2;
     }
 }

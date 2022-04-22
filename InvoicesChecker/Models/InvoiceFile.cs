@@ -11,6 +11,7 @@ public class InvoiceFile
     public int Year { get; set; }
     public int FileNumber { get; set; }
     public string FileName { get; set; }
+    public decimal TotalAmount { get; set; }
     public decimal TotalToPay { get; set; }
     public decimal TotalPayed { get; set; }
     public decimal RestToPay { get; set; }

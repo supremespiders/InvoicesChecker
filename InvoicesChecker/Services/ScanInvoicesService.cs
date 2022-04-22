@@ -22,11 +22,15 @@ public class ScanInvoicesService
     private HashSet<string> _savedPos;
     private Dictionary<string, Payment> _savedPayments;
     readonly MyContext _context = new();
-    public ScanInvoicesService(string wintechInvoiceFolder, string winsatInvoiceFolder, string paymentFolder)
+    private decimal _kwDiscount;
+    private decimal _lbDiscount;
+    public ScanInvoicesService(string wintechInvoiceFolder, string winsatInvoiceFolder, string paymentFolder, decimal kwDiscount, decimal lbDiscount)
     {
         _wintechInvoiceFolder = wintechInvoiceFolder;
         _winsatInvoiceFolder = winsatInvoiceFolder;
         _paymentFolder = paymentFolder;
+        _kwDiscount = kwDiscount;
+        _lbDiscount = lbDiscount;
         ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
     }
 
@@ -66,7 +70,7 @@ public class ScanInvoicesService
             if (string.IsNullOrEmpty(order)) break;
 
 
-            if (!DateTime.TryParseExact(sheet.Cells[i, 2].Value?.ToString(),"dd/MM/yyyy", CultureInfo.InvariantCulture,DateTimeStyles.None, out var date)) throw new KnownException($"Failed to parse date : {sheet.Cells[i, 2].Value?.ToString()} at line : {i}");
+            if (!DateTime.TryParseExact(sheet.Cells[i, 2].Value?.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out var date)) throw new KnownException($"Failed to parse date : {sheet.Cells[i, 2].Value?.ToString()} at line : {i}");
             if (_savedPayments.ContainsKey(order))
             {
                 // Notifier.Error($"Duplicate purchase number : {order} on payment file");
@@ -156,8 +160,12 @@ public class ScanInvoicesService
         var element = await path.DeserializeXmlToObject<RootElement>();
         var (client, week, year) = ParseFileName(path);
         var invoices = new List<Invoice>();
+        var discount = _kwDiscount;
+        if (client == "LB")
+            discount = _lbDiscount;
         foreach (var factuur in element.FACTUUR)
         {
+            var amount = factuur.FACTUURREGELS.FACTUURREGEL.Sum(x => x.NETTOBEDRAG);
             invoices.Add(new Invoice
             {
                 InvoiceDate = DateTime.ParseExact(factuur.FACTUURDATUM, "yyyyMMdd", CultureInfo.InvariantCulture),
@@ -165,7 +173,8 @@ public class ScanInvoicesService
                 GlnPartner = factuur.GLN_PARTNER,
                 InvoiceNumber = factuur.FACTUURNUMMER,
                 PurchaseNumber = factuur.ORDERNR_AFNEMER,
-                TotalToPay = factuur.FACTUURREGELS.FACTUURREGEL.Sum(x => x.NETTOBEDRAG)
+                TotalAmount = amount,
+                TotalToPay = Math.Round(amount - (amount * discount / 100), 2)
             });
         }
         var invoiceFile = new InvoiceFile
@@ -175,6 +184,7 @@ public class ScanInvoicesService
             Client = client,
             FileName = Path.GetFileNameWithoutExtension(path),
             Invoices = invoices,
+            TotalAmount = invoices.Sum(x => x.TotalAmount),
             TotalToPay = invoices.Sum(x => x.TotalToPay)
         };
         return invoiceFile;
@@ -312,7 +322,7 @@ public class ScanInvoicesService
         }
     }
 
-    public async Task<(bool invoiceChanged,bool paymentChanged)> MainWork()
+    public async Task<(bool invoiceChanged, bool paymentChanged)> MainWork()
     {
         Notifier.Log($"Start working");
 
@@ -351,7 +361,7 @@ public class ScanInvoicesService
 
 
         Notifier.Log($"work complete");
-        return (invoiceFiles.Count!=0, payments.Count!=0);
+        return (invoiceFiles.Count != 0, payments.Count != 0);
     }
 
     private void CheckDuplicatePurchaseNumbers(List<InvoiceFile> invoiceFiles)

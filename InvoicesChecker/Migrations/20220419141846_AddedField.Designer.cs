@@ -4,6 +4,7 @@ using InvoicesChecker.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InvoicesChecker.Migrations
 {
     [DbContext(typeof(MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20220419141846_AddedField")]
+    partial class AddedField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,13 +56,13 @@ namespace InvoicesChecker.Migrations
                     b.Property<decimal>("RestToPay")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("TotalAmount")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<decimal>("TotalPayed")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("TotalToPay")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalToPayAfterDiscount")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");

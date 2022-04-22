@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -51,12 +52,16 @@ namespace InvoicesChecker
             wintechInvoiceFolderI.Text = config?.WintechInvoiceFolder;
             winsatInvoiceFolderI.Text = config?.WinsatInvoiceFolder;
             paymentsFolderI.Text = config?.PaymentFolder;
+            kwDiscountText.Text = config?.KwDiscount.ToString();
+            LbDiscountText.Text = config?.lbDiscount.ToString();
             var cs = config?.ConnectionString;
-            if (!File.Exists("connection"))
+
+
+            if (!File.Exists(GlobalData.ConnectionStringPath))
             {
                 if (string.IsNullOrEmpty(cs))
                 {
-                    await File.WriteAllTextAsync("connection", "Server=DESKTOP-G1IQ31I;Database=InvoiceDb;User Id=invoice;Password=qw182sdfRt7$;");
+                    await File.WriteAllTextAsync(GlobalData.ConnectionStringPath, "Server=DESKTOP-G1IQ31I;Database=InvoiceDb;User Id=invoice;Password=qw182sdfRt7$;");
                     MessageBox.Show("Please enter a connection string");
                     return;
                 }
@@ -67,7 +72,7 @@ namespace InvoicesChecker
             }
             else
             {
-                GlobalData.ConnectionString = await File.ReadAllTextAsync("connection");
+                GlobalData.ConnectionString = await File.ReadAllTextAsync(GlobalData.ConnectionStringPath);
             }
 
             if (string.IsNullOrEmpty(GlobalData.ConnectionString))
@@ -86,8 +91,8 @@ namespace InvoicesChecker
             await this.Exec(async () =>
             {
                 await LoadDates();
-                //await LoadInvoiceFiles();
-                //await LoadPayments();
+                await LoadInvoiceFiles();
+                await LoadPayments();
             });
         }
 
@@ -239,11 +244,21 @@ namespace InvoicesChecker
 
         private async Task SaveConfig()
         {
+            var b = decimal.TryParse(kwDiscountText.Text, out var kwDiscount);
+            var b2 = decimal.TryParse(LbDiscountText.Text, out var lbDiscount);
+            if (!b || !b2)
+            {
+                MessageBox.Show("Please enter valid discounts");
+                return;
+            }
             var config = new Config
             {
                 WintechInvoiceFolder = wintechInvoiceFolderI.Text,
                 WinsatInvoiceFolder = winsatInvoiceFolderI.Text,
                 PaymentFolder = paymentsFolderI.Text,
+                KwDiscount = kwDiscount,
+                lbDiscount = lbDiscount
+
             };
             try
             {
@@ -356,13 +371,16 @@ namespace InvoicesChecker
             debugT.Text = "";
             myTabs.SelectedTabPageIndex = 1;
             await SaveConfig();
-            var service = new ScanInvoicesService(wintechInvoiceFolderI.Text, winsatInvoiceFolderI.Text, paymentsFolderI.Text);
+
+            var config = JsonSerializer.Deserialize<Config>(await File.ReadAllTextAsync("config"));
+            var service = new ScanInvoicesService(wintechInvoiceFolderI.Text, winsatInvoiceFolderI.Text, paymentsFolderI.Text, config.KwDiscount, config.lbDiscount);
             try
             {
                 var (invoiceChanged, paymentChanged) = await Task.Run(service.MainWork);
                 if (invoiceChanged || paymentChanged)
                     await this.Exec(async () =>
                     {
+                        await LoadDates();
                         await LoadInvoiceFiles();
                         await LoadPayments();
                     });
@@ -494,7 +512,8 @@ namespace InvoicesChecker
             var savePath = saveFileDialog.FileName;
             try
             {
-                await payments.SaveToExcel(savePath);
+                //await payments.SaveToExcel(savePath);
+                paymentsGrid.ExportToXlsx(savePath);
                 var psi = new ProcessStartInfo
                 {
                     FileName = savePath,

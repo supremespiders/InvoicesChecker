@@ -10,8 +10,8 @@ public class MyContext : DbContext
 {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        if (File.Exists("connection"))
-            GlobalData.ConnectionString = File.ReadAllText("connection");
+        if (File.Exists(GlobalData.ConnectionStringPath))
+            GlobalData.ConnectionString = File.ReadAllText(GlobalData.ConnectionStringPath);
         //if (string.IsNullOrEmpty(GlobalData.ConnectionString))
         //{
         //    var config = JsonSerializer.Deserialize<Config>(File.ReadAllText($"{Application.StartupPath}/config"));
