@@ -53,6 +53,7 @@
             this.colTotalPayed1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colRestToPay2 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colTotalAmount1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.invoiceFileGrid = new DevExpress.XtraGrid.GridControl();
             this.invoiceFileBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.invoiceFileView = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -134,7 +135,6 @@
             this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.invoicesView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.invoiceFileGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.invoiceFileBindingSource)).BeginInit();
@@ -307,6 +307,20 @@
             this.colTotalAmount1.Visible = true;
             this.colTotalAmount1.VisibleIndex = 5;
             this.colTotalAmount1.Width = 112;
+            // 
+            // gridColumn2
+            // 
+            this.gridColumn2.Caption = "Discount";
+            this.gridColumn2.FieldName = "gridColumn2";
+            this.gridColumn2.MinWidth = 30;
+            this.gridColumn2.Name = "gridColumn2";
+            this.gridColumn2.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "gridColumn2", "Total Discount={0:0.##}")});
+            this.gridColumn2.UnboundDataType = typeof(decimal);
+            this.gridColumn2.UnboundExpression = "[TotalAmount] - [TotalToPay]";
+            this.gridColumn2.Visible = true;
+            this.gridColumn2.VisibleIndex = 6;
+            this.gridColumn2.Width = 112;
             // 
             // invoiceFileGrid
             // 
@@ -1135,20 +1149,6 @@
             this.layoutControlItem7.Text = "Wintech Invoice Folder";
             this.layoutControlItem7.TextSize = new System.Drawing.Size(161, 19);
             // 
-            // gridColumn2
-            // 
-            this.gridColumn2.Caption = "Discount";
-            this.gridColumn2.FieldName = "gridColumn2";
-            this.gridColumn2.MinWidth = 30;
-            this.gridColumn2.Name = "gridColumn2";
-            this.gridColumn2.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
-            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "gridColumn2", "Total Discount={0:0.##}")});
-            this.gridColumn2.UnboundDataType = typeof(decimal);
-            this.gridColumn2.UnboundExpression = "[TotalAmount] - [TotalToPay]";
-            this.gridColumn2.Visible = true;
-            this.gridColumn2.VisibleIndex = 6;
-            this.gridColumn2.Width = 112;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
@@ -1157,7 +1157,7 @@
             this.Controls.Add(this.myTabs);
             this.IsMdiContainer = true;
             this.Name = "MainForm";
-            this.Text = "InvoicesChecker 1.02";
+            this.Text = "InvoicesChecker 1.04";
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.invoicesView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.invoiceFileGrid)).EndInit();

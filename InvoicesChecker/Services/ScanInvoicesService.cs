@@ -70,7 +70,9 @@ public class ScanInvoicesService
             if (string.IsNullOrEmpty(order)) break;
 
 
-            if (!DateTime.TryParseExact(sheet.Cells[i, 2].Value?.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out var date)) throw new KnownException($"Failed to parse date : {sheet.Cells[i, 2].Value?.ToString()} at line : {i}");
+            if (!DateTime.TryParseExact(sheet.Cells[i, 2].Value?.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out var date))
+                if (!DateTime.TryParse(sheet.Cells[i, 2].Value?.ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out date))
+                    throw new KnownException($"Failed to parse date : {sheet.Cells[i, 2].Value?.ToString()} at line : {i}");
             if (_savedPayments.ContainsKey(order))
             {
                 // Notifier.Error($"Duplicate purchase number : {order} on payment file");
@@ -166,6 +168,7 @@ public class ScanInvoicesService
         foreach (var factuur in element.FACTUUR)
         {
             var amount = factuur.FACTUURREGELS.FACTUURREGEL.Sum(x => x.NETTOBEDRAG);
+            if(amount==0) continue;
             invoices.Add(new Invoice
             {
                 InvoiceDate = DateTime.ParseExact(factuur.FACTUURDATUM, "yyyyMMdd", CultureInfo.InvariantCulture),
