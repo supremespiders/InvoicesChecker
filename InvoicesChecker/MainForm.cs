@@ -50,6 +50,7 @@ namespace InvoicesChecker
             if (!File.Exists("config")) return;
             var config = JsonSerializer.Deserialize<Config>(await File.ReadAllTextAsync("config"));
             wintechInvoiceFolderI.Text = config?.WintechInvoiceFolder;
+            wintechLBInvoiceFolderI.Text = config?.WintechLBInvoiceFolder;
             winsatInvoiceFolderI.Text = config?.WinsatInvoiceFolder;
             paymentsFolderI.Text = config?.PaymentFolder;
             kwDiscountText.Text = config?.KwDiscount.ToString();
@@ -254,6 +255,7 @@ namespace InvoicesChecker
             var config = new Config
             {
                 WintechInvoiceFolder = wintechInvoiceFolderI.Text,
+                WintechLBInvoiceFolder = wintechLBInvoiceFolderI.Text,
                 WinsatInvoiceFolder = winsatInvoiceFolderI.Text,
                 PaymentFolder = paymentsFolderI.Text,
                 KwDiscount = kwDiscount,
@@ -373,7 +375,7 @@ namespace InvoicesChecker
             await SaveConfig();
 
             var config = JsonSerializer.Deserialize<Config>(await File.ReadAllTextAsync("config"));
-            var service = new ScanInvoicesService(wintechInvoiceFolderI.Text, winsatInvoiceFolderI.Text, paymentsFolderI.Text, config.KwDiscount, config.lbDiscount);
+            var service = new ScanInvoicesService(wintechInvoiceFolderI.Text,wintechLBInvoiceFolderI.Text, winsatInvoiceFolderI.Text, paymentsFolderI.Text, config.KwDiscount, config.lbDiscount);
             try
             {
                 var (invoiceChanged, paymentChanged) = await Task.Run(service.MainWork);

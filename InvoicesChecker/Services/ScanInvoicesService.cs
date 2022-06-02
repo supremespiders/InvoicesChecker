@@ -16,6 +16,7 @@ namespace InvoicesChecker.Services;
 public class ScanInvoicesService
 {
     private string _wintechInvoiceFolder;
+    private string _wintechLBInvoiceFolder;
     private string _winsatInvoiceFolder;
     private string _paymentFolder;
     private HashSet<string> _filesOnDb;
@@ -24,9 +25,11 @@ public class ScanInvoicesService
     readonly MyContext _context = new();
     private decimal _kwDiscount;
     private decimal _lbDiscount;
-    public ScanInvoicesService(string wintechInvoiceFolder, string winsatInvoiceFolder, string paymentFolder, decimal kwDiscount, decimal lbDiscount)
+
+    public ScanInvoicesService(string wintechInvoiceFolder, string wintechLBInvoiceFolder, string winsatInvoiceFolder, string paymentFolder, decimal kwDiscount, decimal lbDiscount)
     {
         _wintechInvoiceFolder = wintechInvoiceFolder;
+        _wintechLBInvoiceFolder = wintechLBInvoiceFolder;
         _winsatInvoiceFolder = winsatInvoiceFolder;
         _paymentFolder = paymentFolder;
         _kwDiscount = kwDiscount;
@@ -89,7 +92,6 @@ public class ScanInvoicesService
                 //Client = client,
                 //Week = week,
                 //Year = year,
-
             };
             _savedPayments.Add(order, payment);
             payments.Add(payment);
@@ -168,7 +170,7 @@ public class ScanInvoicesService
         foreach (var factuur in element.FACTUUR)
         {
             var amount = factuur.FACTUURREGELS.FACTUURREGEL.Sum(x => x.NETTOBEDRAG);
-            if(amount==0) continue;
+            if (amount == 0) continue;
             invoices.Add(new Invoice
             {
                 InvoiceDate = DateTime.ParseExact(factuur.FACTUURDATUM, "yyyyMMdd", CultureInfo.InvariantCulture),
@@ -180,6 +182,7 @@ public class ScanInvoicesService
                 TotalToPay = Math.Round(amount - (amount * discount / 100), 2)
             });
         }
+
         var invoiceFile = new InvoiceFile
         {
             Year = year,
@@ -206,6 +209,7 @@ public class ScanInvoicesService
             if (_filesOnDb.Contains($"{client}{year}{week}")) continue;
             newFiles.Add(file);
         }
+
         Notifier.Log($"Found {newFiles.Count} new files");
         if (newFiles.Count == 0) return invoiceFiles;
         foreach (var newFile in newFiles)
@@ -233,6 +237,7 @@ public class ScanInvoicesService
             invoiceFile.Invoices = null;
             context.InvoiceFiles.Add(invoiceFile);
         }
+
         await context.SaveChangesAsync();
         for (var i = 0; i < invoiceFiles.Count; i++)
         {
@@ -259,6 +264,7 @@ public class ScanInvoicesService
             var payment = payments.First(x => x.InvoiceNumber == invoice.InvoiceNumber);
             payment.InvoiceId = invoice.Id;
         }
+
         await _context.BulkInsert(payments);
 
         //update invoices with payments
@@ -284,6 +290,7 @@ public class ScanInvoicesService
             invoice.TotalPayed = payment.PaymentAmount;
             invoice.RestToPay = invoice.TotalToPay - invoice.TotalPayed;
         }
+
         await _context.BulkUpdate(invoices, new List<string> { "TotalPayed", "RestToPay" });
         await _context.BulkUpdate(invoiceFiles, new List<string> { "TotalPayed", "RestToPay" });
 
@@ -318,8 +325,10 @@ public class ScanInvoicesService
                     invoice.PaymentId = _savedPayments[invoice.InvoiceNumber].Id;
                     invoice.TotalPayed = _savedPayments[invoice.InvoiceNumber].PaymentAmount;
                 }
+
                 invoice.RestToPay = invoice.TotalToPay - invoice.TotalPayed;
             }
+
             invoicesFile.TotalPayed = invoicesFile.Invoices.Sum(x => x.TotalPayed);
             invoicesFile.RestToPay = invoicesFile.Invoices.Sum(x => x.RestToPay);
         }
@@ -336,8 +345,10 @@ public class ScanInvoicesService
         _savedPos = (await _context.Invoices.AsNoTracking().ToListAsync()).Select(x => x.InvoiceNumber).ToHashSet();
 
         var invoiceFiles = new List<InvoiceFile>();
-        Notifier.Log("Checking Wintech folder for new invoices");
+        Notifier.Log("Checking Wintech KW folder for new invoices");
         invoiceFiles.AddRange(await CheckForNewFiles(_wintechInvoiceFolder));
+        Notifier.Log("Checking Wintech LB folder for new invoices");
+        invoiceFiles.AddRange(await CheckForNewFiles(_wintechLBInvoiceFolder));
         Notifier.Log("Checking Winsat folder for new invoices");
         invoiceFiles.AddRange(await CheckForNewFiles(_winsatInvoiceFolder));
 
@@ -347,19 +358,6 @@ public class ScanInvoicesService
 
         var payments = ScanPayment(_paymentFolder);
         await SavePayment(payments);
-        //foreach (var payment in payments)
-        //{
-        //    if (_purchaseNumbers.Contains(payment.Order))
-        //    {
-        //        var factuur = await context.FACTUUR.FirstAsync(x => x.ORDERNR_AFNEMER.Equals(payment.Order));
-        //        payment.Factuur = factuur;
-        //        factuur.Payed = payment.PaymentAmount;
-        //        factuur.Payment = payment;
-        //    }
-        //}
-
-        //await _context.Payments.AddRangeAsync(payments);
-        //await _context.SaveChangesAsync();
         Notifier.Log($"{payments.Count} new payments saved");
 
 
