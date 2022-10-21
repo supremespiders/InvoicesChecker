@@ -20,5 +20,7 @@ public class Payment
     public string InvoiceNumber { get; set; }
 
     public int? InvoiceId { get; set; }
+
+    public bool IsBis { get; set; } 
     public Invoice Invoice { get; set; }
 }

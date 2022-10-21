@@ -94,6 +94,7 @@ namespace InvoicesChecker
                 await LoadDates();
                 await LoadInvoiceFiles();
                 await LoadPayments();
+                await LoadBis();
             });
         }
 
@@ -329,8 +330,16 @@ namespace InvoicesChecker
             var d = paymentDateI.DateTime;
             var context = new MyContext();
             // var payments = await context.Payments.AsNoTracking().Where(x => x.InvoiceId == null && x.Date.Year == d.Year && x.Date.Month == d.Month).ToListAsync();
-            var payments = await context.Payments.AsNoTracking().Where(x => x.InvoiceId == null).ToListAsync();
+            var payments = await context.Payments.AsNoTracking().Where(x => x.InvoiceId == null && !x.IsBis).ToListAsync();
             paymentsGrid.DataSource = payments;
+        }
+        
+        private async Task LoadBis()
+        {
+            var d = paymentDateI.DateTime;
+            var context = new MyContext();
+            var payments = await context.Payments.AsNoTracking().Where(x => x.InvoiceId == null && x.IsBis).ToListAsync();
+            BisGrid.DataSource = payments;
         }
 
 
@@ -516,6 +525,43 @@ namespace InvoicesChecker
             {
                 //await payments.SaveToExcel(savePath);
                 paymentsGrid.ExportToXlsx(savePath);
+                var psi = new ProcessStartInfo
+                {
+                    FileName = savePath,
+                    UseShellExecute = true
+                };
+                Process.Start(psi);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.ToString());
+            }
+        }
+
+        private async void SearchBisButton_Click(object sender, EventArgs e)
+        {
+            await this.Exec(async () =>
+            {
+                await LoadBis();
+            });
+        }
+
+        private void ExportBisButton_Click(object sender, EventArgs e)
+        {
+            var payments = (List<Payment>)BisGrid.DataSource;
+            if (payments == null || payments.Count == 0) return;
+            var saveFileDialog = new SaveFileDialog()
+            {
+                Filter = "xlsx files (*.xlsx)|*.xlsx",
+                InitialDirectory = Application.StartupPath,
+                RestoreDirectory = true
+            };
+            if (saveFileDialog.ShowDialog() != DialogResult.OK) return;
+            var savePath = saveFileDialog.FileName;
+            try
+            {
+                //await payments.SaveToExcel(savePath);
+                BisGrid.ExportToXlsx(savePath);
                 var psi = new ProcessStartInfo
                 {
                     FileName = savePath,

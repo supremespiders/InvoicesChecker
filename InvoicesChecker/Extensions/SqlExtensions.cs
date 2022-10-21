@@ -57,6 +57,9 @@ public static class SqlExtensions
                 {
 
                     sql.Append(((decimal)propertyInfo.GetValue(model)).ToString(CultureInfo.InvariantCulture)).Append(",");
+                }else if (propertyInfo.PropertyType == typeof(bool))
+                {
+                    sql.Append((bool)propertyInfo.GetValue(model) ? "1" : "0").Append(",");
                 }
                 else if (propertyInfo.PropertyType == typeof(double))
                 {
@@ -129,6 +132,10 @@ public static class SqlExtensions
                 {
 
                     sql.Append(((decimal)propertyInfo.GetValue(model)).ToString(CultureInfo.InvariantCulture)).Append(",");
+                }
+                else if (propertyInfo.PropertyType == typeof(bool))
+                {
+                    sql.Append((bool)propertyInfo.GetValue(model) ? "1" : "0").Append(",");
                 }
                 else if (propertyInfo.PropertyType == typeof(double))
                 {

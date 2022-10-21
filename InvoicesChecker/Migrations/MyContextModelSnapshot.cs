@@ -155,6 +155,9 @@ namespace InvoicesChecker.Migrations
                     b.Property<string>("InvoiceNumber")
                         .HasColumnType("varchar(20)");
 
+                    b.Property<bool>("IsBis")
+                        .HasColumnType("bit");
+
                     b.Property<decimal>("PaymentAmount")
                         .HasColumnType("decimal(18,2)");
 

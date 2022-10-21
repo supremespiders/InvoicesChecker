@@ -37,48 +37,23 @@ public class ScanInvoicesService
         ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
     }
 
-    private List<Payment> ScanPaymentFile(string path)
+
+    private List<Payment> ParseFormat1(ExcelWorksheet sheet)
     {
-        var package = new ExcelPackage(new FileInfo(path));
-        var sheet = package.Workbook.Worksheets.FirstOrDefault();
-        if (sheet == null) throw new KnownException($"File {path} don't have sheet");
         var payments = new List<Payment>();
         for (int i = 19; i <= sheet.Dimension.End.Row; i++)
         {
-            //var invoice = sheet.Cells[i, 3].Value?.ToString()?.Split("/");
-            //if (invoice == null) break;
-            //var client = "";
-            //var week = 0;
-            //var year = 0;
-            //if (invoice.Length != 4)
-            //{
-            //    Debug.WriteLine($"Unknown format : {sheet.Cells[i, 3].Value?.ToString()}");
-            //    continue;
-            //}
-            //if (char.IsDigit(invoice[0][0]))
-            //{
-            //    client = invoice[1];
-            //    if (!int.TryParse(invoice[2], out week)) throw new KnownException($"Unexpected format at line : {i} on payment file week(2) : {sheet.Cells[i, 3].Value?.ToString()}");
-            //    if (!int.TryParse(invoice[0], out year)) throw new KnownException($"Unexpected format at line : {i} on payment file year(0) : {sheet.Cells[i, 3].Value?.ToString()}");
-            //}
-            //else
-            //{
-            //    client = invoice[0];
-            //    if (!int.TryParse(invoice[1], out week)) throw new KnownException($"Unexpected format at line : {i} on payment file week(1) : {sheet.Cells[i, 3].Value?.ToString()}");
-            //    if (!int.TryParse(invoice[2], out year)) throw new KnownException($"Unexpected format at line : {i} on payment file year(2) : {sheet.Cells[i, 3].Value?.ToString()}");
-            //}
-
-            //var order = invoice[3];
             var order = sheet.Cells[i, 3].Value?.ToString();
             if (string.IsNullOrEmpty(order)) break;
-
-
-            if (!DateTime.TryParseExact(sheet.Cells[i, 2].Value?.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out var date))
-                if (!DateTime.TryParse(sheet.Cells[i, 2].Value?.ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out date))
-                    throw new KnownException($"Failed to parse date : {sheet.Cells[i, 2].Value?.ToString()} at line : {i}");
+            if (order.Contains("/"))
+                order = order.Substring(0, order.IndexOf("/", StringComparison.Ordinal));
+            
+            if (!DateTime.TryParseExact(sheet.Cells[i, 2].Value?.ToString(), "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var date))
+                if (!DateTime.TryParseExact(sheet.Cells[i, 2].Value?.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out date))
+                    if (!DateTime.TryParse(sheet.Cells[i, 2].Value?.ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out date))
+                        throw new KnownException($"Failed to parse date : {sheet.Cells[i, 2].Value?.ToString()} at line : {i}");
             if (_savedPayments.ContainsKey(order))
             {
-                // Notifier.Error($"Duplicate purchase number : {order} on payment file");
                 continue;
             }
 
@@ -89,15 +64,60 @@ public class ScanInvoicesService
                 DiscountUsed = Math.Abs(decimal.Parse(sheet.Cells[i, 5].Value?.ToString() ?? "0")),
                 PaymentAmount = Math.Abs(decimal.Parse(sheet.Cells[i, 6].Value?.ToString() ?? "0")),
                 InvoiceNumber = order
-                //Client = client,
-                //Week = week,
-                //Year = year,
             };
             _savedPayments.Add(order, payment);
             payments.Add(payment);
         }
-
         return payments;
+    }
+    
+    private List<Payment> ParseFormat2(ExcelWorksheet sheet)
+    {
+        var payments = new List<Payment>();
+        for (int i = 19; i <= sheet.Dimension.End.Row; i++)
+        {
+            var order = sheet.Cells[i, 1].Value?.ToString();
+            if (string.IsNullOrEmpty(order)) break;
+            var isBis = order.Contains("BIS");
+            if (order.Contains("/") && !isBis)
+                order = order.Substring(0, order.IndexOf("/", StringComparison.Ordinal));
+            
+           
+            
+            if (!DateTime.TryParseExact(sheet.Cells[i, 2].Value?.ToString(), "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var date))
+                if (!DateTime.TryParseExact(sheet.Cells[i, 2].Value?.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out date))
+                    if (!DateTime.TryParse(sheet.Cells[i, 2].Value?.ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out date))
+                        throw new KnownException($"Failed to parse date : {sheet.Cells[i, 2].Value?.ToString()} at line : {i}");
+            if (_savedPayments.ContainsKey(order))
+            {
+                continue;
+            }
+
+            var payment = new Payment
+            {
+                Date = date,
+                InvoiceAmount = Math.Abs(decimal.Parse(sheet.Cells[i, 3].Value?.ToString() ?? "0")),
+                DiscountUsed = Math.Abs(decimal.Parse(sheet.Cells[i, 5].Value?.ToString() ?? "0")),
+                PaymentAmount = Math.Abs(decimal.Parse(sheet.Cells[i, 7].Value?.ToString() ?? "0")),
+                InvoiceNumber = order,
+                IsBis = isBis
+            };
+            _savedPayments.Add(order, payment);
+            payments.Add(payment);
+        }
+        return payments;
+    }
+
+    private List<Payment> ScanPaymentFile(string path)
+    {
+        var package = new ExcelPackage(new FileInfo(path));
+        var sheet = package.Workbook.Worksheets.FirstOrDefault();
+        if (sheet == null) throw new KnownException($"File {path} don't have sheet");
+        var h = sheet.Cells[19, 3].Value?.ToString()?.Trim();
+        var isHeader3IsFacture =  h== "Invoice";
+        return isHeader3IsFacture ?
+            ParseFormat1(sheet) :
+            ParseFormat2(sheet);
     }
 
     private List<Payment> ScanPayment(string paymentFolder)

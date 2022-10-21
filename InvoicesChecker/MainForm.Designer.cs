@@ -29,20 +29,20 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            DevExpress.XtraGrid.GridFormatRule gridFormatRule7 = new DevExpress.XtraGrid.GridFormatRule();
-            DevExpress.XtraEditors.FormatConditionRuleExpression formatConditionRuleExpression7 = new DevExpress.XtraEditors.FormatConditionRuleExpression();
-            DevExpress.XtraGrid.GridFormatRule gridFormatRule8 = new DevExpress.XtraGrid.GridFormatRule();
-            DevExpress.XtraEditors.FormatConditionRuleExpression formatConditionRuleExpression8 = new DevExpress.XtraEditors.FormatConditionRuleExpression();
-            DevExpress.XtraGrid.GridLevelNode gridLevelNode2 = new DevExpress.XtraGrid.GridLevelNode();
-            DevExpress.XtraGrid.GridFormatRule gridFormatRule9 = new DevExpress.XtraGrid.GridFormatRule();
-            DevExpress.XtraEditors.FormatConditionRuleExpression formatConditionRuleExpression9 = new DevExpress.XtraEditors.FormatConditionRuleExpression();
-            DevExpress.XtraGrid.GridFormatRule gridFormatRule10 = new DevExpress.XtraGrid.GridFormatRule();
-            DevExpress.XtraEditors.FormatConditionRuleExpression formatConditionRuleExpression10 = new DevExpress.XtraEditors.FormatConditionRuleExpression();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             DevExpress.XtraGrid.GridFormatRule gridFormatRule1 = new DevExpress.XtraGrid.GridFormatRule();
             DevExpress.XtraEditors.FormatConditionRuleExpression formatConditionRuleExpression1 = new DevExpress.XtraEditors.FormatConditionRuleExpression();
             DevExpress.XtraGrid.GridFormatRule gridFormatRule2 = new DevExpress.XtraGrid.GridFormatRule();
             DevExpress.XtraEditors.FormatConditionRuleExpression formatConditionRuleExpression2 = new DevExpress.XtraEditors.FormatConditionRuleExpression();
+            DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
+            DevExpress.XtraGrid.GridFormatRule gridFormatRule3 = new DevExpress.XtraGrid.GridFormatRule();
+            DevExpress.XtraEditors.FormatConditionRuleExpression formatConditionRuleExpression3 = new DevExpress.XtraEditors.FormatConditionRuleExpression();
+            DevExpress.XtraGrid.GridFormatRule gridFormatRule4 = new DevExpress.XtraGrid.GridFormatRule();
+            DevExpress.XtraEditors.FormatConditionRuleExpression formatConditionRuleExpression4 = new DevExpress.XtraEditors.FormatConditionRuleExpression();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            DevExpress.XtraGrid.GridFormatRule gridFormatRule5 = new DevExpress.XtraGrid.GridFormatRule();
+            DevExpress.XtraEditors.FormatConditionRuleExpression formatConditionRuleExpression5 = new DevExpress.XtraEditors.FormatConditionRuleExpression();
+            DevExpress.XtraGrid.GridFormatRule gridFormatRule6 = new DevExpress.XtraGrid.GridFormatRule();
+            DevExpress.XtraEditors.FormatConditionRuleExpression formatConditionRuleExpression6 = new DevExpress.XtraEditors.FormatConditionRuleExpression();
             this.invoicesView = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colInvoiceNumber1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colInvoiceDate1 = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -69,6 +69,8 @@
             this.xtraTabbedMdiManager1 = new DevExpress.XtraTabbedMdi.XtraTabbedMdiManager(this.components);
             this.myTabs = new DevExpress.XtraTab.XtraTabControl();
             this.xtraTabPage1 = new DevExpress.XtraTab.XtraTabPage();
+            this.labelControl8 = new DevExpress.XtraEditors.LabelControl();
+            this.wintechLBInvoiceFolderI = new DevExpress.XtraEditors.TextEdit();
             this.labelControl7 = new DevExpress.XtraEditors.LabelControl();
             this.LbDiscountText = new DevExpress.XtraEditors.TextEdit();
             this.labelControl6 = new DevExpress.XtraEditors.LabelControl();
@@ -125,6 +127,21 @@
             this.invoiceStatusCombo = new DevExpress.XtraEditors.ComboBoxEdit();
             this.searchInvoiceFilesButton = new DevExpress.XtraEditors.SimpleButton();
             this.selectYearCombo = new DevExpress.XtraEditors.ComboBoxEdit();
+            this.xtraTabPage6 = new DevExpress.XtraTab.XtraTabPage();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.BisGrid = new DevExpress.XtraGrid.GridControl();
+            this.gridView3 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridColumn3 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn4 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn5 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn6 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn7 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn8 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.panelControl5 = new DevExpress.XtraEditors.PanelControl();
+            this.ExportBisButton = new DevExpress.XtraEditors.SimpleButton();
+            this.SearchBisButton = new DevExpress.XtraEditors.SimpleButton();
+            this.labelControl9 = new DevExpress.XtraEditors.LabelControl();
+            this.BisDateI = new DevExpress.XtraEditors.DateEdit();
             this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
@@ -135,8 +152,6 @@
             this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.labelControl8 = new DevExpress.XtraEditors.LabelControl();
-            this.wintechLBInvoiceFolderI = new DevExpress.XtraEditors.TextEdit();
             ((System.ComponentModel.ISupportInitialize)(this.invoicesView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.invoiceFileGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.invoiceFileBindingSource)).BeginInit();
@@ -145,6 +160,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.myTabs)).BeginInit();
             this.myTabs.SuspendLayout();
             this.xtraTabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.wintechLBInvoiceFolderI.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LbDiscountText.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.kwDiscountText.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.paymentsFolderI.Properties)).BeginInit();
@@ -174,6 +190,14 @@
             this.panelControl3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.invoiceStatusCombo.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.selectYearCombo.Properties)).BeginInit();
+            this.xtraTabPage6.SuspendLayout();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BisGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.panelControl5)).BeginInit();
+            this.panelControl5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BisDateI.Properties.CalendarTimeProperties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BisDateI.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
@@ -184,7 +208,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.wintechLBInvoiceFolderI.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // invoicesView
@@ -200,20 +223,20 @@
             this.colRestToPay2,
             this.colTotalAmount1,
             this.gridColumn2});
-            gridFormatRule7.ApplyToRow = true;
-            gridFormatRule7.Name = "Format0";
-            formatConditionRuleExpression7.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            formatConditionRuleExpression7.Appearance.Options.UseBackColor = true;
-            formatConditionRuleExpression7.Expression = "[RestToPay] = 0";
-            gridFormatRule7.Rule = formatConditionRuleExpression7;
-            gridFormatRule8.ApplyToRow = true;
-            gridFormatRule8.Name = "Format1";
-            formatConditionRuleExpression8.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            formatConditionRuleExpression8.Appearance.Options.UseBackColor = true;
-            formatConditionRuleExpression8.Expression = "[RestToPay] <> 0 And [RestToPay] <> [TotalToPay]";
-            gridFormatRule8.Rule = formatConditionRuleExpression8;
-            this.invoicesView.FormatRules.Add(gridFormatRule7);
-            this.invoicesView.FormatRules.Add(gridFormatRule8);
+            gridFormatRule1.ApplyToRow = true;
+            gridFormatRule1.Name = "Format0";
+            formatConditionRuleExpression1.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            formatConditionRuleExpression1.Appearance.Options.UseBackColor = true;
+            formatConditionRuleExpression1.Expression = "[RestToPay] = 0";
+            gridFormatRule1.Rule = formatConditionRuleExpression1;
+            gridFormatRule2.ApplyToRow = true;
+            gridFormatRule2.Name = "Format1";
+            formatConditionRuleExpression2.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            formatConditionRuleExpression2.Appearance.Options.UseBackColor = true;
+            formatConditionRuleExpression2.Expression = "[RestToPay] <> 0 And [RestToPay] <> [TotalToPay]";
+            gridFormatRule2.Rule = formatConditionRuleExpression2;
+            this.invoicesView.FormatRules.Add(gridFormatRule1);
+            this.invoicesView.FormatRules.Add(gridFormatRule2);
             this.invoicesView.GridControl = this.invoiceFileGrid;
             this.invoicesView.GroupSummary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "TotalToPay", null, "")});
@@ -329,10 +352,10 @@
             // 
             this.invoiceFileGrid.DataSource = this.invoiceFileBindingSource;
             this.invoiceFileGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            gridLevelNode2.LevelTemplate = this.invoicesView;
-            gridLevelNode2.RelationName = "Invoices";
+            gridLevelNode1.LevelTemplate = this.invoicesView;
+            gridLevelNode1.RelationName = "Invoices";
             this.invoiceFileGrid.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
-            gridLevelNode2});
+            gridLevelNode1});
             this.invoiceFileGrid.Location = new System.Drawing.Point(2, 2);
             this.invoiceFileGrid.MainView = this.invoiceFileView;
             this.invoiceFileGrid.Name = "invoiceFileGrid";
@@ -358,20 +381,20 @@
             this.colRestToPay1,
             this.colTotalAmount,
             this.gridColumn1});
-            gridFormatRule9.ApplyToRow = true;
-            gridFormatRule9.Name = "Format0";
-            formatConditionRuleExpression9.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            formatConditionRuleExpression9.Appearance.Options.UseBackColor = true;
-            formatConditionRuleExpression9.Expression = "[RestToPay] = 0";
-            gridFormatRule9.Rule = formatConditionRuleExpression9;
-            gridFormatRule10.ApplyToRow = true;
-            gridFormatRule10.Name = "Format1";
-            formatConditionRuleExpression10.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            formatConditionRuleExpression10.Appearance.Options.UseBackColor = true;
-            formatConditionRuleExpression10.Expression = "[RestToPay] <> 0 And [RestToPay] <> [TotalToPay]";
-            gridFormatRule10.Rule = formatConditionRuleExpression10;
-            this.invoiceFileView.FormatRules.Add(gridFormatRule9);
-            this.invoiceFileView.FormatRules.Add(gridFormatRule10);
+            gridFormatRule3.ApplyToRow = true;
+            gridFormatRule3.Name = "Format0";
+            formatConditionRuleExpression3.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            formatConditionRuleExpression3.Appearance.Options.UseBackColor = true;
+            formatConditionRuleExpression3.Expression = "[RestToPay] = 0";
+            gridFormatRule3.Rule = formatConditionRuleExpression3;
+            gridFormatRule4.ApplyToRow = true;
+            gridFormatRule4.Name = "Format1";
+            formatConditionRuleExpression4.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            formatConditionRuleExpression4.Appearance.Options.UseBackColor = true;
+            formatConditionRuleExpression4.Expression = "[RestToPay] <> 0 And [RestToPay] <> [TotalToPay]";
+            gridFormatRule4.Rule = formatConditionRuleExpression4;
+            this.invoiceFileView.FormatRules.Add(gridFormatRule3);
+            this.invoiceFileView.FormatRules.Add(gridFormatRule4);
             this.invoiceFileView.GridControl = this.invoiceFileGrid;
             this.invoiceFileView.Name = "invoiceFileView";
             this.invoiceFileView.OptionsBehavior.Editable = false;
@@ -489,7 +512,8 @@
             this.xtraTabPage2,
             this.xtraTabPage3,
             this.xtraTabPage4,
-            this.xtraTabPage5});
+            this.xtraTabPage5,
+            this.xtraTabPage6});
             // 
             // xtraTabPage1
             // 
@@ -511,6 +535,21 @@
             this.xtraTabPage1.Name = "xtraTabPage1";
             this.xtraTabPage1.Size = new System.Drawing.Size(1650, 876);
             this.xtraTabPage1.Text = "Scanner";
+            // 
+            // labelControl8
+            // 
+            this.labelControl8.Location = new System.Drawing.Point(33, 92);
+            this.labelControl8.Name = "labelControl8";
+            this.labelControl8.Size = new System.Drawing.Size(205, 19);
+            this.labelControl8.TabIndex = 21;
+            this.labelControl8.Text = "Wintech LB Invoices Location";
+            // 
+            // wintechLBInvoiceFolderI
+            // 
+            this.wintechLBInvoiceFolderI.Location = new System.Drawing.Point(255, 89);
+            this.wintechLBInvoiceFolderI.Name = "wintechLBInvoiceFolderI";
+            this.wintechLBInvoiceFolderI.Size = new System.Drawing.Size(910, 26);
+            this.wintechLBInvoiceFolderI.TabIndex = 20;
             // 
             // labelControl7
             // 
@@ -674,20 +713,20 @@
             this.colTotal,
             this.colPayment,
             this.colRestToPay});
-            gridFormatRule1.ApplyToRow = true;
-            gridFormatRule1.Name = "Format0";
-            formatConditionRuleExpression1.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            formatConditionRuleExpression1.Appearance.Options.UseBackColor = true;
-            formatConditionRuleExpression1.Expression = "[RestToPay] = 0";
-            gridFormatRule1.Rule = formatConditionRuleExpression1;
-            gridFormatRule2.ApplyToRow = true;
-            gridFormatRule2.Name = "Format1";
-            formatConditionRuleExpression2.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            formatConditionRuleExpression2.Appearance.Options.UseBackColor = true;
-            formatConditionRuleExpression2.Expression = "[RestToPay] <> 0 And [RestToPay] <> [Total]";
-            gridFormatRule2.Rule = formatConditionRuleExpression2;
-            this.gridView1.FormatRules.Add(gridFormatRule1);
-            this.gridView1.FormatRules.Add(gridFormatRule2);
+            gridFormatRule5.ApplyToRow = true;
+            gridFormatRule5.Name = "Format0";
+            formatConditionRuleExpression5.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            formatConditionRuleExpression5.Appearance.Options.UseBackColor = true;
+            formatConditionRuleExpression5.Expression = "[RestToPay] = 0";
+            gridFormatRule5.Rule = formatConditionRuleExpression5;
+            gridFormatRule6.ApplyToRow = true;
+            gridFormatRule6.Name = "Format1";
+            formatConditionRuleExpression6.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            formatConditionRuleExpression6.Appearance.Options.UseBackColor = true;
+            formatConditionRuleExpression6.Expression = "[RestToPay] <> 0 And [RestToPay] <> [Total]";
+            gridFormatRule6.Rule = formatConditionRuleExpression6;
+            this.gridView1.FormatRules.Add(gridFormatRule5);
+            this.gridView1.FormatRules.Add(gridFormatRule6);
             this.gridView1.GridControl = this.InvoicesGrid;
             this.gridView1.Name = "gridView1";
             this.gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
@@ -1065,6 +1104,160 @@
             this.selectYearCombo.Size = new System.Drawing.Size(225, 26);
             this.selectYearCombo.TabIndex = 0;
             // 
+            // xtraTabPage6
+            // 
+            this.xtraTabPage6.Controls.Add(this.panel1);
+            this.xtraTabPage6.Controls.Add(this.panelControl5);
+            this.xtraTabPage6.Name = "xtraTabPage6";
+            this.xtraTabPage6.Size = new System.Drawing.Size(1650, 876);
+            this.xtraTabPage6.Text = "BIS";
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.BisGrid);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 70);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1650, 806);
+            this.panel1.TabIndex = 2;
+            // 
+            // BisGrid
+            // 
+            this.BisGrid.DataSource = this.paymentBindingSource;
+            this.BisGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BisGrid.Location = new System.Drawing.Point(0, 0);
+            this.BisGrid.MainView = this.gridView3;
+            this.BisGrid.Name = "BisGrid";
+            this.BisGrid.Size = new System.Drawing.Size(1650, 806);
+            this.BisGrid.TabIndex = 2;
+            this.BisGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridView3});
+            // 
+            // gridView3
+            // 
+            this.gridView3.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gridColumn3,
+            this.gridColumn4,
+            this.gridColumn5,
+            this.gridColumn6,
+            this.gridColumn7,
+            this.gridColumn8});
+            this.gridView3.GridControl = this.BisGrid;
+            this.gridView3.Name = "gridView3";
+            this.gridView3.OptionsBehavior.Editable = false;
+            this.gridView3.OptionsView.ShowGroupPanel = false;
+            // 
+            // gridColumn3
+            // 
+            this.gridColumn3.FieldName = "Date";
+            this.gridColumn3.MinWidth = 30;
+            this.gridColumn3.Name = "gridColumn3";
+            this.gridColumn3.Visible = true;
+            this.gridColumn3.VisibleIndex = 1;
+            this.gridColumn3.Width = 207;
+            // 
+            // gridColumn4
+            // 
+            this.gridColumn4.FieldName = "Client";
+            this.gridColumn4.MinWidth = 30;
+            this.gridColumn4.Name = "gridColumn4";
+            this.gridColumn4.Visible = true;
+            this.gridColumn4.VisibleIndex = 0;
+            this.gridColumn4.Width = 98;
+            // 
+            // gridColumn5
+            // 
+            this.gridColumn5.FieldName = "InvoiceAmount";
+            this.gridColumn5.MinWidth = 30;
+            this.gridColumn5.Name = "gridColumn5";
+            this.gridColumn5.Visible = true;
+            this.gridColumn5.VisibleIndex = 3;
+            this.gridColumn5.Width = 498;
+            // 
+            // gridColumn6
+            // 
+            this.gridColumn6.FieldName = "DiscountUsed";
+            this.gridColumn6.MinWidth = 30;
+            this.gridColumn6.Name = "gridColumn6";
+            this.gridColumn6.Visible = true;
+            this.gridColumn6.VisibleIndex = 4;
+            this.gridColumn6.Width = 498;
+            // 
+            // gridColumn7
+            // 
+            this.gridColumn7.FieldName = "PaymentAmount";
+            this.gridColumn7.MinWidth = 30;
+            this.gridColumn7.Name = "gridColumn7";
+            this.gridColumn7.Visible = true;
+            this.gridColumn7.VisibleIndex = 5;
+            this.gridColumn7.Width = 517;
+            // 
+            // gridColumn8
+            // 
+            this.gridColumn8.FieldName = "InvoiceNumber";
+            this.gridColumn8.MinWidth = 30;
+            this.gridColumn8.Name = "gridColumn8";
+            this.gridColumn8.Visible = true;
+            this.gridColumn8.VisibleIndex = 2;
+            this.gridColumn8.Width = 355;
+            // 
+            // panelControl5
+            // 
+            this.panelControl5.Controls.Add(this.ExportBisButton);
+            this.panelControl5.Controls.Add(this.SearchBisButton);
+            this.panelControl5.Controls.Add(this.labelControl9);
+            this.panelControl5.Controls.Add(this.BisDateI);
+            this.panelControl5.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelControl5.Location = new System.Drawing.Point(0, 0);
+            this.panelControl5.Name = "panelControl5";
+            this.panelControl5.Size = new System.Drawing.Size(1650, 70);
+            this.panelControl5.TabIndex = 1;
+            // 
+            // ExportBisButton
+            // 
+            this.ExportBisButton.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("ExportBisButton.ImageOptions.Image")));
+            this.ExportBisButton.Location = new System.Drawing.Point(562, 14);
+            this.ExportBisButton.Name = "ExportBisButton";
+            this.ExportBisButton.Size = new System.Drawing.Size(177, 35);
+            this.ExportBisButton.TabIndex = 6;
+            this.ExportBisButton.Text = "Export to Excel";
+            this.ExportBisButton.Click += new System.EventHandler(this.ExportBisButton_Click);
+            // 
+            // SearchBisButton
+            // 
+            this.SearchBisButton.Location = new System.Drawing.Point(388, 14);
+            this.SearchBisButton.Name = "SearchBisButton";
+            this.SearchBisButton.Size = new System.Drawing.Size(168, 35);
+            this.SearchBisButton.TabIndex = 5;
+            this.SearchBisButton.Text = "Search";
+            this.SearchBisButton.Visible = false;
+            this.SearchBisButton.Click += new System.EventHandler(this.SearchBisButton_Click);
+            // 
+            // labelControl9
+            // 
+            this.labelControl9.Location = new System.Drawing.Point(36, 22);
+            this.labelControl9.Name = "labelControl9";
+            this.labelControl9.Size = new System.Drawing.Size(44, 19);
+            this.labelControl9.TabIndex = 4;
+            this.labelControl9.Text = "Month";
+            this.labelControl9.Visible = false;
+            // 
+            // BisDateI
+            // 
+            this.BisDateI.EditValue = null;
+            this.BisDateI.Location = new System.Drawing.Point(127, 19);
+            this.BisDateI.Name = "BisDateI";
+            this.BisDateI.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.BisDateI.Properties.CalendarView = DevExpress.XtraEditors.Repository.CalendarView.Vista;
+            this.BisDateI.Properties.MaskSettings.Set("mask", "Y");
+            this.BisDateI.Properties.UseMaskAsDisplayFormat = true;
+            this.BisDateI.Properties.VistaCalendarViewStyle = DevExpress.XtraEditors.VistaCalendarViewStyle.YearView;
+            this.BisDateI.Properties.VistaDisplayMode = DevExpress.Utils.DefaultBoolean.True;
+            this.BisDateI.Size = new System.Drawing.Size(225, 26);
+            this.BisDateI.TabIndex = 3;
+            this.BisDateI.Visible = false;
+            // 
             // Root
             // 
             this.Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
@@ -1154,21 +1347,6 @@
             this.layoutControlItem7.Text = "Wintech Invoice Folder";
             this.layoutControlItem7.TextSize = new System.Drawing.Size(161, 19);
             // 
-            // labelControl8
-            // 
-            this.labelControl8.Location = new System.Drawing.Point(33, 92);
-            this.labelControl8.Name = "labelControl8";
-            this.labelControl8.Size = new System.Drawing.Size(205, 19);
-            this.labelControl8.TabIndex = 21;
-            this.labelControl8.Text = "Wintech LB Invoices Location";
-            // 
-            // wintechLBInvoiceFolderI
-            // 
-            this.wintechLBInvoiceFolderI.Location = new System.Drawing.Point(255, 89);
-            this.wintechLBInvoiceFolderI.Name = "wintechLBInvoiceFolderI";
-            this.wintechLBInvoiceFolderI.Size = new System.Drawing.Size(910, 26);
-            this.wintechLBInvoiceFolderI.TabIndex = 20;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
@@ -1177,7 +1355,7 @@
             this.Controls.Add(this.myTabs);
             this.IsMdiContainer = true;
             this.Name = "MainForm";
-            this.Text = "InvoicesChecker 1.05";
+            this.Text = "InvoicesChecker 1.06";
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.invoicesView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.invoiceFileGrid)).EndInit();
@@ -1188,6 +1366,7 @@
             this.myTabs.ResumeLayout(false);
             this.xtraTabPage1.ResumeLayout(false);
             this.xtraTabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.wintechLBInvoiceFolderI.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.LbDiscountText.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.kwDiscountText.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.paymentsFolderI.Properties)).EndInit();
@@ -1219,6 +1398,15 @@
             this.panelControl3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.invoiceStatusCombo.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.selectYearCombo.Properties)).EndInit();
+            this.xtraTabPage6.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.BisGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.panelControl5)).EndInit();
+            this.panelControl5.ResumeLayout(false);
+            this.panelControl5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BisDateI.Properties.CalendarTimeProperties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BisDateI.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
@@ -1229,7 +1417,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.wintechLBInvoiceFolderI.Properties)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1329,5 +1516,20 @@
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn2;
         private DevExpress.XtraEditors.LabelControl labelControl8;
         private DevExpress.XtraEditors.TextEdit wintechLBInvoiceFolderI;
+        private DevExpress.XtraTab.XtraTabPage xtraTabPage6;
+        private System.Windows.Forms.Panel panel1;
+        private DevExpress.XtraEditors.PanelControl panelControl5;
+        private DevExpress.XtraEditors.SimpleButton ExportBisButton;
+        private DevExpress.XtraEditors.SimpleButton SearchBisButton;
+        private DevExpress.XtraEditors.LabelControl labelControl9;
+        private DevExpress.XtraEditors.DateEdit BisDateI;
+        private DevExpress.XtraGrid.GridControl BisGrid;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridView3;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn3;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn4;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn5;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn6;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn7;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn8;
     }
 }
