@@ -113,7 +113,7 @@ public class ScanInvoicesService
         var package = new ExcelPackage(new FileInfo(path));
         var sheet = package.Workbook.Worksheets.FirstOrDefault();
         if (sheet == null) throw new KnownException($"File {path} don't have sheet");
-        var h = sheet.Cells[19, 3].Value?.ToString()?.Trim();
+        var h = sheet.Cells[18, 3].Value?.ToString()?.Trim();
         var isHeader3IsFacture =  h== "Invoice";
         return isHeader3IsFacture ?
             ParseFormat1(sheet) :
