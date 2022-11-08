@@ -79,6 +79,9 @@ public class ScanInvoicesService
             var order = sheet.Cells[i, 1].Value?.ToString();
             if (string.IsNullOrEmpty(order)) break;
             var isBis = order.Contains("BIS");
+           
+            //we don't take Bis
+            if(isBis) continue;
             if (order.Contains("/") && !isBis)
                 order = order.Substring(0, order.IndexOf("/", StringComparison.Ordinal));
             
