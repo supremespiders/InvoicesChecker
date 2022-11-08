@@ -615,6 +615,7 @@
             this.recreateDbButton.Size = new System.Drawing.Size(219, 65);
             this.recreateDbButton.TabIndex = 11;
             this.recreateDbButton.Text = "Recreate database";
+            this.recreateDbButton.Visible = false;
             this.recreateDbButton.Click += new System.EventHandler(this.recreateDbButton_Click_1);
             // 
             // scanButton
