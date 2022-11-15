@@ -47,6 +47,10 @@ namespace InvoicesChecker
             Notifier.OnProgress += OnProgress;
             client = this.Controls.OfType<MdiClient>().FirstOrDefault();
 
+            if (File.Exists("admin.txt"))
+            {
+                recreateDbButton.Visible = true;
+            }
             if (!File.Exists("config")) return;
             var config = JsonSerializer.Deserialize<Config>(await File.ReadAllTextAsync("config"));
             wintechInvoiceFolderI.Text = config?.WintechInvoiceFolder;
