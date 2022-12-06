@@ -47,7 +47,7 @@ public class ScanInvoicesService
             if (string.IsNullOrEmpty(order)) break;
             if (order.Contains("/"))
                 order = order.Substring(0, order.IndexOf("/", StringComparison.Ordinal));
-            
+
             if (!DateTime.TryParseExact(sheet.Cells[i, 2].Value?.ToString(), "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var date))
                 if (!DateTime.TryParseExact(sheet.Cells[i, 2].Value?.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out date))
                     if (!DateTime.TryParse(sheet.Cells[i, 2].Value?.ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out date))
@@ -68,9 +68,10 @@ public class ScanInvoicesService
             _savedPayments.Add(order, payment);
             payments.Add(payment);
         }
+
         return payments;
     }
-    
+
     private List<Payment> ParseFormat2(ExcelWorksheet sheet)
     {
         var payments = new List<Payment>();
@@ -79,14 +80,13 @@ public class ScanInvoicesService
             var order = sheet.Cells[i, 1].Value?.ToString();
             if (string.IsNullOrEmpty(order)) break;
             var isBis = order.Contains("BIS");
-           
+
             //we don't take Bis
-            if(isBis) continue;
+            if (isBis) continue;
             if (order.Contains("/") && !isBis)
                 order = order.Substring(0, order.IndexOf("/", StringComparison.Ordinal));
-            
-           
-            
+
+
             if (!DateTime.TryParseExact(sheet.Cells[i, 2].Value?.ToString(), "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var date))
                 if (!DateTime.TryParseExact(sheet.Cells[i, 2].Value?.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out date))
                     if (!DateTime.TryParse(sheet.Cells[i, 2].Value?.ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out date))
@@ -108,6 +108,7 @@ public class ScanInvoicesService
             _savedPayments.Add(order, payment);
             payments.Add(payment);
         }
+
         return payments;
     }
 
@@ -117,10 +118,8 @@ public class ScanInvoicesService
         var sheet = package.Workbook.Worksheets.FirstOrDefault();
         if (sheet == null) throw new KnownException($"File {path} don't have sheet");
         var h = sheet.Cells[18, 3].Value?.ToString()?.Trim();
-        var isHeader3IsFacture =  h== "Invoice";
-        return isHeader3IsFacture ?
-            ParseFormat1(sheet) :
-            ParseFormat2(sheet);
+        var isHeader3IsFacture = h == "Invoice";
+        return isHeader3IsFacture ? ParseFormat1(sheet) : ParseFormat2(sheet);
     }
 
     private List<Payment> ScanPayment(string paymentFolder)
@@ -228,12 +227,13 @@ public class ScanInvoicesService
         foreach (var file in files)
         {
             if (!file.EndsWith(".xml")) continue;
-            var (client, week, year) = ParseFileName(file);
-            if (_filesOnDb.Contains($"{client}{year}{week}")) continue;
+            //     var (client, week, year) = ParseFileName(file);
+            var name = Path.GetFileNameWithoutExtension(file);
+            if (_filesOnDb.Contains(name)) continue;
             newFiles.Add(file);
         }
 
-        Notifier.Log($"Found {newFiles.Count} new files");
+        Notifier.Log($"Found {newFiles.Count} new files from {files.Length}");
         if (newFiles.Count == 0) return invoiceFiles;
         foreach (var newFile in newFiles)
         {
@@ -362,7 +362,8 @@ public class ScanInvoicesService
         Notifier.Log($"Start working");
 
         Notifier.Log("fetching file headers from db");
-        _filesOnDb = (await _context.InvoiceFiles.AsNoTracking().Select(x => new { x.Client, x.Year, x.FileNumber }).ToListAsync()).Select(x => $"{x.Client}{x.Year}{x.FileNumber}").ToHashSet();
+        // _filesOnDb = (await _context.InvoiceFiles.AsNoTracking().Select(x => new { x.Client, x.Year, x.FileNumber }).ToListAsync()).Select(x => $"{x.Client}{x.Year}{x.FileNumber}").ToHashSet();
+        _filesOnDb = (await _context.InvoiceFiles.AsNoTracking().Select(x => x.FileName).ToListAsync()).ToHashSet();
         _savedPayments = (await _context.Payments.AsNoTracking().ToListAsync()).ToDictionary(x => x.InvoiceNumber, x => x);
         Notifier.Log("fetching purchase numbers from db");
         _savedPos = (await _context.Invoices.AsNoTracking().ToListAsync()).Select(x => x.InvoiceNumber).ToHashSet();
