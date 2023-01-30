@@ -272,7 +272,21 @@ public class ScanInvoicesService
             }
         }
 
+        var invoiceNumbers = invoiceFiles.SelectMany(x => x.Invoices).ToList().Select(x => x.InvoiceNumber).ToList();
         await context.BulkInsert(invoiceFiles.SelectMany(x => x.Invoices).ToList());
+        var savedInvoices = await context.Invoices.AsNoTracking().Where(x => invoiceNumbers.Contains(x.InvoiceNumber)).ToListAsync();
+        var paymentsToUpdate = new List<Payment>();
+        foreach (var invoice in savedInvoices)
+        {
+            if (_savedPayments.ContainsKey(invoice.InvoiceNumber))
+            {
+                var p = _savedPayments[invoice.InvoiceNumber];
+                p.InvoiceId = invoice.Id;
+                paymentsToUpdate.Add(p);
+            }
+        }
+
+        await paymentsToUpdate.PrepareBulkUpdate(new List<string>(){"InvoiceId"}).ExecuteSqlInTransaction();
         Notifier.Log($"{invoiceFiles.Count} new invoice files saved");
     }
 
@@ -307,7 +321,6 @@ public class ScanInvoicesService
             }
 
             var invoiceFile = invoiceFiles.First(x => x.Id == invoice.InvoiceFileId);
-
             invoiceFile.TotalPayed += payment.PaymentAmount;
             invoiceFile.RestToPay = invoiceFile.TotalToPay - invoiceFile.TotalPayed;
             invoice.TotalPayed = payment.PaymentAmount;
@@ -315,6 +328,7 @@ public class ScanInvoicesService
         }
 
         await _context.BulkUpdate(invoices, new List<string> { "TotalPayed", "RestToPay" });
+       // await _context.BulkUpdate(insertedPayments, new List<string> { "InvoiceId" });
         await _context.BulkUpdate(invoiceFiles, new List<string> { "TotalPayed", "RestToPay" });
 
         //var invoiceFiles = await _context.InvoiceFiles.AsNoTracking().Include(x=>x.Invoices).Where(x => invoiceFilesIds.Contains(x.Id)).ToListAsync();
