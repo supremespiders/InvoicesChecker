@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -15,6 +16,7 @@ namespace InvoicesChecker.Extensions;
 
 public static class SqlExtensions
 {
+
     public static async Task BulkInsert<T>(this MyContext dbContext, List<T> models, int batch = 1000) where T : class
     {
         if (models.Count == 0) return;
@@ -180,5 +182,110 @@ public static class SqlExtensions
                 inserted = 0;
             }
         }
+    }
+    
+    public static string GetTableName<T>(this DbContext context) where T : class
+    {
+        var entityType = context.Model.FindEntityType(typeof(T));
+        var schema = entityType.GetSchema();
+        var tableName = entityType.GetTableName();
+        return tableName;
+    }
+    
+    public static async Task BulkDelete<T>(this List<T> items) where T : class
+    {
+        await items.PrepareBulkDelete().ExecuteSqlInTransaction();
+    }
+    
+    public static async Task ExecuteSqlInTransaction(this string sql)
+    {
+        if (string.IsNullOrEmpty(sql.Replace(Environment.NewLine,"").Trim())) return;
+        try
+        {
+            File.WriteAllText("lastSql", sql);
+        }
+        catch (Exception)
+        {
+            //
+        }
+
+        await using var connection = new SqlConnection(GlobalData.ConnectionString);
+        await connection.OpenAsync();
+        await using SqlTransaction transaction =(SqlTransaction) await connection.BeginTransactionAsync();
+        await using var cmd = new SqlCommand(sql, connection, transaction){CommandTimeout = 60*20};
+        try
+        {
+            var x = await cmd.ExecuteNonQueryAsync();
+            transaction.Commit();
+            Debug.WriteLine($"rows affected {x}");
+        }
+        catch (Exception)
+        {
+            transaction.Rollback();
+            throw;
+        }
+    }
+    
+    
+       public static string PrepareBulkUpdate<T>(this List<T> models, List<string> propertiesToCheck) where T : class
+        {
+            var dbContext = new MyContext();
+            if (models.Count == 0) return "";
+            //string name = dbContext.GetTableName<T>();
+            var table = dbContext.GetTableName<T>();
+            var properties = typeof(T).GetProperties().Where(x => propertiesToCheck.Contains(x.Name));
+            var propertyId = typeof(T).GetProperty("Id");
+            var sql = new StringBuilder("");
+            foreach (var model in models)
+            {
+                sql.Append($"update {table} set ");
+                foreach (var propertyInfo in properties)
+                {
+                    sql.Append(propertyInfo.Name).Append(" = ");
+
+                    var val = propertyInfo.GetValue(model)?.ToString() ?? "null";
+
+                    if (propertyInfo.PropertyType == typeof(decimal))
+                    {
+                        sql.Append(((decimal)propertyInfo.GetValue(model)).ToString(CultureInfo.InvariantCulture)).Append(",");
+                    }
+                    else if (propertyInfo.PropertyType == typeof(double))
+                    {
+                        sql.Append(((double)propertyInfo.GetValue(model)).ToString(CultureInfo.InvariantCulture)).Append(",");
+                    }
+                    else if (propertyInfo.PropertyType == typeof(DateTime))
+                    {
+                        sql.Append($"'{((DateTime)propertyInfo.GetValue(model)):yyyy-MM-dd H:mm:ss}',");
+                    }
+                    else if (propertyInfo.PropertyType == typeof(string))
+                    {
+                        sql.Append(propertyInfo.GetValue(model)?.ToString() == null ? "null," : $"'{val.Replace("'", "''")}',");
+                    }
+                    else if (propertyInfo.PropertyType.IsEnum)
+                    {
+                        sql.Append((int)propertyInfo.GetValue(model, null)).Append(",");
+                    }
+                    else
+                    {
+                        sql.Append(val.Replace("'", "''")).Append(",");
+                    }
+                }
+
+                sql.Remove(sql.Length - 1, 1);
+                sql.Append($" where Id={propertyId.GetValue(model)};\n");
+            }
+
+            return sql.ToString();
+        }
+    
+    public static string PrepareBulkDelete<T>(this List<T> items) where T : class
+    {
+        var dbContext = new MyContext();
+        if (items.Count == 0) return "";
+        var getter = items.First().Getter<T, int>("Id");
+        var ids = items.Select(item => getter(item)).ToList();
+        var table = dbContext.GetTableName<T>();
+        var sql = $"delete from {table} where Id in({string.Join(",", ids)});";
+        return sql;
     }
 }

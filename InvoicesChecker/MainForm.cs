@@ -51,6 +51,7 @@ namespace InvoicesChecker
             {
                 recreateDbButton.Visible = true;
                 SaveButton.Visible = true;
+                deleteButton.Visible = true;
             }
             if (!File.Exists("config")) return;
             var config = JsonSerializer.Deserialize<Config>(await File.ReadAllTextAsync("config"));
@@ -578,6 +579,31 @@ namespace InvoicesChecker
             {
                 MessageBox.Show(exception.ToString());
             }
+        }
+
+        private async void deleteButton_Click(object sender, EventArgs e)
+        {
+            if (invoiceFileView.SelectedRowsCount == 0) return;
+            var invoiceFile = invoiceFileView.GetRow(invoiceFileView.GetSelectedRows()[0]) as InvoiceFile;
+            if (invoiceFile == null) return;
+            if (!this.Confirm($"Do you want to delete this invoice file : {invoiceFile.FileName} ?")) return;
+            var context = new MyContext();
+            var ids = invoiceFile.Invoices.Select(x => x.Id);
+            await this.Exec(async () =>
+            {
+                var payments = await context.Payments.Where(x => ids.Contains(x.InvoiceId.GetValueOrDefault())).ToListAsync();
+                foreach (var payment in payments)
+                {
+                    payment.InvoiceId = null;
+                }
+                var sb = new StringBuilder();
+                sb.AppendLine(payments.PrepareBulkUpdate(new List<string>() { "InvoiceId" }));
+                sb.AppendLine(invoiceFile.Invoices.PrepareBulkDelete());
+                sb.AppendLine(new List<InvoiceFile>() { invoiceFile }.PrepareBulkDelete());
+                await sb.ToString().ExecuteSqlInTransaction();
+                _invoiceFiles.Remove(invoiceFile);
+                invoiceFileGrid.RefreshDataSource();
+            });
         }
     }
 }
