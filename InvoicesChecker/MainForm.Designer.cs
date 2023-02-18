@@ -1424,7 +1424,7 @@
             this.IsMdiContainer = true;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "MainForm";
-            this.Text = "InvoicesChecker 1.08";
+            this.Text = "InvoicesChecker 1.09";
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.invoicesView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.invoiceFileGrid)).EndInit();

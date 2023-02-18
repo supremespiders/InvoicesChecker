@@ -457,6 +457,7 @@ namespace InvoicesChecker
                 }
 
                 f.TotalToPay = f.Invoices.Sum(x => x.TotalToPay);
+                f.TotalAmount = f.Invoices.Sum(x => x.TotalAmount);
                 f.TotalPayed = f.Invoices.Sum(x => x.TotalPayed);
                 f.RestToPay = f.Invoices.Sum(x => x.RestToPay);
                 if (f.Invoices.Count != 0)
