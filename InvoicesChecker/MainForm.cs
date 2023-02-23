@@ -489,6 +489,7 @@ namespace InvoicesChecker
                             TotalPayed = invoice.TotalPayed,
                             RestToPay = invoice.RestToPay,
                             TotalToPay = invoice.TotalToPay,
+                            TotalAmount = invoice.TotalAmount,
                             Year = invoiceFile.Year,
                             InvoiceFile = invoiceFile.FileName,
                             FileNumber = invoiceFile.FileNumber,
