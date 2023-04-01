@@ -29,20 +29,20 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            DevExpress.XtraGrid.GridFormatRule gridFormatRule7 = new DevExpress.XtraGrid.GridFormatRule();
-            DevExpress.XtraEditors.FormatConditionRuleExpression formatConditionRuleExpression7 = new DevExpress.XtraEditors.FormatConditionRuleExpression();
-            DevExpress.XtraGrid.GridFormatRule gridFormatRule8 = new DevExpress.XtraGrid.GridFormatRule();
-            DevExpress.XtraEditors.FormatConditionRuleExpression formatConditionRuleExpression8 = new DevExpress.XtraEditors.FormatConditionRuleExpression();
-            DevExpress.XtraGrid.GridLevelNode gridLevelNode2 = new DevExpress.XtraGrid.GridLevelNode();
-            DevExpress.XtraGrid.GridFormatRule gridFormatRule9 = new DevExpress.XtraGrid.GridFormatRule();
-            DevExpress.XtraEditors.FormatConditionRuleExpression formatConditionRuleExpression9 = new DevExpress.XtraEditors.FormatConditionRuleExpression();
-            DevExpress.XtraGrid.GridFormatRule gridFormatRule10 = new DevExpress.XtraGrid.GridFormatRule();
-            DevExpress.XtraEditors.FormatConditionRuleExpression formatConditionRuleExpression10 = new DevExpress.XtraEditors.FormatConditionRuleExpression();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             DevExpress.XtraGrid.GridFormatRule gridFormatRule1 = new DevExpress.XtraGrid.GridFormatRule();
             DevExpress.XtraEditors.FormatConditionRuleExpression formatConditionRuleExpression1 = new DevExpress.XtraEditors.FormatConditionRuleExpression();
             DevExpress.XtraGrid.GridFormatRule gridFormatRule2 = new DevExpress.XtraGrid.GridFormatRule();
             DevExpress.XtraEditors.FormatConditionRuleExpression formatConditionRuleExpression2 = new DevExpress.XtraEditors.FormatConditionRuleExpression();
+            DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
+            DevExpress.XtraGrid.GridFormatRule gridFormatRule3 = new DevExpress.XtraGrid.GridFormatRule();
+            DevExpress.XtraEditors.FormatConditionRuleExpression formatConditionRuleExpression3 = new DevExpress.XtraEditors.FormatConditionRuleExpression();
+            DevExpress.XtraGrid.GridFormatRule gridFormatRule4 = new DevExpress.XtraGrid.GridFormatRule();
+            DevExpress.XtraEditors.FormatConditionRuleExpression formatConditionRuleExpression4 = new DevExpress.XtraEditors.FormatConditionRuleExpression();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            DevExpress.XtraGrid.GridFormatRule gridFormatRule5 = new DevExpress.XtraGrid.GridFormatRule();
+            DevExpress.XtraEditors.FormatConditionRuleExpression formatConditionRuleExpression5 = new DevExpress.XtraEditors.FormatConditionRuleExpression();
+            DevExpress.XtraGrid.GridFormatRule gridFormatRule6 = new DevExpress.XtraGrid.GridFormatRule();
+            DevExpress.XtraEditors.FormatConditionRuleExpression formatConditionRuleExpression6 = new DevExpress.XtraEditors.FormatConditionRuleExpression();
             this.invoicesView = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colInvoiceNumber1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colInvoiceDate1 = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -224,20 +224,20 @@
             this.colRestToPay2,
             this.colTotalAmount1,
             this.gridColumn2});
-            gridFormatRule7.ApplyToRow = true;
-            gridFormatRule7.Name = "Format0";
-            formatConditionRuleExpression7.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            formatConditionRuleExpression7.Appearance.Options.UseBackColor = true;
-            formatConditionRuleExpression7.Expression = "[RestToPay] = 0";
-            gridFormatRule7.Rule = formatConditionRuleExpression7;
-            gridFormatRule8.ApplyToRow = true;
-            gridFormatRule8.Name = "Format1";
-            formatConditionRuleExpression8.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            formatConditionRuleExpression8.Appearance.Options.UseBackColor = true;
-            formatConditionRuleExpression8.Expression = "[RestToPay] <> 0 And [RestToPay] <> [TotalToPay]";
-            gridFormatRule8.Rule = formatConditionRuleExpression8;
-            this.invoicesView.FormatRules.Add(gridFormatRule7);
-            this.invoicesView.FormatRules.Add(gridFormatRule8);
+            gridFormatRule1.ApplyToRow = true;
+            gridFormatRule1.Name = "Format0";
+            formatConditionRuleExpression1.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            formatConditionRuleExpression1.Appearance.Options.UseBackColor = true;
+            formatConditionRuleExpression1.Expression = "[RestToPay] = 0";
+            gridFormatRule1.Rule = formatConditionRuleExpression1;
+            gridFormatRule2.ApplyToRow = true;
+            gridFormatRule2.Name = "Format1";
+            formatConditionRuleExpression2.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            formatConditionRuleExpression2.Appearance.Options.UseBackColor = true;
+            formatConditionRuleExpression2.Expression = "[RestToPay] <> 0 And [RestToPay] <> [TotalToPay]";
+            gridFormatRule2.Rule = formatConditionRuleExpression2;
+            this.invoicesView.FormatRules.Add(gridFormatRule1);
+            this.invoicesView.FormatRules.Add(gridFormatRule2);
             this.invoicesView.GridControl = this.invoiceFileGrid;
             this.invoicesView.GroupSummary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "TotalToPay", null, "")});
@@ -245,12 +245,16 @@
             this.invoicesView.OptionsBehavior.Editable = false;
             this.invoicesView.OptionsView.ShowFooter = true;
             this.invoicesView.OptionsView.ShowGroupPanel = false;
+            this.invoicesView.IndicatorWidth= 70;  
+            this.invoicesView.CustomDrawRowIndicator += InvoicesViewCustomDrawRowIndicator;
             // 
             // colInvoiceNumber1
             // 
             this.colInvoiceNumber1.FieldName = "InvoiceNumber";
             this.colInvoiceNumber1.MinWidth = 30;
             this.colInvoiceNumber1.Name = "colInvoiceNumber1";
+            this.colInvoiceNumber1.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Count, "InvoiceNumber", "Number of rows {0}")});
             this.colInvoiceNumber1.Visible = true;
             this.colInvoiceNumber1.VisibleIndex = 0;
             this.colInvoiceNumber1.Width = 112;
@@ -354,10 +358,10 @@
             this.invoiceFileGrid.DataSource = this.invoiceFileBindingSource;
             this.invoiceFileGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.invoiceFileGrid.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            gridLevelNode2.LevelTemplate = this.invoicesView;
-            gridLevelNode2.RelationName = "Invoices";
+            gridLevelNode1.LevelTemplate = this.invoicesView;
+            gridLevelNode1.RelationName = "Invoices";
             this.invoiceFileGrid.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
-            gridLevelNode2});
+            gridLevelNode1});
             this.invoiceFileGrid.Location = new System.Drawing.Point(2, 2);
             this.invoiceFileGrid.MainView = this.invoiceFileView;
             this.invoiceFileGrid.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -384,20 +388,20 @@
             this.colRestToPay1,
             this.colTotalAmount,
             this.gridColumn1});
-            gridFormatRule9.ApplyToRow = true;
-            gridFormatRule9.Name = "Format0";
-            formatConditionRuleExpression9.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            formatConditionRuleExpression9.Appearance.Options.UseBackColor = true;
-            formatConditionRuleExpression9.Expression = "[RestToPay] = 0";
-            gridFormatRule9.Rule = formatConditionRuleExpression9;
-            gridFormatRule10.ApplyToRow = true;
-            gridFormatRule10.Name = "Format1";
-            formatConditionRuleExpression10.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            formatConditionRuleExpression10.Appearance.Options.UseBackColor = true;
-            formatConditionRuleExpression10.Expression = "[RestToPay] <> 0 And [RestToPay] <> [TotalToPay]";
-            gridFormatRule10.Rule = formatConditionRuleExpression10;
-            this.invoiceFileView.FormatRules.Add(gridFormatRule9);
-            this.invoiceFileView.FormatRules.Add(gridFormatRule10);
+            gridFormatRule3.ApplyToRow = true;
+            gridFormatRule3.Name = "Format0";
+            formatConditionRuleExpression3.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            formatConditionRuleExpression3.Appearance.Options.UseBackColor = true;
+            formatConditionRuleExpression3.Expression = "[RestToPay] = 0";
+            gridFormatRule3.Rule = formatConditionRuleExpression3;
+            gridFormatRule4.ApplyToRow = true;
+            gridFormatRule4.Name = "Format1";
+            formatConditionRuleExpression4.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            formatConditionRuleExpression4.Appearance.Options.UseBackColor = true;
+            formatConditionRuleExpression4.Expression = "[RestToPay] <> 0 And [RestToPay] <> [TotalToPay]";
+            gridFormatRule4.Rule = formatConditionRuleExpression4;
+            this.invoiceFileView.FormatRules.Add(gridFormatRule3);
+            this.invoiceFileView.FormatRules.Add(gridFormatRule4);
             this.invoiceFileView.GridControl = this.invoiceFileGrid;
             this.invoiceFileView.Name = "invoiceFileView";
             this.invoiceFileView.OptionsBehavior.Editable = false;
@@ -740,20 +744,20 @@
             this.colTotal,
             this.colPayment,
             this.colRestToPay});
-            gridFormatRule1.ApplyToRow = true;
-            gridFormatRule1.Name = "Format0";
-            formatConditionRuleExpression1.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            formatConditionRuleExpression1.Appearance.Options.UseBackColor = true;
-            formatConditionRuleExpression1.Expression = "[RestToPay] = 0";
-            gridFormatRule1.Rule = formatConditionRuleExpression1;
-            gridFormatRule2.ApplyToRow = true;
-            gridFormatRule2.Name = "Format1";
-            formatConditionRuleExpression2.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            formatConditionRuleExpression2.Appearance.Options.UseBackColor = true;
-            formatConditionRuleExpression2.Expression = "[RestToPay] <> 0 And [RestToPay] <> [Total]";
-            gridFormatRule2.Rule = formatConditionRuleExpression2;
-            this.gridView1.FormatRules.Add(gridFormatRule1);
-            this.gridView1.FormatRules.Add(gridFormatRule2);
+            gridFormatRule5.ApplyToRow = true;
+            gridFormatRule5.Name = "Format0";
+            formatConditionRuleExpression5.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            formatConditionRuleExpression5.Appearance.Options.UseBackColor = true;
+            formatConditionRuleExpression5.Expression = "[RestToPay] = 0";
+            gridFormatRule5.Rule = formatConditionRuleExpression5;
+            gridFormatRule6.ApplyToRow = true;
+            gridFormatRule6.Name = "Format1";
+            formatConditionRuleExpression6.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            formatConditionRuleExpression6.Appearance.Options.UseBackColor = true;
+            formatConditionRuleExpression6.Expression = "[RestToPay] <> 0 And [RestToPay] <> [Total]";
+            gridFormatRule6.Rule = formatConditionRuleExpression6;
+            this.gridView1.FormatRules.Add(gridFormatRule5);
+            this.gridView1.FormatRules.Add(gridFormatRule6);
             this.gridView1.GridControl = this.InvoicesGrid;
             this.gridView1.Name = "gridView1";
             this.gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
@@ -1424,7 +1428,7 @@
             this.IsMdiContainer = true;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "MainForm";
-            this.Text = "InvoicesChecker 1.09";
+            this.Text = "InvoicesChecker 1.10";
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.invoicesView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.invoiceFileGrid)).EndInit();

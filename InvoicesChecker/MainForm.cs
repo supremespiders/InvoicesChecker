@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.Export;
 using DevExpress.LookAndFeel;
+using DevExpress.XtraGrid.Views.Grid;
 using ExcelHelperExe;
 using InvoicesChecker.Extensions;
 using InvoicesChecker.Models;
@@ -465,7 +466,12 @@ namespace InvoicesChecker
             }
             invoiceFileGrid.DataSource = _filteredInvoiceFiles;
         }
-
+        
+        void InvoicesViewCustomDrawRowIndicator(object sender, RowIndicatorCustomDrawEventArgs e)  
+        {  
+            if(e.RowHandle >= 0 )  
+                e.Info.DisplayText = (e.RowHandle+1).ToString();  
+        }  
         private async void exportInvoicesToExcel_Click(object sender, EventArgs e)
         {
             if (_filteredInvoiceFiles == null || _filteredInvoiceFiles.Count == 0) return;
