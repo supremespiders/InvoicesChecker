@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 using InvoicesChecker.Extensions;
 using InvoicesChecker.Models;
 using Microsoft.EntityFrameworkCore;
+using MySql.Data.MySqlClient;
 using OfficeOpenXml;
 
 namespace InvoicesChecker.Services;
@@ -371,6 +373,23 @@ public class ScanInvoicesService
         }
     }
 
+    public async Task<Dictionary<string, string>> GetBdcs(List<string> purchaseNumbers)
+    {
+        var dic = new Dictionary<string, string>();
+        await using var con = new MySqlConnection(ConfigurationManager.ConnectionStrings["wintech"].ConnectionString);
+        await con.OpenAsync();
+        await using var cmd = new MySqlCommand($"Select Number,PurchaseNumber from bdcs where PurchaseNumber in ({string.Join(",", purchaseNumbers)})", con);
+        await using var r = await cmd.ExecuteReaderAsync();
+        while (await r.ReadAsync())
+        {
+           var number = r["Number"].ToString();
+           var purchase = r["PurchaseNumber"].ToString();
+           if(purchase==null) continue;
+           dic.Add(purchase,number);
+        }
+        return dic;
+    }
+
     public async Task<(bool invoiceChanged, bool paymentChanged)> MainWork()
     {
         Notifier.Log($"Start working");
@@ -383,12 +402,16 @@ public class ScanInvoicesService
         _savedPos = (await _context.Invoices.AsNoTracking().ToListAsync()).Select(x => x.InvoiceNumber).ToHashSet();
 
         var invoiceFiles = new List<InvoiceFile>();
+        var invoiceFilesWintech = new List<InvoiceFile>();
+        var invoiceFilesWinsat = new List<InvoiceFile>();
         Notifier.Log("Checking Wintech KW folder for new invoices");
-        invoiceFiles.AddRange(await CheckForNewFiles(_wintechInvoiceFolder));
+        invoiceFilesWintech.AddRange(await CheckForNewFiles(_wintechInvoiceFolder));
         Notifier.Log("Checking Wintech LB folder for new invoices");
-        invoiceFiles.AddRange(await CheckForNewFiles(_wintechLBInvoiceFolder));
+        invoiceFilesWintech.AddRange(await CheckForNewFiles(_wintechLBInvoiceFolder));
         Notifier.Log("Checking Winsat folder for new invoices");
-        invoiceFiles.AddRange(await CheckForNewFiles(_winsatInvoiceFolder));
+        invoiceFilesWinsat.AddRange(await CheckForNewFiles(_winsatInvoiceFolder));
+        invoiceFiles.AddRange(invoiceFilesWintech);
+        invoiceFiles.AddRange(invoiceFilesWinsat);
 
         CheckDuplicatePurchaseNumbers(invoiceFiles);
         CheckPaymentsForInvoices(invoiceFiles);

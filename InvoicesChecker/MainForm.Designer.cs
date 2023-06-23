@@ -66,6 +66,7 @@
             this.colRestToPay1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colTotalAmount = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colEcart = new DevExpress.XtraGrid.Columns.GridColumn();
             this.xtraTabbedMdiManager1 = new DevExpress.XtraTabbedMdi.XtraTabbedMdiManager(this.components);
             this.myTabs = new DevExpress.XtraTab.XtraTabControl();
             this.xtraTabPage1 = new DevExpress.XtraTab.XtraTabPage();
@@ -153,6 +154,7 @@
             this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.colEcart1 = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.invoicesView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.invoiceFileGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.invoiceFileBindingSource)).BeginInit();
@@ -223,7 +225,9 @@
             this.colTotalPayed1,
             this.colRestToPay2,
             this.colTotalAmount1,
-            this.gridColumn2});
+            this.gridColumn2,
+            this.colEcart1});
+            this.invoicesView.DetailHeight = 295;
             gridFormatRule1.ApplyToRow = true;
             gridFormatRule1.Name = "Format0";
             formatConditionRuleExpression1.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
@@ -241,109 +245,108 @@
             this.invoicesView.GridControl = this.invoiceFileGrid;
             this.invoicesView.GroupSummary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "TotalToPay", null, "")});
+            this.invoicesView.IndicatorWidth = 54;
             this.invoicesView.Name = "invoicesView";
             this.invoicesView.OptionsBehavior.Editable = false;
             this.invoicesView.OptionsView.ShowFooter = true;
             this.invoicesView.OptionsView.ShowGroupPanel = false;
-            this.invoicesView.IndicatorWidth= 70;  
-            this.invoicesView.CustomDrawRowIndicator += InvoicesViewCustomDrawRowIndicator;
             // 
             // colInvoiceNumber1
             // 
             this.colInvoiceNumber1.FieldName = "InvoiceNumber";
-            this.colInvoiceNumber1.MinWidth = 30;
+            this.colInvoiceNumber1.MinWidth = 23;
             this.colInvoiceNumber1.Name = "colInvoiceNumber1";
             this.colInvoiceNumber1.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Count, "InvoiceNumber", "Number of rows {0}")});
             this.colInvoiceNumber1.Visible = true;
             this.colInvoiceNumber1.VisibleIndex = 0;
-            this.colInvoiceNumber1.Width = 112;
+            this.colInvoiceNumber1.Width = 87;
             // 
             // colInvoiceDate1
             // 
             this.colInvoiceDate1.FieldName = "InvoiceDate";
-            this.colInvoiceDate1.MinWidth = 30;
+            this.colInvoiceDate1.MinWidth = 23;
             this.colInvoiceDate1.Name = "colInvoiceDate1";
             this.colInvoiceDate1.Visible = true;
             this.colInvoiceDate1.VisibleIndex = 1;
-            this.colInvoiceDate1.Width = 112;
+            this.colInvoiceDate1.Width = 87;
             // 
             // colOrderDate1
             // 
             this.colOrderDate1.FieldName = "OrderDate";
-            this.colOrderDate1.MinWidth = 30;
+            this.colOrderDate1.MinWidth = 23;
             this.colOrderDate1.Name = "colOrderDate1";
             this.colOrderDate1.Visible = true;
             this.colOrderDate1.VisibleIndex = 2;
-            this.colOrderDate1.Width = 112;
+            this.colOrderDate1.Width = 87;
             // 
             // colPurchaseNumber1
             // 
             this.colPurchaseNumber1.FieldName = "PurchaseNumber";
-            this.colPurchaseNumber1.MinWidth = 30;
+            this.colPurchaseNumber1.MinWidth = 23;
             this.colPurchaseNumber1.Name = "colPurchaseNumber1";
             this.colPurchaseNumber1.Visible = true;
             this.colPurchaseNumber1.VisibleIndex = 3;
-            this.colPurchaseNumber1.Width = 112;
+            this.colPurchaseNumber1.Width = 87;
             // 
             // colGlnPartner1
             // 
             this.colGlnPartner1.FieldName = "GlnPartner";
-            this.colGlnPartner1.MinWidth = 30;
+            this.colGlnPartner1.MinWidth = 23;
             this.colGlnPartner1.Name = "colGlnPartner1";
             this.colGlnPartner1.Visible = true;
             this.colGlnPartner1.VisibleIndex = 4;
-            this.colGlnPartner1.Width = 112;
+            this.colGlnPartner1.Width = 87;
             // 
             // colTotalToPay1
             // 
             this.colTotalToPay1.FieldName = "TotalToPay";
-            this.colTotalToPay1.MinWidth = 30;
+            this.colTotalToPay1.MinWidth = 23;
             this.colTotalToPay1.Name = "colTotalToPay1";
             this.colTotalToPay1.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "TotalToPay", "Total To Pay={0:0.##}")});
             this.colTotalToPay1.Visible = true;
             this.colTotalToPay1.VisibleIndex = 7;
-            this.colTotalToPay1.Width = 112;
+            this.colTotalToPay1.Width = 87;
             // 
             // colTotalPayed1
             // 
             this.colTotalPayed1.FieldName = "TotalPayed";
-            this.colTotalPayed1.MinWidth = 30;
+            this.colTotalPayed1.MinWidth = 23;
             this.colTotalPayed1.Name = "colTotalPayed1";
             this.colTotalPayed1.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "TotalPayed", "Total Payed={0:0.##}")});
             this.colTotalPayed1.Visible = true;
             this.colTotalPayed1.VisibleIndex = 8;
-            this.colTotalPayed1.Width = 112;
+            this.colTotalPayed1.Width = 87;
             // 
             // colRestToPay2
             // 
             this.colRestToPay2.FieldName = "RestToPay";
-            this.colRestToPay2.MinWidth = 30;
+            this.colRestToPay2.MinWidth = 23;
             this.colRestToPay2.Name = "colRestToPay2";
             this.colRestToPay2.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "RestToPay", "Rest To Pay={0:0.##}")});
             this.colRestToPay2.Visible = true;
             this.colRestToPay2.VisibleIndex = 9;
-            this.colRestToPay2.Width = 112;
+            this.colRestToPay2.Width = 87;
             // 
             // colTotalAmount1
             // 
             this.colTotalAmount1.FieldName = "TotalAmount";
-            this.colTotalAmount1.MinWidth = 30;
+            this.colTotalAmount1.MinWidth = 23;
             this.colTotalAmount1.Name = "colTotalAmount1";
             this.colTotalAmount1.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "TotalAmount", "Total Amount={0:0.##}")});
             this.colTotalAmount1.Visible = true;
             this.colTotalAmount1.VisibleIndex = 5;
-            this.colTotalAmount1.Width = 112;
+            this.colTotalAmount1.Width = 87;
             // 
             // gridColumn2
             // 
             this.gridColumn2.Caption = "Discount";
             this.gridColumn2.FieldName = "gridColumn2";
-            this.gridColumn2.MinWidth = 30;
+            this.gridColumn2.MinWidth = 23;
             this.gridColumn2.Name = "gridColumn2";
             this.gridColumn2.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "gridColumn2", "Total Discount={0:0.##}")});
@@ -351,22 +354,22 @@
             this.gridColumn2.UnboundExpression = "[TotalAmount] - [TotalToPay]";
             this.gridColumn2.Visible = true;
             this.gridColumn2.VisibleIndex = 6;
-            this.gridColumn2.Width = 112;
+            this.gridColumn2.Width = 87;
             // 
             // invoiceFileGrid
             // 
             this.invoiceFileGrid.DataSource = this.invoiceFileBindingSource;
             this.invoiceFileGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.invoiceFileGrid.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.invoiceFileGrid.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             gridLevelNode1.LevelTemplate = this.invoicesView;
             gridLevelNode1.RelationName = "Invoices";
             this.invoiceFileGrid.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
             gridLevelNode1});
             this.invoiceFileGrid.Location = new System.Drawing.Point(2, 2);
             this.invoiceFileGrid.MainView = this.invoiceFileView;
-            this.invoiceFileGrid.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.invoiceFileGrid.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.invoiceFileGrid.Name = "invoiceFileGrid";
-            this.invoiceFileGrid.Size = new System.Drawing.Size(1646, 783);
+            this.invoiceFileGrid.Size = new System.Drawing.Size(1279, 658);
             this.invoiceFileGrid.TabIndex = 0;
             this.invoiceFileGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.invoiceFileView,
@@ -387,7 +390,9 @@
             this.colTotalPayed,
             this.colRestToPay1,
             this.colTotalAmount,
-            this.gridColumn1});
+            this.gridColumn1,
+            this.colEcart});
+            this.invoiceFileView.DetailHeight = 295;
             gridFormatRule3.ApplyToRow = true;
             gridFormatRule3.Name = "Format0";
             formatConditionRuleExpression3.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
@@ -411,88 +416,88 @@
             // colClient2
             // 
             this.colClient2.FieldName = "Client";
-            this.colClient2.MinWidth = 30;
+            this.colClient2.MinWidth = 23;
             this.colClient2.Name = "colClient2";
             this.colClient2.Visible = true;
             this.colClient2.VisibleIndex = 1;
-            this.colClient2.Width = 112;
+            this.colClient2.Width = 87;
             // 
             // colYear2
             // 
             this.colYear2.FieldName = "Year";
-            this.colYear2.MinWidth = 30;
+            this.colYear2.MinWidth = 23;
             this.colYear2.Name = "colYear2";
             this.colYear2.Visible = true;
             this.colYear2.VisibleIndex = 2;
-            this.colYear2.Width = 112;
+            this.colYear2.Width = 87;
             // 
             // colFileNumber
             // 
             this.colFileNumber.FieldName = "FileNumber";
-            this.colFileNumber.MinWidth = 30;
+            this.colFileNumber.MinWidth = 23;
             this.colFileNumber.Name = "colFileNumber";
             this.colFileNumber.Visible = true;
             this.colFileNumber.VisibleIndex = 3;
-            this.colFileNumber.Width = 112;
+            this.colFileNumber.Width = 87;
             // 
             // colFileName
             // 
             this.colFileName.FieldName = "FileName";
-            this.colFileName.MinWidth = 30;
+            this.colFileName.MinWidth = 23;
             this.colFileName.Name = "colFileName";
             this.colFileName.Visible = true;
             this.colFileName.VisibleIndex = 0;
-            this.colFileName.Width = 112;
+            this.colFileName.Width = 87;
             // 
             // colTotalToPay
             // 
             this.colTotalToPay.FieldName = "TotalToPay";
-            this.colTotalToPay.MinWidth = 30;
+            this.colTotalToPay.MinWidth = 23;
             this.colTotalToPay.Name = "colTotalToPay";
             this.colTotalToPay.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "TotalToPay", "Total to pay={0:0.##}")});
             this.colTotalToPay.Visible = true;
             this.colTotalToPay.VisibleIndex = 6;
-            this.colTotalToPay.Width = 112;
+            this.colTotalToPay.Width = 87;
             // 
             // colTotalPayed
             // 
             this.colTotalPayed.FieldName = "TotalPayed";
-            this.colTotalPayed.MinWidth = 30;
+            this.colTotalPayed.MinWidth = 23;
             this.colTotalPayed.Name = "colTotalPayed";
             this.colTotalPayed.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "TotalPayed", "Total Payed={0:0.##}")});
             this.colTotalPayed.Visible = true;
             this.colTotalPayed.VisibleIndex = 7;
-            this.colTotalPayed.Width = 112;
+            this.colTotalPayed.Width = 87;
             // 
             // colRestToPay1
             // 
             this.colRestToPay1.FieldName = "RestToPay";
-            this.colRestToPay1.MinWidth = 30;
+            this.colRestToPay1.MinWidth = 23;
             this.colRestToPay1.Name = "colRestToPay1";
             this.colRestToPay1.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "RestToPay", "Rest To Pay={0:0.##}")});
             this.colRestToPay1.Visible = true;
             this.colRestToPay1.VisibleIndex = 8;
-            this.colRestToPay1.Width = 112;
+            this.colRestToPay1.Width = 87;
             // 
             // colTotalAmount
             // 
             this.colTotalAmount.FieldName = "TotalAmount";
-            this.colTotalAmount.MinWidth = 30;
+            this.colTotalAmount.MinWidth = 23;
             this.colTotalAmount.Name = "colTotalAmount";
             this.colTotalAmount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "TotalAmount", "Total Amount={0:0.##}")});
             this.colTotalAmount.Visible = true;
             this.colTotalAmount.VisibleIndex = 4;
-            this.colTotalAmount.Width = 112;
+            this.colTotalAmount.Width = 87;
             // 
             // gridColumn1
             // 
             this.gridColumn1.Caption = "Discount";
             this.gridColumn1.FieldName = "gridColumn1";
-            this.gridColumn1.MinWidth = 30;
+            this.gridColumn1.MinWidth = 23;
             this.gridColumn1.Name = "gridColumn1";
             this.gridColumn1.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "gridColumn1", "Total Discount={0:0.##}")});
@@ -500,7 +505,18 @@
             this.gridColumn1.UnboundExpression = "[TotalAmount] - [TotalToPay]";
             this.gridColumn1.Visible = true;
             this.gridColumn1.VisibleIndex = 5;
-            this.gridColumn1.Width = 112;
+            this.gridColumn1.Width = 87;
+            // 
+            // colEcart
+            // 
+            this.colEcart.DisplayFormat.FormatString = "P1";
+            this.colEcart.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Custom;
+            this.colEcart.FieldName = "Ecart";
+            this.colEcart.MinWidth = 25;
+            this.colEcart.Name = "colEcart";
+            this.colEcart.Visible = true;
+            this.colEcart.VisibleIndex = 9;
+            this.colEcart.Width = 58;
             // 
             // xtraTabbedMdiManager1
             // 
@@ -510,10 +526,10 @@
             // 
             this.myTabs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.myTabs.Location = new System.Drawing.Point(0, 0);
-            this.myTabs.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.myTabs.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.myTabs.Name = "myTabs";
             this.myTabs.SelectedTabPage = this.xtraTabPage1;
-            this.myTabs.Size = new System.Drawing.Size(1652, 911);
+            this.myTabs.Size = new System.Drawing.Size(1285, 767);
             this.myTabs.TabIndex = 1;
             this.myTabs.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.xtraTabPage1,
@@ -540,86 +556,86 @@
             this.xtraTabPage1.Controls.Add(this.paymentsFolderI);
             this.xtraTabPage1.Controls.Add(this.winsatInvoiceFolderI);
             this.xtraTabPage1.Controls.Add(this.wintechInvoiceFolderI);
-            this.xtraTabPage1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.xtraTabPage1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.xtraTabPage1.Name = "xtraTabPage1";
-            this.xtraTabPage1.Size = new System.Drawing.Size(1650, 876);
+            this.xtraTabPage1.Size = new System.Drawing.Size(1283, 737);
             this.xtraTabPage1.Text = "Scanner";
             // 
             // labelControl8
             // 
-            this.labelControl8.Location = new System.Drawing.Point(33, 91);
-            this.labelControl8.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.labelControl8.Location = new System.Drawing.Point(26, 77);
+            this.labelControl8.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.labelControl8.Name = "labelControl8";
-            this.labelControl8.Size = new System.Drawing.Size(205, 19);
+            this.labelControl8.Size = new System.Drawing.Size(164, 16);
             this.labelControl8.TabIndex = 21;
             this.labelControl8.Text = "Wintech LB Invoices Location";
             // 
             // wintechLBInvoiceFolderI
             // 
-            this.wintechLBInvoiceFolderI.Location = new System.Drawing.Point(255, 89);
-            this.wintechLBInvoiceFolderI.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.wintechLBInvoiceFolderI.Location = new System.Drawing.Point(198, 75);
+            this.wintechLBInvoiceFolderI.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.wintechLBInvoiceFolderI.Name = "wintechLBInvoiceFolderI";
-            this.wintechLBInvoiceFolderI.Size = new System.Drawing.Size(910, 26);
+            this.wintechLBInvoiceFolderI.Size = new System.Drawing.Size(708, 22);
             this.wintechLBInvoiceFolderI.TabIndex = 20;
             // 
             // labelControl7
             // 
-            this.labelControl7.Location = new System.Drawing.Point(435, 249);
-            this.labelControl7.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.labelControl7.Location = new System.Drawing.Point(338, 210);
+            this.labelControl7.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.labelControl7.Name = "labelControl7";
-            this.labelControl7.Size = new System.Drawing.Size(83, 19);
+            this.labelControl7.Size = new System.Drawing.Size(65, 16);
             this.labelControl7.TabIndex = 19;
             this.labelControl7.Text = "LB Discount";
             // 
             // LbDiscountText
             // 
-            this.LbDiscountText.Location = new System.Drawing.Point(586, 246);
-            this.LbDiscountText.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.LbDiscountText.Location = new System.Drawing.Point(456, 207);
+            this.LbDiscountText.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.LbDiscountText.Name = "LbDiscountText";
-            this.LbDiscountText.Size = new System.Drawing.Size(123, 26);
+            this.LbDiscountText.Size = new System.Drawing.Size(96, 22);
             this.LbDiscountText.TabIndex = 18;
             // 
             // labelControl6
             // 
-            this.labelControl6.Location = new System.Drawing.Point(33, 249);
-            this.labelControl6.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.labelControl6.Location = new System.Drawing.Point(26, 210);
+            this.labelControl6.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.labelControl6.Name = "labelControl6";
-            this.labelControl6.Size = new System.Drawing.Size(89, 19);
+            this.labelControl6.Size = new System.Drawing.Size(71, 16);
             this.labelControl6.TabIndex = 17;
             this.labelControl6.Text = "KW Discount";
             // 
             // kwDiscountText
             // 
-            this.kwDiscountText.Location = new System.Drawing.Point(255, 246);
-            this.kwDiscountText.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.kwDiscountText.Location = new System.Drawing.Point(198, 207);
+            this.kwDiscountText.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.kwDiscountText.Name = "kwDiscountText";
-            this.kwDiscountText.Size = new System.Drawing.Size(107, 26);
+            this.kwDiscountText.Size = new System.Drawing.Size(83, 22);
             this.kwDiscountText.TabIndex = 16;
             // 
             // labelControl5
             // 
-            this.labelControl5.Location = new System.Drawing.Point(33, 197);
-            this.labelControl5.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.labelControl5.Location = new System.Drawing.Point(26, 166);
+            this.labelControl5.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.labelControl5.Name = "labelControl5";
-            this.labelControl5.Size = new System.Drawing.Size(132, 19);
+            this.labelControl5.Size = new System.Drawing.Size(106, 16);
             this.labelControl5.TabIndex = 15;
             this.labelControl5.Text = "Payments Location";
             // 
             // labelControl4
             // 
-            this.labelControl4.Location = new System.Drawing.Point(33, 142);
-            this.labelControl4.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.labelControl4.Location = new System.Drawing.Point(26, 120);
+            this.labelControl4.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.labelControl4.Name = "labelControl4";
-            this.labelControl4.Size = new System.Drawing.Size(174, 19);
+            this.labelControl4.Size = new System.Drawing.Size(140, 16);
             this.labelControl4.TabIndex = 14;
             this.labelControl4.Text = "Winsat Invoices Location";
             // 
             // labelControl3
             // 
-            this.labelControl3.Location = new System.Drawing.Point(33, 42);
-            this.labelControl3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.labelControl3.Location = new System.Drawing.Point(26, 35);
+            this.labelControl3.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.labelControl3.Name = "labelControl3";
-            this.labelControl3.Size = new System.Drawing.Size(211, 19);
+            this.labelControl3.Size = new System.Drawing.Size(170, 16);
             this.labelControl3.TabIndex = 13;
             this.labelControl3.Text = "Wintech KW Invoices Location";
             // 
@@ -628,10 +644,10 @@
             this.recreateDbButton.Appearance.BackColor = System.Drawing.Color.White;
             this.recreateDbButton.Appearance.Options.UseBackColor = true;
             this.recreateDbButton.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("recreateDbButton.ImageOptions.Image")));
-            this.recreateDbButton.Location = new System.Drawing.Point(501, 312);
-            this.recreateDbButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.recreateDbButton.Location = new System.Drawing.Point(390, 263);
+            this.recreateDbButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.recreateDbButton.Name = "recreateDbButton";
-            this.recreateDbButton.Size = new System.Drawing.Size(219, 65);
+            this.recreateDbButton.Size = new System.Drawing.Size(170, 55);
             this.recreateDbButton.TabIndex = 11;
             this.recreateDbButton.Text = "Recreate database";
             this.recreateDbButton.Visible = false;
@@ -640,10 +656,10 @@
             // scanButton
             // 
             this.scanButton.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("scanButton.ImageOptions.Image")));
-            this.scanButton.Location = new System.Drawing.Point(726, 311);
-            this.scanButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.scanButton.Location = new System.Drawing.Point(565, 262);
+            this.scanButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.scanButton.Name = "scanButton";
-            this.scanButton.Size = new System.Drawing.Size(219, 66);
+            this.scanButton.Size = new System.Drawing.Size(170, 56);
             this.scanButton.TabIndex = 12;
             this.scanButton.Text = "Scan now";
             this.scanButton.Click += new System.EventHandler(this.scanButton_Click_1);
@@ -651,10 +667,10 @@
             // SaveButton
             // 
             this.SaveButton.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("SaveButton.ImageOptions.Image")));
-            this.SaveButton.Location = new System.Drawing.Point(951, 311);
-            this.SaveButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.SaveButton.Location = new System.Drawing.Point(740, 262);
+            this.SaveButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.SaveButton.Name = "SaveButton";
-            this.SaveButton.Size = new System.Drawing.Size(219, 64);
+            this.SaveButton.Size = new System.Drawing.Size(170, 54);
             this.SaveButton.TabIndex = 10;
             this.SaveButton.Text = "Save";
             this.SaveButton.Visible = false;
@@ -662,34 +678,34 @@
             // 
             // paymentsFolderI
             // 
-            this.paymentsFolderI.Location = new System.Drawing.Point(255, 194);
-            this.paymentsFolderI.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.paymentsFolderI.Location = new System.Drawing.Point(198, 163);
+            this.paymentsFolderI.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.paymentsFolderI.Name = "paymentsFolderI";
-            this.paymentsFolderI.Size = new System.Drawing.Size(910, 26);
+            this.paymentsFolderI.Size = new System.Drawing.Size(708, 22);
             this.paymentsFolderI.TabIndex = 9;
             // 
             // winsatInvoiceFolderI
             // 
-            this.winsatInvoiceFolderI.Location = new System.Drawing.Point(255, 140);
-            this.winsatInvoiceFolderI.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.winsatInvoiceFolderI.Location = new System.Drawing.Point(198, 118);
+            this.winsatInvoiceFolderI.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.winsatInvoiceFolderI.Name = "winsatInvoiceFolderI";
-            this.winsatInvoiceFolderI.Size = new System.Drawing.Size(910, 26);
+            this.winsatInvoiceFolderI.Size = new System.Drawing.Size(708, 22);
             this.winsatInvoiceFolderI.TabIndex = 8;
             // 
             // wintechInvoiceFolderI
             // 
-            this.wintechInvoiceFolderI.Location = new System.Drawing.Point(255, 38);
-            this.wintechInvoiceFolderI.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.wintechInvoiceFolderI.Location = new System.Drawing.Point(198, 32);
+            this.wintechInvoiceFolderI.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.wintechInvoiceFolderI.Name = "wintechInvoiceFolderI";
-            this.wintechInvoiceFolderI.Size = new System.Drawing.Size(910, 26);
+            this.wintechInvoiceFolderI.Size = new System.Drawing.Size(708, 22);
             this.wintechInvoiceFolderI.TabIndex = 7;
             // 
             // xtraTabPage2
             // 
             this.xtraTabPage2.Controls.Add(this.debugT);
-            this.xtraTabPage2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.xtraTabPage2.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.xtraTabPage2.Name = "xtraTabPage2";
-            this.xtraTabPage2.Size = new System.Drawing.Size(1650, 876);
+            this.xtraTabPage2.Size = new System.Drawing.Size(1283, 737);
             this.xtraTabPage2.Text = "Logs";
             // 
             // debugT
@@ -697,9 +713,9 @@
             this.debugT.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.debugT.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.debugT.Location = new System.Drawing.Point(0, -2);
-            this.debugT.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.debugT.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.debugT.Name = "debugT";
-            this.debugT.Size = new System.Drawing.Size(1650, 878);
+            this.debugT.Size = new System.Drawing.Size(1283, 739);
             this.debugT.TabIndex = 0;
             this.debugT.Text = "";
             // 
@@ -707,21 +723,21 @@
             // 
             this.xtraTabPage3.Controls.Add(this.InvoicesGrid);
             this.xtraTabPage3.Controls.Add(this.panelControl1);
-            this.xtraTabPage3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.xtraTabPage3.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.xtraTabPage3.Name = "xtraTabPage3";
-            this.xtraTabPage3.Size = new System.Drawing.Size(1650, 876);
+            this.xtraTabPage3.Size = new System.Drawing.Size(1283, 737);
             this.xtraTabPage3.Text = "Invoices";
             // 
             // InvoicesGrid
             // 
             this.InvoicesGrid.DataSource = this.invoiceAdapterBindingSource;
             this.InvoicesGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.InvoicesGrid.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.InvoicesGrid.Location = new System.Drawing.Point(0, 102);
+            this.InvoicesGrid.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.InvoicesGrid.Location = new System.Drawing.Point(0, 86);
             this.InvoicesGrid.MainView = this.gridView1;
-            this.InvoicesGrid.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.InvoicesGrid.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.InvoicesGrid.Name = "InvoicesGrid";
-            this.InvoicesGrid.Size = new System.Drawing.Size(1650, 774);
+            this.InvoicesGrid.Size = new System.Drawing.Size(1283, 651);
             this.InvoicesGrid.TabIndex = 1;
             this.InvoicesGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
@@ -744,6 +760,7 @@
             this.colTotal,
             this.colPayment,
             this.colRestToPay});
+            this.gridView1.DetailHeight = 295;
             gridFormatRule5.ApplyToRow = true;
             gridFormatRule5.Name = "Format0";
             formatConditionRuleExpression5.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
@@ -767,102 +784,102 @@
             // colClient
             // 
             this.colClient.FieldName = "Client";
-            this.colClient.MinWidth = 30;
+            this.colClient.MinWidth = 23;
             this.colClient.Name = "colClient";
             this.colClient.Visible = true;
             this.colClient.VisibleIndex = 0;
-            this.colClient.Width = 112;
+            this.colClient.Width = 87;
             // 
             // colYear
             // 
             this.colYear.FieldName = "Year";
-            this.colYear.MinWidth = 30;
+            this.colYear.MinWidth = 23;
             this.colYear.Name = "colYear";
             this.colYear.Visible = true;
             this.colYear.VisibleIndex = 1;
-            this.colYear.Width = 112;
+            this.colYear.Width = 87;
             // 
             // colWeek
             // 
             this.colWeek.Caption = "File number";
             this.colWeek.FieldName = "FileNumber";
-            this.colWeek.MinWidth = 30;
+            this.colWeek.MinWidth = 23;
             this.colWeek.Name = "colWeek";
             this.colWeek.Visible = true;
             this.colWeek.VisibleIndex = 2;
-            this.colWeek.Width = 112;
+            this.colWeek.Width = 87;
             // 
             // colInvoiceNumber
             // 
             this.colInvoiceNumber.FieldName = "InvoiceNumber";
-            this.colInvoiceNumber.MinWidth = 30;
+            this.colInvoiceNumber.MinWidth = 23;
             this.colInvoiceNumber.Name = "colInvoiceNumber";
             this.colInvoiceNumber.Visible = true;
             this.colInvoiceNumber.VisibleIndex = 3;
-            this.colInvoiceNumber.Width = 112;
+            this.colInvoiceNumber.Width = 87;
             // 
             // colPurchaseNumber
             // 
             this.colPurchaseNumber.FieldName = "PurchaseNumber";
-            this.colPurchaseNumber.MinWidth = 30;
+            this.colPurchaseNumber.MinWidth = 23;
             this.colPurchaseNumber.Name = "colPurchaseNumber";
             this.colPurchaseNumber.Visible = true;
             this.colPurchaseNumber.VisibleIndex = 4;
-            this.colPurchaseNumber.Width = 112;
+            this.colPurchaseNumber.Width = 87;
             // 
             // colInvoiceDate
             // 
             this.colInvoiceDate.FieldName = "InvoiceDate";
-            this.colInvoiceDate.MinWidth = 30;
+            this.colInvoiceDate.MinWidth = 23;
             this.colInvoiceDate.Name = "colInvoiceDate";
             this.colInvoiceDate.Visible = true;
             this.colInvoiceDate.VisibleIndex = 5;
-            this.colInvoiceDate.Width = 112;
+            this.colInvoiceDate.Width = 87;
             // 
             // colOrderDate
             // 
             this.colOrderDate.FieldName = "OrderDate";
-            this.colOrderDate.MinWidth = 30;
+            this.colOrderDate.MinWidth = 23;
             this.colOrderDate.Name = "colOrderDate";
             this.colOrderDate.Visible = true;
             this.colOrderDate.VisibleIndex = 6;
-            this.colOrderDate.Width = 112;
+            this.colOrderDate.Width = 87;
             // 
             // colGlnPartner
             // 
             this.colGlnPartner.FieldName = "GlnPartner";
-            this.colGlnPartner.MinWidth = 30;
+            this.colGlnPartner.MinWidth = 23;
             this.colGlnPartner.Name = "colGlnPartner";
             this.colGlnPartner.Visible = true;
             this.colGlnPartner.VisibleIndex = 7;
-            this.colGlnPartner.Width = 112;
+            this.colGlnPartner.Width = 87;
             // 
             // colTotal
             // 
             this.colTotal.FieldName = "Total";
-            this.colTotal.MinWidth = 30;
+            this.colTotal.MinWidth = 23;
             this.colTotal.Name = "colTotal";
             this.colTotal.Visible = true;
             this.colTotal.VisibleIndex = 8;
-            this.colTotal.Width = 112;
+            this.colTotal.Width = 87;
             // 
             // colPayment
             // 
             this.colPayment.FieldName = "Payment";
-            this.colPayment.MinWidth = 30;
+            this.colPayment.MinWidth = 23;
             this.colPayment.Name = "colPayment";
             this.colPayment.Visible = true;
             this.colPayment.VisibleIndex = 9;
-            this.colPayment.Width = 112;
+            this.colPayment.Width = 87;
             // 
             // colRestToPay
             // 
             this.colRestToPay.FieldName = "RestToPay";
-            this.colRestToPay.MinWidth = 30;
+            this.colRestToPay.MinWidth = 23;
             this.colRestToPay.Name = "colRestToPay";
             this.colRestToPay.Visible = true;
             this.colRestToPay.VisibleIndex = 10;
-            this.colRestToPay.Width = 112;
+            this.colRestToPay.Width = 87;
             // 
             // panelControl1
             // 
@@ -871,35 +888,35 @@
             this.panelControl1.Controls.Add(this.InvoiceDateEdit);
             this.panelControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelControl1.Location = new System.Drawing.Point(0, 0);
-            this.panelControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.panelControl1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.panelControl1.Name = "panelControl1";
-            this.panelControl1.Size = new System.Drawing.Size(1650, 102);
+            this.panelControl1.Size = new System.Drawing.Size(1283, 86);
             this.panelControl1.TabIndex = 0;
             // 
             // SearchInvoicesButton
             // 
-            this.SearchInvoicesButton.Location = new System.Drawing.Point(516, 33);
-            this.SearchInvoicesButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.SearchInvoicesButton.Location = new System.Drawing.Point(401, 28);
+            this.SearchInvoicesButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.SearchInvoicesButton.Name = "SearchInvoicesButton";
-            this.SearchInvoicesButton.Size = new System.Drawing.Size(168, 34);
+            this.SearchInvoicesButton.Size = new System.Drawing.Size(131, 29);
             this.SearchInvoicesButton.TabIndex = 2;
             this.SearchInvoicesButton.Text = "Search";
             this.SearchInvoicesButton.Click += new System.EventHandler(this.SearchInvoicesButton_Click);
             // 
             // labelControl1
             // 
-            this.labelControl1.Location = new System.Drawing.Point(165, 42);
-            this.labelControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.labelControl1.Location = new System.Drawing.Point(128, 35);
+            this.labelControl1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.labelControl1.Name = "labelControl1";
-            this.labelControl1.Size = new System.Drawing.Size(44, 19);
+            this.labelControl1.Size = new System.Drawing.Size(35, 16);
             this.labelControl1.TabIndex = 1;
             this.labelControl1.Text = "Month";
             // 
             // InvoiceDateEdit
             // 
             this.InvoiceDateEdit.EditValue = null;
-            this.InvoiceDateEdit.Location = new System.Drawing.Point(255, 38);
-            this.InvoiceDateEdit.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.InvoiceDateEdit.Location = new System.Drawing.Point(198, 32);
+            this.InvoiceDateEdit.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.InvoiceDateEdit.Name = "InvoiceDateEdit";
             this.InvoiceDateEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -910,28 +927,28 @@
             this.InvoiceDateEdit.Properties.UseMaskAsDisplayFormat = true;
             this.InvoiceDateEdit.Properties.VistaCalendarViewStyle = DevExpress.XtraEditors.VistaCalendarViewStyle.YearView;
             this.InvoiceDateEdit.Properties.VistaDisplayMode = DevExpress.Utils.DefaultBoolean.True;
-            this.InvoiceDateEdit.Size = new System.Drawing.Size(225, 26);
+            this.InvoiceDateEdit.Size = new System.Drawing.Size(175, 22);
             this.InvoiceDateEdit.TabIndex = 0;
             // 
             // xtraTabPage4
             // 
             this.xtraTabPage4.Controls.Add(this.paymentsGrid);
             this.xtraTabPage4.Controls.Add(this.panelControl2);
-            this.xtraTabPage4.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.xtraTabPage4.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.xtraTabPage4.Name = "xtraTabPage4";
-            this.xtraTabPage4.Size = new System.Drawing.Size(1650, 876);
+            this.xtraTabPage4.Size = new System.Drawing.Size(1283, 737);
             this.xtraTabPage4.Text = "Non mapped Payments";
             // 
             // paymentsGrid
             // 
             this.paymentsGrid.DataSource = this.paymentBindingSource;
             this.paymentsGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.paymentsGrid.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.paymentsGrid.Location = new System.Drawing.Point(0, 70);
+            this.paymentsGrid.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.paymentsGrid.Location = new System.Drawing.Point(0, 59);
             this.paymentsGrid.MainView = this.gridView2;
-            this.paymentsGrid.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.paymentsGrid.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.paymentsGrid.Name = "paymentsGrid";
-            this.paymentsGrid.Size = new System.Drawing.Size(1650, 806);
+            this.paymentsGrid.Size = new System.Drawing.Size(1283, 678);
             this.paymentsGrid.TabIndex = 1;
             this.paymentsGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView2});
@@ -949,6 +966,7 @@
             this.colDiscountUsed,
             this.colPaymentAmount,
             this.colInvoiceNumber2});
+            this.gridView2.DetailHeight = 295;
             this.gridView2.GridControl = this.paymentsGrid;
             this.gridView2.Name = "gridView2";
             this.gridView2.OptionsBehavior.Editable = false;
@@ -957,56 +975,56 @@
             // colDate
             // 
             this.colDate.FieldName = "Date";
-            this.colDate.MinWidth = 30;
+            this.colDate.MinWidth = 23;
             this.colDate.Name = "colDate";
             this.colDate.Visible = true;
             this.colDate.VisibleIndex = 1;
-            this.colDate.Width = 207;
+            this.colDate.Width = 161;
             // 
             // colClient1
             // 
             this.colClient1.FieldName = "Client";
-            this.colClient1.MinWidth = 30;
+            this.colClient1.MinWidth = 23;
             this.colClient1.Name = "colClient1";
             this.colClient1.Visible = true;
             this.colClient1.VisibleIndex = 0;
-            this.colClient1.Width = 98;
+            this.colClient1.Width = 76;
             // 
             // colInvoiceAmount
             // 
             this.colInvoiceAmount.FieldName = "InvoiceAmount";
-            this.colInvoiceAmount.MinWidth = 30;
+            this.colInvoiceAmount.MinWidth = 23;
             this.colInvoiceAmount.Name = "colInvoiceAmount";
             this.colInvoiceAmount.Visible = true;
             this.colInvoiceAmount.VisibleIndex = 3;
-            this.colInvoiceAmount.Width = 498;
+            this.colInvoiceAmount.Width = 387;
             // 
             // colDiscountUsed
             // 
             this.colDiscountUsed.FieldName = "DiscountUsed";
-            this.colDiscountUsed.MinWidth = 30;
+            this.colDiscountUsed.MinWidth = 23;
             this.colDiscountUsed.Name = "colDiscountUsed";
             this.colDiscountUsed.Visible = true;
             this.colDiscountUsed.VisibleIndex = 4;
-            this.colDiscountUsed.Width = 498;
+            this.colDiscountUsed.Width = 387;
             // 
             // colPaymentAmount
             // 
             this.colPaymentAmount.FieldName = "PaymentAmount";
-            this.colPaymentAmount.MinWidth = 30;
+            this.colPaymentAmount.MinWidth = 23;
             this.colPaymentAmount.Name = "colPaymentAmount";
             this.colPaymentAmount.Visible = true;
             this.colPaymentAmount.VisibleIndex = 5;
-            this.colPaymentAmount.Width = 517;
+            this.colPaymentAmount.Width = 402;
             // 
             // colInvoiceNumber2
             // 
             this.colInvoiceNumber2.FieldName = "InvoiceNumber";
-            this.colInvoiceNumber2.MinWidth = 30;
+            this.colInvoiceNumber2.MinWidth = 23;
             this.colInvoiceNumber2.Name = "colInvoiceNumber2";
             this.colInvoiceNumber2.Visible = true;
             this.colInvoiceNumber2.VisibleIndex = 2;
-            this.colInvoiceNumber2.Width = 355;
+            this.colInvoiceNumber2.Width = 276;
             // 
             // panelControl2
             // 
@@ -1016,28 +1034,28 @@
             this.panelControl2.Controls.Add(this.paymentDateI);
             this.panelControl2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelControl2.Location = new System.Drawing.Point(0, 0);
-            this.panelControl2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.panelControl2.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.panelControl2.Name = "panelControl2";
-            this.panelControl2.Size = new System.Drawing.Size(1650, 70);
+            this.panelControl2.Size = new System.Drawing.Size(1283, 59);
             this.panelControl2.TabIndex = 0;
             // 
             // exportPaymentsButton
             // 
             this.exportPaymentsButton.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("exportPaymentsButton.ImageOptions.Image")));
-            this.exportPaymentsButton.Location = new System.Drawing.Point(562, 14);
-            this.exportPaymentsButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.exportPaymentsButton.Location = new System.Drawing.Point(437, 12);
+            this.exportPaymentsButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.exportPaymentsButton.Name = "exportPaymentsButton";
-            this.exportPaymentsButton.Size = new System.Drawing.Size(177, 34);
+            this.exportPaymentsButton.Size = new System.Drawing.Size(138, 29);
             this.exportPaymentsButton.TabIndex = 6;
             this.exportPaymentsButton.Text = "Export to Excel";
             this.exportPaymentsButton.Click += new System.EventHandler(this.exportPaymentsButton_Click);
             // 
             // searchPaymentsButton
             // 
-            this.searchPaymentsButton.Location = new System.Drawing.Point(388, 14);
-            this.searchPaymentsButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.searchPaymentsButton.Location = new System.Drawing.Point(302, 12);
+            this.searchPaymentsButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.searchPaymentsButton.Name = "searchPaymentsButton";
-            this.searchPaymentsButton.Size = new System.Drawing.Size(168, 34);
+            this.searchPaymentsButton.Size = new System.Drawing.Size(131, 29);
             this.searchPaymentsButton.TabIndex = 5;
             this.searchPaymentsButton.Text = "Search";
             this.searchPaymentsButton.Visible = false;
@@ -1045,10 +1063,10 @@
             // 
             // labelControl2
             // 
-            this.labelControl2.Location = new System.Drawing.Point(36, 23);
-            this.labelControl2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.labelControl2.Location = new System.Drawing.Point(28, 19);
+            this.labelControl2.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.labelControl2.Name = "labelControl2";
-            this.labelControl2.Size = new System.Drawing.Size(44, 19);
+            this.labelControl2.Size = new System.Drawing.Size(35, 16);
             this.labelControl2.TabIndex = 4;
             this.labelControl2.Text = "Month";
             this.labelControl2.Visible = false;
@@ -1056,8 +1074,8 @@
             // paymentDateI
             // 
             this.paymentDateI.EditValue = null;
-            this.paymentDateI.Location = new System.Drawing.Point(127, 19);
-            this.paymentDateI.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.paymentDateI.Location = new System.Drawing.Point(99, 16);
+            this.paymentDateI.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.paymentDateI.Name = "paymentDateI";
             this.paymentDateI.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -1066,7 +1084,7 @@
             this.paymentDateI.Properties.UseMaskAsDisplayFormat = true;
             this.paymentDateI.Properties.VistaCalendarViewStyle = DevExpress.XtraEditors.VistaCalendarViewStyle.YearView;
             this.paymentDateI.Properties.VistaDisplayMode = DevExpress.Utils.DefaultBoolean.True;
-            this.paymentDateI.Size = new System.Drawing.Size(225, 26);
+            this.paymentDateI.Size = new System.Drawing.Size(175, 22);
             this.paymentDateI.TabIndex = 3;
             this.paymentDateI.Visible = false;
             // 
@@ -1074,19 +1092,19 @@
             // 
             this.xtraTabPage5.Controls.Add(this.panelControl4);
             this.xtraTabPage5.Controls.Add(this.panelControl3);
-            this.xtraTabPage5.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.xtraTabPage5.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.xtraTabPage5.Name = "xtraTabPage5";
-            this.xtraTabPage5.Size = new System.Drawing.Size(1650, 876);
+            this.xtraTabPage5.Size = new System.Drawing.Size(1283, 737);
             this.xtraTabPage5.Text = "Invoice Files";
             // 
             // panelControl4
             // 
             this.panelControl4.Controls.Add(this.invoiceFileGrid);
             this.panelControl4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelControl4.Location = new System.Drawing.Point(0, 89);
-            this.panelControl4.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.panelControl4.Location = new System.Drawing.Point(0, 75);
+            this.panelControl4.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.panelControl4.Name = "panelControl4";
-            this.panelControl4.Size = new System.Drawing.Size(1650, 787);
+            this.panelControl4.Size = new System.Drawing.Size(1283, 662);
             this.panelControl4.TabIndex = 1;
             // 
             // panelControl3
@@ -1098,18 +1116,18 @@
             this.panelControl3.Controls.Add(this.selectYearCombo);
             this.panelControl3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelControl3.Location = new System.Drawing.Point(0, 0);
-            this.panelControl3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.panelControl3.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.panelControl3.Name = "panelControl3";
-            this.panelControl3.Size = new System.Drawing.Size(1650, 89);
+            this.panelControl3.Size = new System.Drawing.Size(1283, 75);
             this.panelControl3.TabIndex = 0;
             // 
             // deleteButton
             // 
             this.deleteButton.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("deleteButton.ImageOptions.Image")));
-            this.deleteButton.Location = new System.Drawing.Point(654, 25);
-            this.deleteButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.deleteButton.Location = new System.Drawing.Point(509, 21);
+            this.deleteButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.deleteButton.Name = "deleteButton";
-            this.deleteButton.Size = new System.Drawing.Size(162, 34);
+            this.deleteButton.Size = new System.Drawing.Size(126, 29);
             this.deleteButton.TabIndex = 4;
             this.deleteButton.Text = "Delete";
             this.deleteButton.Visible = false;
@@ -1118,18 +1136,18 @@
             // exportInvoicesToExcel
             // 
             this.exportInvoicesToExcel.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("exportInvoicesToExcel.ImageOptions.Image")));
-            this.exportInvoicesToExcel.Location = new System.Drawing.Point(460, 25);
-            this.exportInvoicesToExcel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.exportInvoicesToExcel.Location = new System.Drawing.Point(358, 21);
+            this.exportInvoicesToExcel.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.exportInvoicesToExcel.Name = "exportInvoicesToExcel";
-            this.exportInvoicesToExcel.Size = new System.Drawing.Size(177, 34);
+            this.exportInvoicesToExcel.Size = new System.Drawing.Size(138, 29);
             this.exportInvoicesToExcel.TabIndex = 3;
             this.exportInvoicesToExcel.Text = "Export to Excel";
             this.exportInvoicesToExcel.Click += new System.EventHandler(this.exportInvoicesToExcel_Click);
             // 
             // invoiceStatusCombo
             // 
-            this.invoiceStatusCombo.Location = new System.Drawing.Point(1372, 30);
-            this.invoiceStatusCombo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.invoiceStatusCombo.Location = new System.Drawing.Point(1067, 25);
+            this.invoiceStatusCombo.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.invoiceStatusCombo.Name = "invoiceStatusCombo";
             this.invoiceStatusCombo.Properties.AutoComplete = false;
             this.invoiceStatusCombo.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -1140,62 +1158,62 @@
             "Partially Payed",
             "Payed"});
             this.invoiceStatusCombo.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-            this.invoiceStatusCombo.Size = new System.Drawing.Size(225, 26);
+            this.invoiceStatusCombo.Size = new System.Drawing.Size(175, 22);
             this.invoiceStatusCombo.TabIndex = 2;
             this.invoiceStatusCombo.SelectedIndexChanged += new System.EventHandler(this.invoiceStatusCombo_SelectedIndexChanged);
             // 
             // searchInvoiceFilesButton
             // 
             this.searchInvoiceFilesButton.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("searchInvoiceFilesButton.ImageOptions.Image")));
-            this.searchInvoiceFilesButton.Location = new System.Drawing.Point(285, 25);
-            this.searchInvoiceFilesButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.searchInvoiceFilesButton.Location = new System.Drawing.Point(222, 21);
+            this.searchInvoiceFilesButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.searchInvoiceFilesButton.Name = "searchInvoiceFilesButton";
-            this.searchInvoiceFilesButton.Size = new System.Drawing.Size(168, 34);
+            this.searchInvoiceFilesButton.Size = new System.Drawing.Size(131, 29);
             this.searchInvoiceFilesButton.TabIndex = 1;
             this.searchInvoiceFilesButton.Text = "Search";
             this.searchInvoiceFilesButton.Click += new System.EventHandler(this.searchInvoiceFilesButton_Click);
             // 
             // selectYearCombo
             // 
-            this.selectYearCombo.Location = new System.Drawing.Point(33, 30);
-            this.selectYearCombo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.selectYearCombo.Location = new System.Drawing.Point(26, 25);
+            this.selectYearCombo.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.selectYearCombo.Name = "selectYearCombo";
             this.selectYearCombo.Properties.AutoComplete = false;
             this.selectYearCombo.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.selectYearCombo.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-            this.selectYearCombo.Size = new System.Drawing.Size(225, 26);
+            this.selectYearCombo.Size = new System.Drawing.Size(175, 22);
             this.selectYearCombo.TabIndex = 0;
             // 
             // xtraTabPage6
             // 
             this.xtraTabPage6.Controls.Add(this.panel1);
             this.xtraTabPage6.Controls.Add(this.panelControl5);
-            this.xtraTabPage6.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.xtraTabPage6.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.xtraTabPage6.Name = "xtraTabPage6";
-            this.xtraTabPage6.Size = new System.Drawing.Size(1650, 876);
+            this.xtraTabPage6.Size = new System.Drawing.Size(1283, 737);
             this.xtraTabPage6.Text = "BIS";
             // 
             // panel1
             // 
             this.panel1.Controls.Add(this.BisGrid);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 70);
-            this.panel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.panel1.Location = new System.Drawing.Point(0, 59);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1650, 806);
+            this.panel1.Size = new System.Drawing.Size(1283, 678);
             this.panel1.TabIndex = 2;
             // 
             // BisGrid
             // 
             this.BisGrid.DataSource = this.paymentBindingSource;
             this.BisGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.BisGrid.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.BisGrid.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.BisGrid.Location = new System.Drawing.Point(0, 0);
             this.BisGrid.MainView = this.gridView3;
-            this.BisGrid.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.BisGrid.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.BisGrid.Name = "BisGrid";
-            this.BisGrid.Size = new System.Drawing.Size(1650, 806);
+            this.BisGrid.Size = new System.Drawing.Size(1283, 678);
             this.BisGrid.TabIndex = 2;
             this.BisGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView3});
@@ -1209,6 +1227,7 @@
             this.gridColumn6,
             this.gridColumn7,
             this.gridColumn8});
+            this.gridView3.DetailHeight = 295;
             this.gridView3.GridControl = this.BisGrid;
             this.gridView3.Name = "gridView3";
             this.gridView3.OptionsBehavior.Editable = false;
@@ -1217,56 +1236,56 @@
             // gridColumn3
             // 
             this.gridColumn3.FieldName = "Date";
-            this.gridColumn3.MinWidth = 30;
+            this.gridColumn3.MinWidth = 23;
             this.gridColumn3.Name = "gridColumn3";
             this.gridColumn3.Visible = true;
             this.gridColumn3.VisibleIndex = 1;
-            this.gridColumn3.Width = 207;
+            this.gridColumn3.Width = 161;
             // 
             // gridColumn4
             // 
             this.gridColumn4.FieldName = "Client";
-            this.gridColumn4.MinWidth = 30;
+            this.gridColumn4.MinWidth = 23;
             this.gridColumn4.Name = "gridColumn4";
             this.gridColumn4.Visible = true;
             this.gridColumn4.VisibleIndex = 0;
-            this.gridColumn4.Width = 98;
+            this.gridColumn4.Width = 76;
             // 
             // gridColumn5
             // 
             this.gridColumn5.FieldName = "InvoiceAmount";
-            this.gridColumn5.MinWidth = 30;
+            this.gridColumn5.MinWidth = 23;
             this.gridColumn5.Name = "gridColumn5";
             this.gridColumn5.Visible = true;
             this.gridColumn5.VisibleIndex = 3;
-            this.gridColumn5.Width = 498;
+            this.gridColumn5.Width = 387;
             // 
             // gridColumn6
             // 
             this.gridColumn6.FieldName = "DiscountUsed";
-            this.gridColumn6.MinWidth = 30;
+            this.gridColumn6.MinWidth = 23;
             this.gridColumn6.Name = "gridColumn6";
             this.gridColumn6.Visible = true;
             this.gridColumn6.VisibleIndex = 4;
-            this.gridColumn6.Width = 498;
+            this.gridColumn6.Width = 387;
             // 
             // gridColumn7
             // 
             this.gridColumn7.FieldName = "PaymentAmount";
-            this.gridColumn7.MinWidth = 30;
+            this.gridColumn7.MinWidth = 23;
             this.gridColumn7.Name = "gridColumn7";
             this.gridColumn7.Visible = true;
             this.gridColumn7.VisibleIndex = 5;
-            this.gridColumn7.Width = 517;
+            this.gridColumn7.Width = 402;
             // 
             // gridColumn8
             // 
             this.gridColumn8.FieldName = "InvoiceNumber";
-            this.gridColumn8.MinWidth = 30;
+            this.gridColumn8.MinWidth = 23;
             this.gridColumn8.Name = "gridColumn8";
             this.gridColumn8.Visible = true;
             this.gridColumn8.VisibleIndex = 2;
-            this.gridColumn8.Width = 355;
+            this.gridColumn8.Width = 276;
             // 
             // panelControl5
             // 
@@ -1276,28 +1295,28 @@
             this.panelControl5.Controls.Add(this.BisDateI);
             this.panelControl5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelControl5.Location = new System.Drawing.Point(0, 0);
-            this.panelControl5.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.panelControl5.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.panelControl5.Name = "panelControl5";
-            this.panelControl5.Size = new System.Drawing.Size(1650, 70);
+            this.panelControl5.Size = new System.Drawing.Size(1283, 59);
             this.panelControl5.TabIndex = 1;
             // 
             // ExportBisButton
             // 
             this.ExportBisButton.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("ExportBisButton.ImageOptions.Image")));
-            this.ExportBisButton.Location = new System.Drawing.Point(562, 14);
-            this.ExportBisButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ExportBisButton.Location = new System.Drawing.Point(437, 12);
+            this.ExportBisButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.ExportBisButton.Name = "ExportBisButton";
-            this.ExportBisButton.Size = new System.Drawing.Size(177, 34);
+            this.ExportBisButton.Size = new System.Drawing.Size(138, 29);
             this.ExportBisButton.TabIndex = 6;
             this.ExportBisButton.Text = "Export to Excel";
             this.ExportBisButton.Click += new System.EventHandler(this.ExportBisButton_Click);
             // 
             // SearchBisButton
             // 
-            this.SearchBisButton.Location = new System.Drawing.Point(388, 14);
-            this.SearchBisButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.SearchBisButton.Location = new System.Drawing.Point(302, 12);
+            this.SearchBisButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.SearchBisButton.Name = "SearchBisButton";
-            this.SearchBisButton.Size = new System.Drawing.Size(168, 34);
+            this.SearchBisButton.Size = new System.Drawing.Size(131, 29);
             this.SearchBisButton.TabIndex = 5;
             this.SearchBisButton.Text = "Search";
             this.SearchBisButton.Visible = false;
@@ -1305,10 +1324,10 @@
             // 
             // labelControl9
             // 
-            this.labelControl9.Location = new System.Drawing.Point(36, 23);
-            this.labelControl9.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.labelControl9.Location = new System.Drawing.Point(28, 19);
+            this.labelControl9.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.labelControl9.Name = "labelControl9";
-            this.labelControl9.Size = new System.Drawing.Size(44, 19);
+            this.labelControl9.Size = new System.Drawing.Size(35, 16);
             this.labelControl9.TabIndex = 4;
             this.labelControl9.Text = "Month";
             this.labelControl9.Visible = false;
@@ -1316,8 +1335,8 @@
             // BisDateI
             // 
             this.BisDateI.EditValue = null;
-            this.BisDateI.Location = new System.Drawing.Point(127, 19);
-            this.BisDateI.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.BisDateI.Location = new System.Drawing.Point(99, 16);
+            this.BisDateI.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.BisDateI.Name = "BisDateI";
             this.BisDateI.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -1326,7 +1345,7 @@
             this.BisDateI.Properties.UseMaskAsDisplayFormat = true;
             this.BisDateI.Properties.VistaCalendarViewStyle = DevExpress.XtraEditors.VistaCalendarViewStyle.YearView;
             this.BisDateI.Properties.VistaDisplayMode = DevExpress.Utils.DefaultBoolean.True;
-            this.BisDateI.Size = new System.Drawing.Size(225, 26);
+            this.BisDateI.Size = new System.Drawing.Size(175, 22);
             this.BisDateI.TabIndex = 3;
             this.BisDateI.Visible = false;
             // 
@@ -1419,14 +1438,25 @@
             this.layoutControlItem7.Text = "Wintech Invoice Folder";
             this.layoutControlItem7.TextSize = new System.Drawing.Size(161, 19);
             // 
+            // colEcart1
+            // 
+            this.colEcart1.DisplayFormat.FormatString = "P1";
+            this.colEcart1.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Custom;
+            this.colEcart1.FieldName = "Ecart";
+            this.colEcart1.MinWidth = 25;
+            this.colEcart1.Name = "colEcart1";
+            this.colEcart1.Visible = true;
+            this.colEcart1.VisibleIndex = 10;
+            this.colEcart1.Width = 94;
+            // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1652, 911);
+            this.ClientSize = new System.Drawing.Size(1285, 767);
             this.Controls.Add(this.myTabs);
             this.IsMdiContainer = true;
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.Name = "MainForm";
             this.Text = "InvoicesChecker 1.10";
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -1605,5 +1635,7 @@
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn7;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn8;
         private DevExpress.XtraEditors.SimpleButton deleteButton;
+        private DevExpress.XtraGrid.Columns.GridColumn colEcart;
+        private DevExpress.XtraGrid.Columns.GridColumn colEcart1;
     }
 }

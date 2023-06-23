@@ -16,4 +16,5 @@ public class InvoiceFile
     public decimal TotalPayed { get; set; }
     public decimal RestToPay { get; set; }
     public List<Invoice> Invoices { get; set; }
+    public decimal Ecart => RestToPay / TotalToPay;
 }
