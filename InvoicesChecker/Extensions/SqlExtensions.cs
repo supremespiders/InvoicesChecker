@@ -27,6 +27,7 @@ public static class SqlExtensions
         foreach (var propertyInfo in typeof(T).GetProperties())
         {
             if (propertyInfo.Name.Equals("Id")) continue;
+            if (propertyInfo.Name.Equals("Ecart")) continue;
             if (propertyInfo.GetCustomAttributes(typeof(NotMappedAttribute), true).Any()) continue;
             var t = propertyInfo.PropertyType;
             if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>))
