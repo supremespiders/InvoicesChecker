@@ -88,7 +88,7 @@ namespace InvoicesChecker
 
             InvoiceDateEdit.EditValue = DateTime.Now;
             paymentDateI.EditValue = DateTime.Now;
-            invoiceStatusCombo.SelectedIndex = 0;
+            //invoiceStatusCombo.SelectedIndex = 0;
             _ = Task.Run(CheckForUpdates);
             //await this.Exec(async () =>
             //{
@@ -340,7 +340,7 @@ namespace InvoicesChecker
             var payments = await context.Payments.AsNoTracking().Where(x => x.InvoiceId == null && !x.IsBis).ToListAsync();
             paymentsGrid.DataSource = payments;
         }
-        
+
         private async Task LoadBis()
         {
             var d = paymentDateI.DateTime;
@@ -391,7 +391,7 @@ namespace InvoicesChecker
             await SaveConfig();
 
             var config = JsonSerializer.Deserialize<Config>(await File.ReadAllTextAsync("config"));
-            var service = new ScanInvoicesService(wintechInvoiceFolderI.Text,wintechLBInvoiceFolderI.Text, winsatInvoiceFolderI.Text, paymentsFolderI.Text, config.KwDiscount, config.lbDiscount);
+            var service = new ScanInvoicesService(wintechInvoiceFolderI.Text, wintechLBInvoiceFolderI.Text, winsatInvoiceFolderI.Text, paymentsFolderI.Text, config.KwDiscount, config.lbDiscount);
             try
             {
                 var (invoiceChanged, paymentChanged) = await Task.Run(service.MainWork);
@@ -427,51 +427,51 @@ namespace InvoicesChecker
             });
         }
 
-        private void invoiceStatusCombo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (_invoiceFiles == null) return;
-            _filteredInvoiceFiles = new List<InvoiceFile>();
-            foreach (var invoiceFile in _invoiceFiles)
-            {
-                var f = new InvoiceFile
-                {
-                    Id = invoiceFile.Id,
-                    Year = invoiceFile.Year,
-                    Client = invoiceFile.Client,
-                    FileName = invoiceFile.FileName,
-                    FileNumber = invoiceFile.FileNumber
-                };
-                switch (invoiceStatusCombo.SelectedIndex)
-                {
-                    case 0:
-                        f.Invoices = invoiceFile.Invoices;
-                        break;
-                    case 1:
-                        f.Invoices = invoiceFile.Invoices.Where(x => x.RestToPay == x.TotalToPay).ToList();
-                        break;
-                    case 2:
-                        f.Invoices = invoiceFile.Invoices.Where(x => x.RestToPay != 0 && x.RestToPay != x.TotalToPay).ToList();
-                        break;
-                    case 3:
-                        f.Invoices = invoiceFile.Invoices.Where(x => x.RestToPay == 0).ToList();
-                        break;
-                }
+        //private void invoiceStatusCombo_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    if (_invoiceFiles == null) return;
+        //    _filteredInvoiceFiles = new List<InvoiceFile>();
+        //    foreach (var invoiceFile in _invoiceFiles)
+        //    {
+        //        var f = new InvoiceFile
+        //        {
+        //            Id = invoiceFile.Id,
+        //            Year = invoiceFile.Year,
+        //            Client = invoiceFile.Client,
+        //            FileName = invoiceFile.FileName,
+        //            FileNumber = invoiceFile.FileNumber
+        //        };
+        //        switch (invoiceStatusCombo.SelectedIndex)
+        //        {
+        //            case 0:
+        //                f.Invoices = invoiceFile.Invoices;
+        //                break;
+        //            case 1:
+        //                f.Invoices = invoiceFile.Invoices.Where(x => x.RestToPay == x.TotalToPay).ToList();
+        //                break;
+        //            case 2:
+        //                f.Invoices = invoiceFile.Invoices.Where(x => x.RestToPay != 0 && x.RestToPay != x.TotalToPay).ToList();
+        //                break;
+        //            case 3:
+        //                f.Invoices = invoiceFile.Invoices.Where(x => x.RestToPay == 0).ToList();
+        //                break;
+        //        }
 
-                f.TotalToPay = f.Invoices.Sum(x => x.TotalToPay);
-                f.TotalAmount = f.Invoices.Sum(x => x.TotalAmount);
-                f.TotalPayed = f.Invoices.Sum(x => x.TotalPayed);
-                f.RestToPay = f.Invoices.Sum(x => x.RestToPay);
-                if (f.Invoices.Count != 0)
-                    _filteredInvoiceFiles.Add(f);
-            }
-            invoiceFileGrid.DataSource = _filteredInvoiceFiles;
+        //        f.TotalToPay = f.Invoices.Sum(x => x.TotalToPay);
+        //        f.TotalAmount = f.Invoices.Sum(x => x.TotalAmount);
+        //        f.TotalPayed = f.Invoices.Sum(x => x.TotalPayed);
+        //        f.RestToPay = f.Invoices.Sum(x => x.RestToPay);
+        //        if (f.Invoices.Count != 0)
+        //            _filteredInvoiceFiles.Add(f);
+        //    }
+        //    invoiceFileGrid.DataSource = _filteredInvoiceFiles;
+        //}
+
+        void InvoicesViewCustomDrawRowIndicator(object sender, RowIndicatorCustomDrawEventArgs e)
+        {
+            if (e.RowHandle >= 0)
+                e.Info.DisplayText = (e.RowHandle + 1).ToString();
         }
-        
-        void InvoicesViewCustomDrawRowIndicator(object sender, RowIndicatorCustomDrawEventArgs e)  
-        {  
-            if(e.RowHandle >= 0 )  
-                e.Info.DisplayText = (e.RowHandle+1).ToString();  
-        }  
         private async void exportInvoicesToExcel_Click(object sender, EventArgs e)
         {
             if (_filteredInvoiceFiles == null || _filteredInvoiceFiles.Count == 0) return;
@@ -612,6 +612,59 @@ namespace InvoicesChecker
                 _invoiceFiles.Remove(invoiceFile);
                 invoiceFileGrid.RefreshDataSource();
             });
+        }
+
+        private void invoiceStatusCheckedCombo_EditValueChanged(object sender, EventArgs e)
+        {
+            if (_invoiceFiles == null) return;
+            _filteredInvoiceFiles = new List<InvoiceFile>();
+            foreach (var invoiceFile in _invoiceFiles)
+            {
+                var f = new InvoiceFile
+                {
+                    Id = invoiceFile.Id,
+                    Year = invoiceFile.Year,
+                    Client = invoiceFile.Client,
+                    FileName = invoiceFile.FileName,
+                    FileNumber = invoiceFile.FileNumber
+                };
+                f.Invoices = new List<Invoice>();
+                if (invoiceStatusCheckedCombo.Properties.Items[0].CheckState == CheckState.Checked)
+                {
+                    f.Invoices.AddRange(invoiceFile.Invoices.Where(x => x.RestToPay == x.TotalToPay).ToList());
+                }
+                if (invoiceStatusCheckedCombo.Properties.Items[1].CheckState == CheckState.Checked)
+                {
+                    f.Invoices.AddRange(invoiceFile.Invoices.Where(x => x.RestToPay != 0 && x.RestToPay != x.TotalToPay).ToList());
+                }
+                if (invoiceStatusCheckedCombo.Properties.Items[2].CheckState == CheckState.Checked)
+                {
+                    f.Invoices.AddRange(invoiceFile.Invoices.Where(x => x.RestToPay == 0).ToList());
+                }
+                //switch (invoiceStatusCheckedCombo.chec)
+                //{
+                //    case 0:
+                //        f.Invoices = invoiceFile.Invoices;
+                //        break;
+                //    case 1:
+                //        f.Invoices = invoiceFile.Invoices.Where(x => x.RestToPay == x.TotalToPay).ToList();
+                //        break;
+                //    case 2:
+                //        f.Invoices = invoiceFile.Invoices.Where(x => x.RestToPay != 0 && x.RestToPay != x.TotalToPay).ToList();
+                //        break;
+                //    case 3:
+                //        f.Invoices = invoiceFile.Invoices.Where(x => x.RestToPay == 0).ToList();
+                //        break;
+                //}
+
+                f.TotalToPay = f.Invoices.Sum(x => x.TotalToPay);
+                f.TotalAmount = f.Invoices.Sum(x => x.TotalAmount);
+                f.TotalPayed = f.Invoices.Sum(x => x.TotalPayed);
+                f.RestToPay = f.Invoices.Sum(x => x.RestToPay);
+                if (f.Invoices.Count != 0)
+                    _filteredInvoiceFiles.Add(f);
+            }
+            invoiceFileGrid.DataSource = _filteredInvoiceFiles;
         }
     }
 }
